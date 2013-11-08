@@ -15,5 +15,12 @@ Route::get('/', function () {
     return View::make('home');
 });
 
+Route::get('/search', function() {
+    $query = Input::get('query');
+    echo $query;
+});
+
 Route::controller('account', 'AccountController');
+
 Route::controller('about', 'AboutController');
+Route::resource('projects', 'ProjectController');
