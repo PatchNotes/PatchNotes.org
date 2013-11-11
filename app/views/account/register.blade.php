@@ -2,10 +2,6 @@
 
 @section('content')
 
-<style>
-    .form-control { margin-bottom: 10px; }
-</style>
-
 <div class="row">
     <div class="col-lg-4 col-lg-offset-4">
         <h2>Create An Account</h2>
@@ -21,7 +17,7 @@
         </div>
         @endif
 
-        {{ Form::open(array('url' => 'account/register', 'class' => 'form', 'role' => 'form')) }}
+        {{ Form::open(array('url' => 'account/register', 'class' => 'form auth', 'role' => 'form')) }}
         <input class="form-control" name="username" placeholder="Username" type="text" />
         <input class="form-control" name="email" placeholder="Email" type="email" />
         <input class="form-control" name="password" placeholder="Password" type="password" />

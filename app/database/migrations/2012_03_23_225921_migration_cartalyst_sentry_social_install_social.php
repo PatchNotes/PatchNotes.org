@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of the Sentry package.
+ * Part of the Sentry Social package.
  *
  * NOTICE OF LICENSE
  *
@@ -20,7 +20,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class MigrationCartalystSentryInstallUsers extends Migration {
+class MigrationCartalystSentrySocialInstallSocial extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -29,29 +29,19 @@ class MigrationCartalystSentryInstallUsers extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users', function($table)
+		Schema::create('social', function($table)
 		{
 			$table->increments('id');
-            $table->string('username')->unique();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-			$table->string('email');
-			$table->string('password');
-			$table->text('permissions')->nullable();
-			$table->boolean('activated')->default(0);
-			$table->string('activation_code')->nullable();
-			$table->timestamp('activated_at')->nullable();
-			$table->timestamp('last_login')->nullable();
-			$table->string('persist_code')->nullable();
-			$table->string('reset_password_code')->nullable();
+			$table->integer('user_id')->unsigned()->nullable();
+			$table->string('service', 127);
+			$table->string('uid', 127);
 			$table->timestamps();
 
 			// We'll need to ensure that MySQL uses the InnoDB engine to
 			// support the indexes, other engines aren't affected.
 			$table->engine = 'InnoDB';
-			$table->unique('email');
-			$table->index('activation_code');
-			$table->index('reset_password_code');
+			$table->unique(array('user_id', 'service'));
+			$table->unique(array('service', 'uid'));
 		});
 	}
 
@@ -62,7 +52,7 @@ class MigrationCartalystSentryInstallUsers extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::drop('social');
 	}
 
 }

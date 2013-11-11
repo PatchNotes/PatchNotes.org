@@ -1,6 +1,14 @@
 <?php
+namespace PatchNotes\Controllers\Projects;
 
 use dflydev\markdown\MarkdownParser;
+use Input;
+use Project;
+use ProjectManager;
+use Redirect;
+use Sentry;
+use Validator;
+use View;
 
 class ProjectController extends BaseController {
 

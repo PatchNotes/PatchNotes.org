@@ -13,22 +13,10 @@
         @foreach(Config::get('patchnotes.assets.styles') as $style)
         {{ HTML::style($style . (App::environment() == 'local' ? '.css' : '.min.css')) }}
         @endforeach
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
         <style>
-            body {
-                margin-top: 50px; /* 50px is the height of the navbar - change this if the navbarn height changes */
-            }
-            .hero-spacer {
-                margin-top: 50px;
-            }
 
-            .hero-feature {
-                margin-bottom: 30px;/* spaces out the feature boxes once they start to stack responsively */
-            }
-
-            footer {
-                margin: 50px 0;
-            }
         </style>
     </head>
 
@@ -55,8 +43,13 @@
 
                     @if(!Sentry::check())
                     <ul class="nav navbar-nav pull-right">
-                        <li><a href="/account/register">Register</a></li>
-                        <li><a href="/account/login">Login</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login / Register <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/account/auth/github"><i class="fa fa-github"></i> GitHub</a></li>
+                                <li><a href="/account/login"><i class="fa fa-user"></i> Email</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     @else
                     <ul class="nav navbar-nav pull-right">
@@ -88,7 +81,8 @@
                     <div class="col-lg-6">
                         <p>
                             Copyright &copy; Axxim, LLC 2013 &middot;
-                            <a href="http://twitter.com/patchnotes">Twitter</a>
+                            <a target="_blank" href="http://twitter.com/patchnotes">Twitter</a> &middot;
+                            <a target="_blank" href="https://github.com/PatchNotes/PatchNotes.org">GitHub</a>
                         </p>
                     </div>
                     <div class="col-lg-6 text-right">
@@ -98,6 +92,9 @@
                         </p>
                     </div>
                 </div>
+                <p class="text-center">
+                    PatchNotes is an Open Company &middot; Crafted in Dallas, TX
+                </p>
             </footer>
 
         </div><!-- /.container -->

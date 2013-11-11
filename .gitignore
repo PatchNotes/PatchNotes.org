@@ -11,5 +11,7 @@ atlassian-ide-plugin.xml
 node_modules/
 app/config/production/
 app/config/local/
+app/database/local.sqlite
+app/config/packages/*/*/local/
 
 .idea/

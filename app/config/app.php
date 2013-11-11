@@ -117,6 +117,7 @@ return array(
         'Axxim\MarkdownBlade\MarkdownBladeServiceProvider',
 
         'Cartalyst\Sentry\SentryServiceProvider',
+        'Cartalyst\SentrySocial\SentrySocialServiceProvider',
 
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 
@@ -186,6 +187,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 
         'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+        'SentrySocial' => 'Cartalyst\SentrySocial\Facades\Laravel\SentrySocial',
 
 	),
 

@@ -28,7 +28,7 @@ $app->redirectIfTrailingSlash();
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('764-875465'),
+	'local' => array('764-875465','luke-desktop'),
 
 ));
 

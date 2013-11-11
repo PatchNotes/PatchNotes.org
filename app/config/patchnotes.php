@@ -8,8 +8,8 @@ return array(
             'assets/css/patchnotes'
         ),
         'scripts' => array(
-            'assets/js/jquery',
-            'assets/js/bootstrap',
+            'assets/js/jquery.min',
+            'assets/js/bootstrap.min',
             'assets/js/patchnotes'
         )
     )
