@@ -9,15 +9,8 @@
         <title>PatchNotes</title>
 
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
-
-        @foreach(Config::get('patchnotes.assets.styles') as $style)
-        {{ HTML::style($style . (App::environment() == 'local' ? '.css' : '.min.css')) }}
-        @endforeach
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-
-        <style>
-
-        </style>
+        {{ stylesheet_link_tag() }}
     </head>
 
     <body class="{{ (isset($bodyclass) ? $bodyclass : '' ) }}">
@@ -99,9 +92,7 @@
 
         </div><!-- /.container -->
 
-        @foreach(Config::get('patchnotes.assets.scripts') as $script)
-        {{ HTML::script($script . (App::environment() == 'local' ? '.js' : '.min.js')) }}
-        @endforeach
+        {{ javascript_include_tag() }}
     </body>
 
 </html>

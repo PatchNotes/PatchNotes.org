@@ -118,6 +118,7 @@ return array(
 
         'Cartalyst\Sentry\SentryServiceProvider',
         'Cartalyst\SentrySocial\SentrySocialServiceProvider',
+        'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 

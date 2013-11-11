@@ -13,5 +13,6 @@ app/config/production/
 app/config/local/
 app/database/local.sqlite
 app/config/packages/*/*/local/
+public/builds
 
 .idea/
