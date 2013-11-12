@@ -2,7 +2,7 @@
 
 class AccountController extends BaseController {
 
-    private $providers = array('github', 'bitbucket');
+    private $providers = array('github');
 
     public function __construct() {
         $this->beforeFilter('guest', ['only' => ['getLogin', 'postLogin', 'getRegister', 'postRegister']]);
