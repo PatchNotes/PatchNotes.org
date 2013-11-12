@@ -1,7 +1,4 @@
 <?php
-namespace PatchNotes\Controllers;
-
-use View;
 
 class HelpController extends BaseController {
 

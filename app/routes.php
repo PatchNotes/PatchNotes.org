@@ -28,7 +28,7 @@ Route::get('/search', function() {
     return View::make('search', compact('projects','users'));
 });
 
-Route::controller('account', 'PatchNotes\\Controllers\\AccountController');
+Route::controller('account', 'AccountController');
 
 Route::get('users', function() {
     App::abort(404);
@@ -42,11 +42,11 @@ Route::get('users/{username}', function($username) {
     return View::make('users/profile', compact('user'));
 });
 
-Route::controller('about', 'PatchNotes\\Controllers\\AboutController');
-Route::controller('help', 'PatchNotes\\Controllers\\HelpController');
+Route::controller('about', 'AboutController');
+Route::controller('help', 'HelpController');
 
-Route::resource('projects', 'PatchNotes\\Controllers\\Projects\\ProjectController');
-Route::resource('projects/{name}/updates', 'PatchNotes\\Controllers\\Projects\\UpdateController');
+Route::resource('projects', 'Projects\\ProjectController');
+Route::resource('projects/{name}/updates', 'Projects\\UpdateController');
 Route::get('projects/{name}/updates', function($project) {
 
 });

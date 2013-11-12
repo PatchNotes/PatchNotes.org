@@ -13,6 +13,13 @@
         </div>
     </div>
     <div class="col-lg-5">
+
+        <div class="row">
+            <div class="col-md-3">
+                <a href="#" class="btn btn-danger btn-lg" role="button">Subscriptions</a>
+            </div>
+        </div>
+
         @if(Sentry::check())
             @if($project->isManager(Sentry::getUser()))
                 <div class="panel panel-default">
@@ -29,7 +36,7 @@
                         @endif
 
 
-                        {{ Form::open(array('action' => array('PatchNotes\\Controllers\\Projects\\UpdateController@store', $project->name), 'class' => 'form-horizontal', 'role' => 'form')) }}
+                        {{ Form::open(array('action' => array('Projects\\UpdateController@store', $project->name), 'class' => 'form-horizontal', 'role' => 'form')) }}
                         <input type="hidden" name="project_id" value="{{ $project->id }}"/>
                         <div class="form-group">
                             <label for="updateTitle" class="col-lg-2 control-label">Title</label>
@@ -59,7 +66,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-10">
-                                <button type="submit" class="btn btn-primary">Create Project</button>
+                                <button type="submit" class="btn btn-primary">Post & Send Update</button>
                             </div>
                         </div>
                         {{ Form::close() }}
@@ -79,8 +86,8 @@
             <div class="panel-heading">Project Managers</div>
             <div class="panel-body">
                 @foreach($project->managers as $manager)
-                <a href="/users/{{{ $manager->user->username }}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{{ $manager->user->username }}}'s Avatar">
-                    <img src="{{ $manager->user->getGravatar() }}" alt="{{{ $manager->user->username }}}'s Avatar"/>
+                <a href="/users/{{{ $manager->user->username }}}">
+                    <img src="{{ $manager->user->getGravatar() }}" alt="{{{ $manager->user->username }}}'s Avatar"  data-toggle="tooltip" data-placement="top" title="" data-original-title="{{{ $manager->user->username }}}'s Avatar"/>
                 </a>
                 @endforeach
             </div>

@@ -18,7 +18,7 @@
 
 @foreach($projects as $project)
 
-    <h4>{{ HTML::linkAction('PatchNotes\\Controllers\\Projects\\ProjectController@show', $project->name, array($project->slug)) }} - {{ count($project->updates) }} updates</h4>
+    <h4>{{ HTML::linkAction('Projects\\ProjectController@show', $project->name, array($project->slug)) }} - {{ count($project->updates) }} updates</h4>
 
 @endforeach
 

@@ -1,15 +1,4 @@
 <?php
-namespace PatchNotes\Controllers;
-
-use App;
-use Event;
-use Sentry;
-use SentrySocial;
-use Input;
-use Redirect;
-use URL;
-use Validator;
-use View;
 
 class AccountController extends BaseController {
 

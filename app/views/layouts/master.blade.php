@@ -61,14 +61,14 @@
             </div><!-- /.container -->
         </nav>
 
-        <div class="container">
+        <div id="content" class="container">
 
             @yield('content')
 
+        </div>
 
-
-            <hr>
-
+        <div class="container">
+            <hr/>
             <footer>
                 <div class="row">
                     <div class="col-lg-6">

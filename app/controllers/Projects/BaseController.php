@@ -1,5 +1,5 @@
 <?php
-namespace PatchNotes\Controllers\Projects;
+namespace Projects;
 
 class BaseController extends \Controller {
 

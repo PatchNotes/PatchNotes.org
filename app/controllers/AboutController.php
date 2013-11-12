@@ -1,5 +1,4 @@
 <?php
-namespace PatchNotes\Controllers;
 
 class AboutController extends BaseController {
 

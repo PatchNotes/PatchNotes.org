@@ -1,5 +1,5 @@
 <?php
-namespace PatchNotes\Controllers\Projects;
+namespace Projects;
 
 use dflydev\markdown\MarkdownParser;
 use Input;
@@ -69,7 +69,7 @@ class UpdateController extends BaseController {
         $manager->project_id = $project->id;
         $manager->save();
 
-        return Redirect::action('ProjectController@show', array($project->slug));
+        return Redirect::action('Projects\\ProjectController@show', array($project->slug));
     }
 
     /**

@@ -1,12 +1,14 @@
 <?php
-namespace PatchNotes\Controllers\Projects;
+namespace Projects;
 
 use dflydev\markdown\MarkdownParser;
 use Input;
 use Project;
 use ProjectManager;
 use Redirect;
+use Response;
 use Sentry;
+use Str;
 use Validator;
 use View;
 
@@ -69,7 +71,7 @@ class ProjectController extends BaseController {
         $manager->project_id = $project->id;
         $manager->save();
 
-        return Redirect::action('ProjectController@show', array($project->slug));
+        return Redirect::action('Projects\\ProjectController@show', array($project->slug));
     }
 
     /**

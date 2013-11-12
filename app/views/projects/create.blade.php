@@ -22,7 +22,7 @@
         </div>
         @endif
 
-        {{ Form::open(array('action' => 'ProjectController@store', 'class' => 'form-horizontal', 'role' => 'form')) }}
+        {{ Form::open(array('action' => 'Projects\\ProjectController@store', 'class' => 'form-horizontal', 'role' => 'form')) }}
         <div class="form-group">
             <label for="projectName" class="col-lg-2 control-label">Name</label>
             <div class="col-lg-10">
