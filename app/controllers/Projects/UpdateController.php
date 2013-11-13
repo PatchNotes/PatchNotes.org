@@ -51,25 +51,13 @@ class UpdateController extends BaseController {
             return Redirect::back()->withErrors($validator);
         }
 
-        $project = new Project();
+        $project = Project::find($projectID);
+        $update = new $project->update();
 
-        $project->name = $input['name'];
-        $project->slug = Str::slug($input['name']);
-        $project->description = $input['description'];
-        $project->content = $input['body'];
-        $project->site_url = $input['url'];
+        $update->title = $input['title'];
+        $update->description = $input['description'];
 
-        $project->save();
-        if(!$project) {
-            return Redirect::back()->withErrors(array('Name already exists.'));
-        }
-
-        $manager = new ProjectManager();
-        $manager->user_id = Sentry::getUser()->id;
-        $manager->project_id = $project->id;
-        $manager->save();
-
-        return Redirect::action('Projects\\ProjectController@show', array($project->slug));
+        $update->save();
     }
 
     /**

@@ -14,9 +14,24 @@
     </div>
     <div class="col-lg-5">
 
-        <div class="row">
-            <div class="col-md-3">
-                <a href="#" class="btn btn-danger btn-lg" role="button">Subscriptions</a>
+        <div class="row text-center">
+            <div class="col-sm-4">
+                <div class="well well-sm">
+                    Subscriptions <br>
+                    <h3>100</h3>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="well well-sm">
+                    Updates <br>
+                    <h3>100</h3>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="well well-sm">
+                    Views <br>
+                    <h3>100</h3>
+                </div>
             </div>
         </div>
 

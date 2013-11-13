@@ -85,14 +85,22 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-center">
-                    PatchNotes is an Open Company &middot; Crafted in Dallas, TX
-                </p>
+                <div class="text-center">
+                    PatchNotes is an Open Company &middot; Crafted in Dallas, TX <br>
+                    <div data-gittip-username="clone1018" data-gittip-widget="custom">
+                        PatchNotes is funded on <a class="gittip-profile-link">
+                            <span class="gittip-receiving">$0.00</span> / wk
+                        </a>
+                        via <a class="gittip-link">Gittip</a>.
+                    </div>
+                </div>
             </footer>
 
         </div><!-- /.container -->
 
         {{ javascript_include_tag() }}
+
+        <script src="//gttp.co/v1.js"></script>
     </body>
 
 </html>
