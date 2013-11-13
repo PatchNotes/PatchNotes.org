@@ -1,10 +1,13 @@
 <?php
 namespace Projects;
 
+use App;
 use dflydev\markdown\MarkdownParser;
+use Event;
 use Input;
 use Project;
 use ProjectManager;
+use ProjectUpdate;
 use Redirect;
 use Sentry;
 use Validator;
@@ -37,27 +40,36 @@ class UpdateController extends BaseController {
      *
      * @return Response
      */
-    public function store() {
+    public function store($slug) {
+        $project = Project::where('slug', $slug)->firstOrFail();
+        if(!$project->isManager(Sentry::getUser())) {
+            App::abort(401);
+        }
+
         $input = Input::all();
 
         $rules = array(
-            'title' => 'required|alpha_num',
-            'url' => 'required|url',
-            'description' => 'required',
-            'body'
+            'title' => 'required|max:200',
+            'description' => 'required|max:1000',
+            'rank' => 'exists:subscription_levels,level'
         );
         $validator = Validator::make($input, $rules);
         if($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }
 
-        $project = Project::find($projectID);
-        $update = new $project->update();
+        $update = new ProjectUpdate();
 
         $update->title = $input['title'];
-        $update->description = $input['description'];
+        $update->body = $input['description'];
+        $update->subscription_level = $input['rank'];
+        $update->user_id = Sentry::getUser()->id;
 
-        $update->save();
+        $update = $project->updates()->save($update);
+
+        Event::fire('project.update', array($update));
+
+        return Redirect::back();
     }
 
     /**

@@ -21,7 +21,6 @@ class PnAddProjects extends Migration {
             $table->string('site_url')->nullable();
 
             $table->timestamps();
-
             $table->softDeletes();
         });
 
@@ -31,9 +30,11 @@ class PnAddProjects extends Migration {
 
             $table->unique(array('user_id', 'project_id'));
 
+            $table->timestamps();
             $table->softDeletes();
 
-            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

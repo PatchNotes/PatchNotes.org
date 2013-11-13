@@ -52,6 +52,11 @@ class PnAddSubscriptions extends Migration {
             $table->integer('subscription_level')->unsigned();
             $table->integer('notification_level')->unsigned();
 
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('subscription_level')->references('level')->on('subscription_levels');
+            $table->foreign('notification_level')->references('level')->on('notification_levels');
+
             $table->timestamps();
             $table->softDeletes();
         });

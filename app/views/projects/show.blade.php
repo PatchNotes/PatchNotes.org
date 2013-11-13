@@ -24,13 +24,13 @@
             <div class="col-sm-4">
                 <div class="well well-sm">
                     Updates <br>
-                    <h3>100</h3>
+                    <h3>{{ count($project->updates) }}</h3>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="well well-sm">
-                    Views <br>
-                    <h3>100</h3>
+                    Managers <br>
+                    <h3>{{ count($project->managers) }}</h3>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                         @endif
 
 
-                        {{ Form::open(array('action' => array('Projects\\UpdateController@store', $project->name), 'class' => 'form-horizontal', 'role' => 'form')) }}
+                        {{ Form::open(array('action' => array('Projects\\UpdateController@store', $project->slug), 'class' => 'form-horizontal', 'role' => 'form')) }}
                         <input type="hidden" name="project_id" value="{{ $project->id }}"/>
                         <div class="form-group">
                             <label for="updateTitle" class="col-lg-2 control-label">Title</label>
@@ -93,7 +93,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">Project Updates</div>
             <div class="panel-body">
-                <p>None yet.</p>
+                @foreach($project->updates as $update)
+                    <h5>{{{ $update->title }}}</h5>
+                    <p>{{{ $update->body }}}</p>
+                @endforeach
             </div>
         </div>
 
