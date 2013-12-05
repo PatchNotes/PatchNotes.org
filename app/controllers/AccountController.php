@@ -8,7 +8,7 @@ class AccountController extends BaseController {
         $this->beforeFilter('guest', ['only' => ['getLogin', 'postLogin', 'getRegister', 'postRegister']]);
     }
 
-    public function getAuth($provider) {
+    public function postAuth($provider) {
         if (!in_array($provider, $this->providers)) {
             App::abort(404, "Provider not found.");
         }
