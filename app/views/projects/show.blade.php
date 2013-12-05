@@ -94,7 +94,7 @@
             <div class="panel-heading">Project Updates</div>
             <div class="panel-body">
                 @foreach($project->updates as $update)
-                    <h5>{{{ $update->title }}}</h5>
+                    <h5><a href="{{ action('Projects\\UpdateController@show', array($project->slug, $update->slug)) }}">{{{ $update->title }}}</a></h5>
                     <p>{{{ $update->body }}}</p>
                 @endforeach
             </div>

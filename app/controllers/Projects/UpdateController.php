@@ -9,7 +9,9 @@ use Project;
 use ProjectManager;
 use ProjectUpdate;
 use Redirect;
+use Response;
 use Sentry;
+use Str;
 use Validator;
 use View;
 
@@ -62,6 +64,7 @@ class UpdateController extends BaseController {
 
         $update->title = $input['title'];
         $update->body = $input['description'];
+        $update->slug = Str::slug($input['title']);
         $update->subscription_level = $input['rank'];
         $update->user_id = Sentry::getUser()->id;
 
@@ -75,16 +78,24 @@ class UpdateController extends BaseController {
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param $projectSlug
+     * @param $updateSlug
+     * @internal param int $id
      *
      * @return Response
      */
-    public function show($slug) {
-        $project = Project::where('slug', $slug)->first();
+    public function show($projectSlug, $updateSlug) {
+        $project = Project::where('slug', $projectSlug)->first();
+        $update = $project->updates()->where('slug', $updateSlug)->first();
 
         $parser = new MarkdownParser();
 
-        return View::make('projects/show', compact('project', 'parser'));
+        return View::make('projects/updates/show', array(
+            'project' => $project,
+            'update' => $update,
+            'parser' => $parser,
+            'bodyclass' => 'small-container'
+        ));
     }
 
     /**
