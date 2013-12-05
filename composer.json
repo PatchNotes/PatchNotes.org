@@ -15,6 +15,7 @@
 		"codesleeve/asset-pipeline": "dev-master",
         "cartalyst/sentry-social": "dev-master",
 		"aws/aws-sdk-php": "2.4.*@dev",
+		"thujohn/rss": "dev-master",
 
 		"barryvdh/laravel-ide-helper": "1.*"
 	},

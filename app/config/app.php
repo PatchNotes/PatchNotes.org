@@ -121,6 +121,7 @@ return array(
         'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        'Thujohn\Rss\RssServiceProvider',
 
 	),
 
@@ -189,6 +190,7 @@ return array(
 
         'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
         'SentrySocial' => 'Cartalyst\SentrySocial\Facades\Laravel\SentrySocial',
+        'Rss' => 'Thujohn\Rss\RssFacade',
 
 	),
 
