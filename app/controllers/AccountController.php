@@ -46,11 +46,15 @@ class AccountController extends BaseController {
             // Either the person rejected the app, or the URL has been manually
             // accesed.
             if ($error = Input::get('error')) {
-                return Redirect::to('oauth')->withErrors($error);
+                return Redirect::to('/account/reject')->withErrors($error);
             }
 
             App::abort(404);
         }
+    }
+
+    public function getReject() {
+        return View::make('account/reject', array('bodyclass' => 'small-container'));
     }
 
     public function getLogin() {
