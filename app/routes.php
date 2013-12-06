@@ -47,6 +47,7 @@ Route::controller('help', 'HelpController');
 
 Route::resource('projects', 'Projects\\ProjectController');
 Route::resource('projects/{name}/updates', 'Projects\\UpdateController');
+Route::controller('projects/{name}/share', 'Projects\\ShareController');
 Route::get('projects/{name}/updates.rss', function($project) {
     $project = Project::where('slug', $project)->first();
 

@@ -14,6 +14,12 @@ use View;
 
 class ProjectController extends BaseController {
 
+    private $socialSites = array(
+        'facebook' => '',
+        'twitter' => 'https://twitter.com/intent/tweet?text='
+    );
+
+
     /**
      * Display a listing of the resource.
      *

@@ -9,7 +9,7 @@
         <title>PatchNotes</title>
 
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         {{ stylesheet_link_tag() }}
     </head>
 
@@ -37,9 +37,10 @@
                     @if(!Sentry::check())
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="http://www.jquery2dotnet.com" class="dropdown-toggle" data-toggle="dropdown">Sign Up / Sign In <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign Up / Sign In <b class="caret"></b></a>
                             <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
                                 <li>
+                                    <p>If you don't have an account, we'll make you one.</p>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
@@ -115,7 +116,7 @@
                 </div>
                 <div class="text-center">
                     PatchNotes is an Open Company &middot; Crafted in Dallas, TX <br>
-                    <div data-gittip-username="clone1018" data-gittip-widget="custom">
+                    <div data-gittip-username="PatchNotes" data-gittip-widget="custom">
                         PatchNotes is funded on <a class="gittip-profile-link"><span class="gittip-receiving">$0.00</span> / wk</a> via <a class="gittip-link">Gittip</a>.
                     </div>
                 </div>

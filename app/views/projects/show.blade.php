@@ -2,17 +2,66 @@
 
 @section('content')
 
-<h2>{{{ $project->name }}}<br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
+<div class="row">
+    <div class="col-lg-7">
+        <h2>{{{ $project->name }}}<br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
+    </div>
+    <div class="col-lg-5">
+        <a href="/projects/{{ $project->slug }}/updates.rss" class="btn social-btn social-rss"><i class="fa fa-rss"></i></a>
+        <a href="{{ action('Projects\\ShareController@getFacebook', array($project->slug)) }}" class="btn social-btn share-btn social-facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+        <a href="{{ action('Projects\\ShareController@getTwitter', array($project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank"><i class="fa fa-twitter"></i></a>
+        <a href="{{ action('Projects\\ShareController@getGoogle', array($project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank"><i class="fa fa-google-plus"></i></a>
+        <a href="" class="btn social-btn social-code"><i class="fa fa-code"></i></a>
+    </div>
+</div>
+
+
 <div class="row">
 
     <div class="col-lg-7">
         <p>{{{ $project->description }}}</p>
 
-        <div class="well">
-            {{ $parser->transformMarkdown($project->content) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Recent Project Updates</div>
+            <div class="panel-body">
+
+                <div class="panel-group" id="accordion">
+                    <?php $first = 'in'; ?>
+                    @foreach($project->updates()->orderby('created_at', 'desc')->get() as $update)
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $update->id }}">
+                                    {{{ $update->title }}}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse{{ $update->id }}" class="panel-collapse collapse {{ $first }}">
+                            <div class="panel-body">
+                                {{{ $update->body }}}
+                                
+                                <hr>
+                                <p><a href="{{ action('Projects\\UpdateController@show', array($project->slug, $update->slug)) }}">{{ $update->created_at->toRSSString() }}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $first = ''; ?>
+                    @endforeach
+
+                </div>
+                
+            </div>
         </div>
     </div>
     <div class="col-lg-5">
+
+        <div id="code" class="panel panel-default" style="display:none">
+            <div class="panel-heading">Embed Widget Code</div>
+            <div class="panel-body">
+                <p>You can use this code to embed our subscription widget on your website.</p>
+                <pre>Some code here.</pre>
+            </div>
+        </div>
 
         <div class="row text-center">
             <div class="col-sm-4">
@@ -89,16 +138,6 @@
                 </div>
             @endif
         @endif
-
-        <div class="panel panel-default">
-            <div class="panel-heading">Project Updates</div>
-            <div class="panel-body">
-                @foreach($project->updates as $update)
-                    <h5><a href="{{ action('Projects\\UpdateController@show', array($project->slug, $update->slug)) }}">{{{ $update->title }}}</a></h5>
-                    <p>{{{ $update->body }}}</p>
-                @endforeach
-            </div>
-        </div>
 
         <div class="panel panel-default">
             <div class="panel-heading">Project Managers</div>
