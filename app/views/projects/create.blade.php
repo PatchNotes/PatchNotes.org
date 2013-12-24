@@ -44,6 +44,7 @@
                 </p>
             </div>
         </div>
+        {{--
         <div class="form-group">
             <label for="projectBody" class="col-lg-2 control-label">Body</label>
             <div class="col-lg-10">
@@ -53,6 +54,7 @@
                 </p>
             </div>
         </div>
+        --}}
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
                 <button type="submit" class="btn btn-primary">Create Project</button>

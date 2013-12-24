@@ -9,4 +9,10 @@ $(document).ready(function() {
 		$("#code").slideToggle();
 	});
 
+	$('.social-subscribe').click(function(e) {
+		e.preventDefault();
+
+		$('#subscribe').slideToggle();
+	})
+
 });

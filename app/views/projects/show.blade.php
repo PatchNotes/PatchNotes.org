@@ -7,8 +7,8 @@
         <h2>{{{ $project->name }}}<br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
+        <a href="#" class="btn social-btn social-subscribe"><i class="fa fa-plus"></i></a>
         <a href="/projects/{{ $project->slug }}/updates.rss" class="btn social-btn social-rss"><i class="fa fa-rss"></i></a>
-        <a href="{{ action('Projects\\ShareController@getFacebook', array($project->slug)) }}" class="btn social-btn share-btn social-facebook" target="_blank"><i class="fa fa-facebook"></i></a>
         <a href="{{ action('Projects\\ShareController@getTwitter', array($project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank"><i class="fa fa-twitter"></i></a>
         <a href="{{ action('Projects\\ShareController@getGoogle', array($project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank"><i class="fa fa-google-plus"></i></a>
         <a href="" class="btn social-btn social-code"><i class="fa fa-code"></i></a>
@@ -25,6 +25,9 @@
             <div class="panel-heading">Recent Project Updates</div>
             <div class="panel-body">
 
+                @if(count($project->updates()->get()) == 0)
+                <p>Nothing yet, subscribe to be notified of project updates.</p>
+                @else
                 <div class="panel-group" id="accordion">
                     <?php $first = 'in'; ?>
                     @foreach($project->updates()->orderby('created_at', 'desc')->get() as $update)
@@ -39,7 +42,7 @@
                         <div id="collapse{{ $update->id }}" class="panel-collapse collapse {{ $first }}">
                             <div class="panel-body">
                                 {{{ $update->body }}}
-                                
+
                                 <hr>
                                 <p><a href="{{ action('Projects\\UpdateController@show', array($project->slug, $update->slug)) }}">{{ $update->created_at->toRSSString() }}</a></p>
                             </div>
@@ -47,8 +50,8 @@
                     </div>
                     <?php $first = ''; ?>
                     @endforeach
-
                 </div>
+                @endif
                 
             </div>
         </div>
@@ -60,6 +63,13 @@
             <div class="panel-body">
                 <p>You can use this code to embed our subscription widget on your website.</p>
                 <pre>Some code here.</pre>
+            </div>
+        </div>
+
+        <div id="subscribe" class="panel panel-default" style="display:none">
+            <div class="panel-heading">Subscribe to {{ $project->name }}</div>
+            <div class="panel-body">
+
             </div>
         </div>
 
