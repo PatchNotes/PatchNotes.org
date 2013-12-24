@@ -35,15 +35,22 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+    if (!Sentry::getUser()) {
+        Session::put('redirect', URL::full());
+        return Redirect::guest('account/login');
+    } 
+
+    if ($redirect = Session::get('redirect')) {
+        Session::forget('redirect');
+        return Redirect::to($redirect);
+    }
 });
 
 
 Route::filter('auth.basic', function()
 {
-	return Auth::basic();
+        return Auth::basic();
 });
-
 /*
 |--------------------------------------------------------------------------
 | Guest Filter

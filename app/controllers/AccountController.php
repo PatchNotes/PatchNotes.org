@@ -86,7 +86,12 @@ class AccountController extends BaseController {
             $user = Sentry::authenticate($credentials, true);
             Event::fire('user.login', array($user));
 
-            return Redirect::to('panel/user/index');
+            $redirect = Session::get('redirect');
+            if ($redirect) {
+                return Redirect::to($redirect);
+            } else {
+                return Redirect::to('/');
+            }
         } catch (\Cartalyst\Sentry\Users\LoginRequiredException $e) {
             return Redirect::to('account/login')->withErrors(['Login field is required.']);
         } catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e) {

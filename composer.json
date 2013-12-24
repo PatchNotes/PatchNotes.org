@@ -8,7 +8,7 @@
         }
     ],
 	"require": {
-		"laravel/framework": "4.0.*",
+		"laravel/framework": "4.1.*",
 
 		"cartalyst/sentry": "2.0.*",
 		"axxim/markdown-blade": "dev-master",

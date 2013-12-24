@@ -14,11 +14,9 @@ use View;
 
 class ProjectController extends BaseController {
 
-    private $socialSites = array(
-        'facebook' => '',
-        'twitter' => 'https://twitter.com/intent/tweet?text='
-    );
-
+    public function __construct() {
+        $this->beforeFilter('auth', ['only' => ['create', 'store', 'edit', 'update','destroy']]);
+    }
 
     /**
      * Display a listing of the resource.

@@ -26,7 +26,7 @@
         <div class="form-group">
             <label for="projectName" class="col-lg-2 control-label">Name</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control" name="name" id="projectName" placeholder="Minotar">
+                {{ Form::input('text', 'name', null, array('class' => 'form-control','placeholder' => 'Minotar', 'id' => 'projectName'))}}
             </div>
         </div>
         <div class="form-group">
