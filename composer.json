@@ -16,6 +16,7 @@
         "cartalyst/sentry-social": "dev-master",
 		"aws/aws-sdk-php": "2.4.*@dev",
 		"thujohn/rss": "dev-master",
+		"knplabs/github-api": "*",
 
 		"barryvdh/laravel-ide-helper": "1.*"
 	},

@@ -13,6 +13,6 @@ $(document).ready(function() {
 		e.preventDefault();
 
 		$('#subscribe').slideToggle();
-	})
+	});
 
 });

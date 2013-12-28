@@ -5,6 +5,7 @@ use dflydev\markdown\MarkdownParser;
 use Input;
 use Project;
 use ProjectManager;
+use Social;
 use Redirect;
 use Response;
 use Sentry;
@@ -35,7 +36,30 @@ class ProjectController extends BaseController {
      * @return Response
      */
     public function create() {
-        return View::make('projects/create');
+        $githubRepos = array();
+
+        $user = Sentry::getUser();
+
+        $githubUser = Social::whereRaw('provider = ? and user_id = ?', array('github', $user->id))->first();
+        if($githubUser) {
+            $client = new \Github\Client(
+                new \Github\HttpClient\CachedHttpClient(array('cache_dir' => storage_path('github')))
+            );
+
+            $repos = $client->api('user')->repositories($user->username);
+            foreach($repos as $repo) {
+                if($repo['fork']) continue;
+
+                $githubRepos[] = array(
+                    'name' => $repo['name'],
+                    'full_name' => $repo['full_name'],
+                    'html_url' => $repo['html_url'],
+                    'description' => $repo['description']
+                );
+            }
+        }
+
+        return View::make('projects/create', compact('githubRepos'));
     }
 
     /**

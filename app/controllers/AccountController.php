@@ -12,7 +12,7 @@ class AccountController extends BaseController {
         if (!in_array($provider, $this->providers)) {
             App::abort(404, "Provider not found.");
         }
-
+        
         $callback = URL::to("account/callback/$provider");
         $url = SentrySocial::getAuthorizationUrl($provider, $callback);
 

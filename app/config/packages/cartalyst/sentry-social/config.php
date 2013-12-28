@@ -46,7 +46,7 @@ return array(
     'connections' => array(
 
         'github' => array(
-            'driver'     => 'GitHub',
+            'driver'     => 'Github',
             'identifier' => '',
             'secret'     => '',
             'scopes'     => array('user'),

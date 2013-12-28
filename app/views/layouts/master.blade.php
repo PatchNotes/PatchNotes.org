@@ -125,6 +125,7 @@
         </div><!-- /.container -->
 
         {{ javascript_include_tag() }}
+        @yield('scripts')
 
         <script src="//gttp.co/v1.js"></script>
     </body>

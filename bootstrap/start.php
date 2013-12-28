@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('764-875465','luke-desktop'),
+	'local' => array('764-875465','luke-desktop','clone1018-desktop'),
 
 ));
 
