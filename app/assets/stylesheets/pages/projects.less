@@ -4,6 +4,24 @@
 
 	.project {
 
+        .caption {
+            @height: 100px;
+
+            height: @height;
+            min-height: @height;
+            max-height: @height;
+
+            h2 {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+            
+            p {
+                text-overflow:ellipsis;
+            }
+        }
+
 		.project-info {
 			color: #000000;
 			text-align: center;

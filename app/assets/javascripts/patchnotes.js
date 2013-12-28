@@ -1,6 +1,9 @@
 $(document).ready(function() {
 
-	$('[data-toggle="tooltip"]').tooltip();
+    $('.textfill').textfill();
+
+
+    $('[data-toggle="tooltip"]').tooltip();
 
 
 	$('.social-code').click(function(e) {

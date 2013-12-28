@@ -71,10 +71,9 @@ class ProjectController extends BaseController {
         $input = Input::all();
 
         $rules = array(
-            'name' => 'required|alpha_num',
+            'name' => 'required',
             'url' => 'required|url',
             'description' => 'required',
-            'body'
         );
         $validator = Validator::make($input, $rules);
         if($validator->fails()) {
@@ -86,7 +85,6 @@ class ProjectController extends BaseController {
         $project->name = $input['name'];
         $project->slug = Str::slug($input['name']);
         $project->description = $input['description'];
-        $project->content = $input['body'];
         $project->site_url = $input['url'];
 
         $project->save();
