@@ -34,6 +34,7 @@ Route::get('/search', function() {
 });
 
 Route::controller('account', 'AccountController');
+Route::controller('settings', 'SettingsController');
 
 Route::get('users', function() {
     App::abort(404);
@@ -52,6 +53,7 @@ Route::controller('help', 'HelpController');
 
 Route::resource('projects', 'Projects\\ProjectController');
 Route::resource('projects/{name}/updates', 'Projects\\UpdateController');
+Route::resource('projects/{name}/subscription', 'Projects\\SubscriptionController');
 Route::controller('projects/{name}/share', 'Projects\\ShareController');
 Route::get('projects/{name}/updates.rss', function($project) {
     $project = Project::where('slug', $project)->first();

@@ -69,13 +69,17 @@ class ProjectController extends BaseController {
      */
     public function store() {
         $input = Input::all();
+        $input['slug'] = Str::slug($input['name']);
 
         $rules = array(
             'name' => 'required',
+            'slug' => 'required|unique:projects',
             'url' => 'required|url',
             'description' => 'required',
         );
-        $validator = Validator::make($input, $rules);
+        $validator = Validator::make($input, $rules, array(
+            'slug.unique' => 'Your project name must not evaluate to a taken slug.'
+        ));
         if($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }
@@ -83,7 +87,7 @@ class ProjectController extends BaseController {
         $project = new Project();
 
         $project->name = $input['name'];
-        $project->slug = Str::slug($input['name']);
+        $project->slug = $input['slug'];
         $project->description = $input['description'];
         $project->site_url = $input['url'];
 

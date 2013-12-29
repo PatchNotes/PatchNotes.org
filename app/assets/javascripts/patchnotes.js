@@ -15,7 +15,19 @@ $(document).ready(function() {
 	$('.social-subscribe').click(function(e) {
 		e.preventDefault();
 
-		$('#subscribe').slideToggle();
+        $.ajax({
+            url: $(this).attr('href'),
+            type: "POST"
+        }).done(function(response) {
+                if(response.success == false) {
+                    alert(response.error);
+                    return;
+                }
+
+                $('#subscribe').slideToggle();
+            });
+
+
 	});
 
 });

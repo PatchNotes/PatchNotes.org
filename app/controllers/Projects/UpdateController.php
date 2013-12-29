@@ -22,26 +22,6 @@ class UpdateController extends BaseController {
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index() {
-        $projects = Project::all();
-
-        return View::make('projects/index', compact('projects'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create() {
-        return View::make('projects/create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return Response

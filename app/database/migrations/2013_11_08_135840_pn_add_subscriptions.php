@@ -48,7 +48,7 @@ class PnAddSubscriptions extends Migration {
             $table->increments('id');
 
             $table->integer('user_id')->unsigned();
-            $table->integer('project_id')->unsigned();
+            $table->integer('project_id')->unsigned()->nullable();
             $table->integer('subscription_level')->unsigned();
             $table->integer('notification_level')->unsigned();
 

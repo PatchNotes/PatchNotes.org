@@ -39,8 +39,39 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
      */
     protected $hidden = array('password');
 
+    protected $defaultLevels = array(
+        10 => 168,
+        50 => 24,
+        100 => 0
+    );
+
+    public function subscriptions() {
+        return $this->hasMany('Subscription');
+    }
+
     public function getGravatar() {
         $hash = md5($this->attributes['email']);
         return "http://www.gravatar.com/avatar/$hash";
+    }
+
+    /**
+     * Get the users default settings. If the user changes these they'll be
+     * saved in the database with the NULL project_id
+     *
+     * @return array
+     */
+    public function getDefaultLevels() {
+
+        $subscriptions = Subscription::where(array(
+            'user_id' => $this->id,
+            'project_id' => NULL
+        ))->get();
+
+        $dbSubscriptions = array();
+        foreach($subscriptions as $subscription) {
+            $dbSubscriptions[$subscription->subscription_level] = $subscription->notification_level;
+        }
+
+        return array_merge($dbSubscriptions, $this->defaultLevels);
     }
 }
