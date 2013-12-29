@@ -19,6 +19,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Project extends Model {
 
+    public function subscribers() {
+        return $this->hasMany('Subscription');
+    }
+
     public function updates() {
         return $this->hasMany('ProjectUpdate');
     }

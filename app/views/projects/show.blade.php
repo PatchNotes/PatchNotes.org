@@ -7,11 +7,21 @@
         <h2>{{{ $project->name }}}<br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
-        <a href="#" class="btn social-btn social-subscribe"><i class="fa fa-plus"></i></a>
-        <a href="/projects/{{ $project->slug }}/updates.rss" class="btn social-btn social-rss"><i class="fa fa-rss"></i></a>
-        <a href="{{ action('Projects\\ShareController@getTwitter', array($project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank"><i class="fa fa-twitter"></i></a>
-        <a href="{{ action('Projects\\ShareController@getGoogle', array($project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank"><i class="fa fa-google-plus"></i></a>
-        <a href="" class="btn social-btn social-code"><i class="fa fa-code"></i></a>
+        <a href="#" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
+            <i class="fa fa-plus"></i>
+        </a>
+        <a href="/projects/{{ $project->slug }}/updates.rss" class="btn social-btn social-rss">
+            <i class="fa fa-rss"></i>
+        </a>
+        <a href="{{ action('Projects\\ShareController@getTwitter', array($project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank">
+            <i class="fa fa-twitter"></i>
+        </a>
+        <a href="{{ action('Projects\\ShareController@getGoogle', array($project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank">
+            <i class="fa fa-google-plus"></i>
+        </a>
+        <a href="" class="btn social-btn social-code">
+            <i class="fa fa-code"></i>
+        </a>
     </div>
 </div>
 
@@ -66,10 +76,10 @@
             </div>
         </div>
 
-        <div id="subscribe" class="panel panel-default" style="display:none">
-            <div class="panel-heading">Subscribe to {{ $project->name }}</div>
+        <div id="subscribe" class="panel panel-primary" style="display:none">
+            <div class="panel-heading">Subscribed to {{{ $project->name }}}</div>
             <div class="panel-body">
-
+                <p>Thanks for your subscription to {{{ $project->name }}}. Your default subscription intervals are below, you can also modify them in your panel.</p>
             </div>
         </div>
 
@@ -77,19 +87,19 @@
             <div class="col-sm-4">
                 <div class="well well-sm">
                     Subscriptions <br>
-                    <h3>100</h3>
+                    <h3>{{ $project->subscribers()->count() }}</h3>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="well well-sm">
                     Updates <br>
-                    <h3>{{ count($project->updates) }}</h3>
+                    <h3>{{ $project->updates()->count() }}</h3>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="well well-sm">
                     Managers <br>
-                    <h3>{{ count($project->managers) }}</h3>
+                    <h3>{{ $project->managers()->count() }}</h3>
                 </div>
             </div>
         </div>

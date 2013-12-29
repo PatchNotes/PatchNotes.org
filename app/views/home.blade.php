@@ -17,59 +17,17 @@
     </div>
 </div><!-- /.row -->
 
-<div class="row text-center">
-
-    <div class="col-lg-3 col-md-6 hero-feature">
-        <div class="thumbnail">
-            <img src="http://www.robothumb.com/src/?url=http://getbootstrap.com&size=800x500" alt="">
-            <div class="caption">
-                <h3>Bootstrap</h3>
-                <p>This would be a great spot to feature some brand new products!</p>
-                <p><a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 hero-feature">
-        <div class="thumbnail">
-            <img src="http://www.robothumb.com/src/?url=http://laravel.com&size=800x500" alt="">
-            <div class="caption">
-                <h3>Laravel</h3>
-                <p>This would be a great spot to feature some brand new products!</p>
-                <p><a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 hero-feature">
-        <div class="thumbnail">
-            <img src="http://www.robothumb.com/src/cnamer.com@800x500.jpg" alt="">
-            <div class="caption">
-                <h3>CNamer</h3>
-                <p>This would be a great spot to feature some brand new products!</p>
-                <p><a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 hero-feature">
-        <div class="thumbnail">
-            <img src="http://placehold.it/800x500" alt="">
-            <div class="caption">
-                <h3>Feature Label</h3>
-                <p>This would be a great spot to feature some brand new products!</p>
-                <p><a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a></p>
-            </div>
-        </div>
-    </div>
-
-
-</div><!-- /.row -->
-
+<?php $projects = $newProjects; ?>
+@include('projects/partials/list')
 
 <div class="row">
     <div class="col-lg-12">
         <h3>Upcoming Projects</h3>
     </div>
 </div><!-- /.row -->
+
+<?php $projects = $popularProjects; ?>
+@include('projects/partials/list')
+
+
 @stop

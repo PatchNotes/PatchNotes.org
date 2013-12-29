@@ -12,7 +12,12 @@
 */
 
 Route::get('/', function () {
-    return View::make('home');
+    $projects = Project::orderBy('created_at', 'desc')->limit(4)->get();
+
+    return View::make('home', array(
+        'newProjects' => $projects,
+        'popularProjects' => $projects
+    ));
 });
 
 Route::get('/search', function() {
