@@ -3,9 +3,12 @@ php:
   - 5.5
   - 5.4
 
+services: mysql
+
 before_script:
   - sh travis-setup.sh
   - composer install
+  - mysql -e 'create database patchnotes_test;'
 
 notifications:
   email: false
