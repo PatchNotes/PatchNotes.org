@@ -4,3 +4,14 @@ php:
   - 5.4
 
 before_script: composer install
+
+notifications:
+  email: false
+  irc:
+    channels:
+      - "irc.freenode.org#patchnotes"
+    on_success: change
+    on_failure: always
+    template:
+      - "%{repository} (%{branch}:%{commit} by %{author}): %{message} (%{build_url})"
+    skip_join: false
