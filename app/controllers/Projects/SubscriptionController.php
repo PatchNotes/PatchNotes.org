@@ -32,7 +32,7 @@ class SubscriptionController extends BaseController {
         $project = Project::where('slug', $project)->first();
         $success = $project->subscribe($this->user, $this->user->getDefaultLevels());
         if(!$success) {
-            return Response::json(array('success' => false, 'error' => 'Somehow saving your subscription failed.'));
+            return Response::json(array('success' => false, 'error' => 'You\'re already subscribed to this project.'));
         }
 
         return Response::json(array('success' => true));

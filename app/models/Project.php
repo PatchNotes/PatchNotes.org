@@ -19,16 +19,29 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Project extends Model {
 
+    /**
+     * Register a users subscription to a project.
+     *
+     * @param User $user
+     * @param $levels
+     * @return bool
+     */
     public function subscribe(User $user, $levels) {
         foreach($levels as $level) {
-            $subscription = new Subscription();
 
-            $subscription->project_id = $this->id;
-            $subscription->user_id = $user->id;
-            $subscription->subscription_level = $level['subscription_level'];
-            $subscription->notification_level = $level['notification_level'];
+            try {
+                $subscription = new Subscription();
 
-            $subscription->save();
+                $subscription->project_id = $this->id;
+                $subscription->user_id = $user->id;
+                $subscription->subscription_level = $level['subscription_level'];
+                $subscription->notification_level = $level['notification_level'];
+
+                $subscription->save();
+            } catch(\Illuminate\Database\QueryException $e) {
+                return false;
+            }
+
         }
 
         return true;

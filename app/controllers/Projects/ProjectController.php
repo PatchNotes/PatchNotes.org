@@ -25,7 +25,7 @@ class ProjectController extends BaseController {
      * @return Response
      */
     public function index() {
-        $projects = Project::all();
+        $projects = Project::paginate(16);
 
         return View::make('projects/index', compact('projects'));
     }

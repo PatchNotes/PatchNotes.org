@@ -17,4 +17,8 @@
 
 @include('projects/partials/list')
 
+<div class="text-center">
+{{ $projects->links(); }}
+</div>
+
 @stop
