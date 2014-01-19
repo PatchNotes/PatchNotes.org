@@ -40,9 +40,18 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
     protected $hidden = array('password');
 
     protected $defaultLevels = array(
-        10 => 168,
-        50 => 24,
-        100 => 0
+        array(
+            'notification_level' => 168,
+            'subscription_level' => 10
+        ),
+        array(
+            'notification_level' => 24,
+            'subscription_level' => 50
+        ),
+        array(
+            'notification_level' => 0,
+            'subscription_level' => 100
+        ),
     );
 
     public function subscriptions() {
@@ -62,10 +71,7 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
      */
     public function getDefaultLevels() {
 
-        $subscriptions = Subscription::where(array(
-            'user_id' => $this->id,
-            'project_id' => NULL
-        ))->get();
+        $subscriptions = Subscription::where('user_id', $this->id)->where('project_id', NULL)->get();
 
         $dbSubscriptions = array();
         foreach($subscriptions as $subscription) {

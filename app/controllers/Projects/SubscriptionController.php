@@ -29,27 +29,8 @@ class SubscriptionController extends BaseController {
     }
 
     public function store($project) {
-        $input = Input::all();
-
-        $rules = array(
-            'subscription_level' => 'required',
-            'notification_level' => 'required'
-        );
-        $validator = Validator::make($input, $rules);
-        if($validator->fails()) {
-            return Response::json(array('success' => false, 'error' => 'Somehow you\'re missing input data, find a stable connection and try again.'));
-        }
-
         $project = Project::where('slug', $project)->first();
-
-        $subscription = new Subscription();
-
-        $subscription->user_id = $this->user->id;
-        $subscription->project_id = $project->id;
-        $subscription->subscription_level = $input['subscription_level'];
-        $subscription->notification_level = $input['notification_level'];
-
-        $success = $subscription->save();
+        $success = $project->subscribe($this->user, $this->user->getDefaultLevels());
         if(!$success) {
             return Response::json(array('success' => false, 'error' => 'Somehow saving your subscription failed.'));
         }

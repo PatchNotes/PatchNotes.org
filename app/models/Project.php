@@ -19,6 +19,21 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Project extends Model {
 
+    public function subscribe(User $user, $levels) {
+        foreach($levels as $level) {
+            $subscription = new Subscription();
+
+            $subscription->project_id = $this->id;
+            $subscription->user_id = $user->id;
+            $subscription->subscription_level = $level['subscription_level'];
+            $subscription->notification_level = $level['notification_level'];
+
+            $subscription->save();
+        }
+
+        return true;
+    }
+
     public function subscribers() {
         return $this->hasMany('Subscription');
     }
