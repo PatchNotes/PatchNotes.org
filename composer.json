@@ -21,7 +21,8 @@
 		"barryvdh/laravel-ide-helper": "1.*"
 	},
     "require-dev": {
-        "fzaninotto/faker": "1.4.*@dev"
+        "fzaninotto/faker": "1.4.*@dev",
+        "satooshi/php-coveralls": "dev-master"
     },
 	"autoload": {
 		"classmap": [
