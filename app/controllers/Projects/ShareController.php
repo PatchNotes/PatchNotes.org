@@ -5,7 +5,7 @@ use Project;
 use Redirect;
 
 class ShareController extends BaseController {
-	
+
 	public function getTwitter($projectSlug) {
 		$project = Project::where('slug', $projectSlug)->first();
 

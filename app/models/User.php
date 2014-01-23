@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Auth\Reminders\RemindableInterface;
-use Illuminate\Auth\UserInterface;
-
 /**
  * An Eloquent Model: 'User'
  *
@@ -25,59 +22,59 @@ use Illuminate\Auth\UserInterface;
  */
 class User extends Cartalyst\Sentry\Users\Eloquent\User {
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
+	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'users';
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = array('password');
+	/**
+	 * The attributes excluded from the model's JSON form.
+	 *
+	 * @var array
+	 */
+	protected $hidden = array('password');
 
-    protected $defaultLevels = array(
-        array(
-            'notification_level' => 168,
-            'subscription_level' => 10
-        ),
-        array(
-            'notification_level' => 24,
-            'subscription_level' => 50
-        ),
-        array(
-            'notification_level' => 0,
-            'subscription_level' => 100
-        ),
-    );
+	protected $defaultLevels = array(
+		array(
+			'notification_level' => 168,
+			'subscription_level' => 10
+		),
+		array(
+			'notification_level' => 24,
+			'subscription_level' => 50
+		),
+		array(
+			'notification_level' => 0,
+			'subscription_level' => 100
+		),
+	);
 
-    public function subscriptions() {
-        return $this->hasMany('Subscription');
-    }
+	public function subscriptions() {
+		return $this->hasMany('Subscription');
+	}
 
-    public function getGravatar() {
-        $hash = md5($this->attributes['email']);
-        return "http://www.gravatar.com/avatar/$hash";
-    }
+	public function getGravatar() {
+		$hash = md5($this->attributes['email']);
+		return "http://www.gravatar.com/avatar/$hash";
+	}
 
-    /**
-     * Get the users default settings. If the user changes these they'll be
-     * saved in the database with the NULL project_id
-     *
-     * @return array
-     */
-    public function getDefaultLevels() {
+	/**
+	 * Get the users default settings. If the user changes these they'll be
+	 * saved in the database with the NULL project_id
+	 *
+	 * @return array
+	 */
+	public function getDefaultLevels() {
 
-        $subscriptions = Subscription::where('user_id', $this->id)->where('project_id', NULL)->get();
+		$subscriptions = Subscription::where('user_id', $this->id)->where('project_id', NULL)->get();
 
-        $dbSubscriptions = array();
-        foreach($subscriptions as $subscription) {
-            $dbSubscriptions[$subscription->subscription_level] = $subscription->notification_level;
-        }
+		$dbSubscriptions = array();
+		foreach ($subscriptions as $subscription) {
+			$dbSubscriptions[$subscription->subscription_level] = $subscription->notification_level;
+		}
 
-        return array_merge($dbSubscriptions, $this->defaultLevels);
-    }
+		return array_merge($dbSubscriptions, $this->defaultLevels);
+	}
 }

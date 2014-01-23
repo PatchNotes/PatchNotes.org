@@ -6,33 +6,33 @@ use User;
 
 class DashboardController extends BaseController {
 
-    /**
-     * @var User
-     */
-    private $user;
+	/**
+	 * @var User
+	 */
+	private $user;
 
-    public function __construct() {
-        $this->beforeFilter('auth');
+	public function __construct() {
+		$this->beforeFilter('auth');
 
-        $this->user = Sentry::getUser();
-    }
+		$this->user = Sentry::getUser();
+	}
 
-    public function getIndex() {
+	public function getIndex() {
 
-    }
+	}
 
-    public function getProfile() {
+	public function getProfile() {
 
-    }
+	}
 
-    public function getSubscriptions() {
-        $subscriptions = $this->user->subscriptions()->get();
+	public function getSubscriptions() {
+		$subscriptions = $this->user->subscriptions()->get();
 
-        var_dump($subscriptions);
-    }
+		var_dump($subscriptions);
+	}
 
-    public function postSubscriptions() {
+	public function postSubscriptions() {
 
-    }
+	}
 
 } 

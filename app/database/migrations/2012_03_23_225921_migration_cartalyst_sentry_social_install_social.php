@@ -27,10 +27,8 @@ class MigrationCartalystSentrySocialInstallSocial extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
-		Schema::create('social', function($table)
-		{
+	public function up() {
+		Schema::create('social', function ($table) {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned()->nullable();
 			$table->string('service', 127);
@@ -50,8 +48,7 @@ class MigrationCartalystSentrySocialInstallSocial extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::drop('social');
 	}
 

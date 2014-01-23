@@ -27,10 +27,8 @@ class MigrationCartalystSentryInstallUsersGroupsPivot extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
-		Schema::create('users_groups', function($table)
-		{
+	public function up() {
+		Schema::create('users_groups', function ($table) {
 			$table->integer('user_id')->unsigned();
 			$table->integer('group_id')->unsigned();
 
@@ -46,8 +44,7 @@ class MigrationCartalystSentryInstallUsersGroupsPivot extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::drop('users_groups');
 	}
 

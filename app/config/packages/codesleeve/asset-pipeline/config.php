@@ -51,9 +51,7 @@ return array(
 	|
 	*/
 	'filters' => array(
-		'.min.js' => array(
-
-		),
+		'.min.js' => array(),
 		'.min.css' => array(
 			new Codesleeve\AssetPipeline\Filters\URLRewrite,
 		),
@@ -110,8 +108,8 @@ return array(
 	|
 	*/
 	'mimes' => array(
-	    'javascripts' => array('.js', '.js.coffee', '.coffee', '.html', '.min.js'),
-	    'stylesheets' => array('.css', '.css.less', '.css.scss', '.less', '.scss', '.min.css'),
+		'javascripts' => array('.js', '.js.coffee', '.coffee', '.html', '.min.js'),
+		'stylesheets' => array('.css', '.css.less', '.css.scss', '.less', '.scss', '.min.css'),
 	),
 
 	/*

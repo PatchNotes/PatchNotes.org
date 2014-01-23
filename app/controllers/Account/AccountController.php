@@ -2,266 +2,264 @@
 namespace Account;
 
 use App;
-use Redirect;
-use URL;
-use SentrySocial;
+use Event;
 use Input;
+use Redirect;
+use Sentry;
+use SentrySocial;
+use Session;
+use URL;
+use Validate;
 use Validator;
 use View;
-use Sentry;
-use Validate;
-use Event;
-use Session;
 
 class AccountController extends BaseController {
 
-    private $providers = array('github');
+	private $providers = array('github');
 
-    public function __construct() {
-        $this->beforeFilter('guest', ['only' => ['getLogin', 'postLogin', 'getRegister', 'postRegister']]);
-    }
+	public function __construct() {
+		$this->beforeFilter('guest', ['only' => ['getLogin', 'postLogin', 'getRegister', 'postRegister']]);
+	}
 
-    public function postAuth($provider) {
-        if (!in_array($provider, $this->providers)) {
-            App::abort(404, "Provider not found.");
-        }
-        
-        $callback = URL::to("account/callback/$provider");
-        $url = SentrySocial::getAuthorizationUrl($provider, $callback);
+	public function postAuth($provider) {
+		if (!in_array($provider, $this->providers)) {
+			App::abort(404, "Provider not found.");
+		}
 
-        return Redirect::to($url);
-    }
+		$callback = URL::to("account/callback/$provider");
+		$url = SentrySocial::getAuthorizationUrl($provider, $callback);
 
-    public function getCallback($provider) {
-        if (!in_array($provider, $this->providers)) {
-            App::abort(404, "Provider not found.");
-        }
+		return Redirect::to($url);
+	}
 
-        // Callback is required for providers such as Facebook and a few others (it's required
-        // by the spec, but some providers ommit this).
-        $callback = URL::current();
+	public function getCallback($provider) {
+		if (!in_array($provider, $this->providers)) {
+			App::abort(404, "Provider not found.");
+		}
 
-        try {
-            $user = SentrySocial::authenticate($provider, URL::current(), function (\Cartalyst\SentrySocial\Links\LinkInterface $link, $provider, $token, $slug) {
-                $user = $link->getUser(); // Modify the user in question
+		// Callback is required for providers such as Facebook and a few others (it's required
+		// by the spec, but some providers ommit this).
+		$callback = URL::current();
 
-                // You could add your custom data
-                $data = $provider->getUserDetails($token);
+		try {
+			$user = SentrySocial::authenticate($provider, URL::current(), function (\Cartalyst\SentrySocial\Links\LinkInterface $link, $provider, $token, $slug) {
+				$user = $link->getUser(); // Modify the user in question
 
-                $user->username = $data->nickname;
+				// You could add your custom data
+				$data = $provider->getUserDetails($token);
 
-                $user->save();
-            });
+				$user->username = $data->nickname;
 
-            return Redirect::to('/');
-        } catch (\Cartalyst\SentrySocial\AccessMissingException $e) {
-            // Missing OAuth parameters were missing from the query string.
-            // Either the person rejected the app, or the URL has been manually
-            // accesed.
-            if ($error = Input::get('error')) {
-                return Redirect::to('/account/reject')->withErrors($error);
-            }
+				$user->save();
+			});
 
-            App::abort(404);
-        }
-    }
+			return Redirect::to('/');
+		} catch (\Cartalyst\SentrySocial\AccessMissingException $e) {
+			// Missing OAuth parameters were missing from the query string.
+			// Either the person rejected the app, or the URL has been manually
+			// accesed.
+			if ($error = Input::get('error')) {
+				return Redirect::to('/account/reject')->withErrors($error);
+			}
 
-    public function getReject() {
-        return View::make('account/reject', array('bodyclass' => 'small-container'));
-    }
+			App::abort(404);
+		}
+	}
 
-    public function getLogin() {
-        return View::make('account.login');
-    }
+	public function getReject() {
+		return View::make('account/reject', array('bodyclass' => 'small-container'));
+	}
 
-    public function postLogin() {
-        $input = Input::all();
+	public function getLogin() {
+		return View::make('account.login');
+	}
 
-        $rules = array(
-            'email' => 'required|email',
-            'password' => 'required'
-        );
+	public function postLogin() {
+		$input = Input::all();
 
-        $validator = Validator::make($input, $rules);
+		$rules = array(
+			'email' => 'required|email',
+			'password' => 'required'
+		);
 
-        if ($validator->fails()) {
-            return Redirect::to('account/login')->withErrors($validator);
-        }
+		$validator = Validator::make($input, $rules);
 
-        try {
-            // Set login credentials
-            $credentials = array(
-                'email' => $input['email'],
-                'password' => $input['password'],
-            );
+		if ($validator->fails()) {
+			return Redirect::to('account/login')->withErrors($validator);
+		}
 
-            // Try to authenticate the user
-            $user = Sentry::authenticate($credentials, true);
-            Event::fire('user.login', array($user));
+		try {
+			// Set login credentials
+			$credentials = array(
+				'email' => $input['email'],
+				'password' => $input['password'],
+			);
 
-            $redirect = Session::get('redirect');
-            if ($redirect) {
-                return Redirect::to($redirect);
-            } else {
-                return Redirect::to('/');
-            }
-        } catch (\Cartalyst\Sentry\Users\LoginRequiredException $e) {
-            return Redirect::to('account/login')->withErrors(['Login field is required.']);
-        } catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e) {
-            return Redirect::to('account/login')->withErrors(['Password field is required.']);
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return Redirect::to('account/login')->withErrors(['User was not found.']);
-        } catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e) {
-            return Redirect::to('account/login')->withErrors(['User is not activated.']);
-        } // The following is only required if throttle is enabled
-        catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
-            return Redirect::to('account/login')->withErrors(['User is suspended.']);
-        } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
-            return Redirect::to('account/login')->withErrors(['User is banned.']);
-        }
-    }
+			// Try to authenticate the user
+			$user = Sentry::authenticate($credentials, true);
+			Event::fire('user.login', array($user));
 
-    public function getRegister() {
-        return View::make('account.register', array('bodyclass' => 'smaller-container'));
-    }
+			$redirect = Session::get('redirect');
+			if ($redirect) {
+				return Redirect::to($redirect);
+			} else {
+				return Redirect::to('/');
+			}
+		} catch (\Cartalyst\Sentry\Users\LoginRequiredException $e) {
+			return Redirect::to('account/login')->withErrors(['Login field is required.']);
+		} catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e) {
+			return Redirect::to('account/login')->withErrors(['Password field is required.']);
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+			return Redirect::to('account/login')->withErrors(['User was not found.']);
+		} catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e) {
+			return Redirect::to('account/login')->withErrors(['User is not activated.']);
+		} // The following is only required if throttle is enabled
+		catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
+			return Redirect::to('account/login')->withErrors(['User is suspended.']);
+		} catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
+			return Redirect::to('account/login')->withErrors(['User is banned.']);
+		}
+	}
 
-    public function postRegister() {
-        $input = Input::all();
+	public function getRegister() {
+		return View::make('account.register', array('bodyclass' => 'smaller-container'));
+	}
 
-        $rules = array(
-            'username' => 'required|min:2|max:32|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6'
-        );
+	public function postRegister() {
+		$input = Input::all();
 
-        $validator = Validator::make($input, $rules);
+		$rules = array(
+			'username' => 'required|min:2|max:32|unique:users',
+			'email' => 'required|email|unique:users',
+			'password' => 'required|min:6'
+		);
 
-        if ($validator->fails()) {
-            return Redirect::to('account/register')->withErrors($validator);
-        }
+		$validator = Validator::make($input, $rules);
 
-        try {
-            $user = Sentry::register(
-                array(
-                    'username' => $input['username'],
-                    'email' => $input['email'],
-                    'password' => $input['password']
-                )
-            );
-            $activationCode = $user->getActivationCode();
+		if ($validator->fails()) {
+			return Redirect::to('account/register')->withErrors($validator);
+		}
 
-            Event::fire('user.register', array($user, $activationCode));
+		try {
+			$user = Sentry::register(array(
+				'username' => $input['username'],
+				'email' => $input['email'],
+				'password' => $input['password']
+			));
+			$activationCode = $user->getActivationCode();
 
-            return Redirect::to('account/thanks');
-        } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
-            return Redirect::to('account/register')->withErrors(['User with this login already exists.']);
-        }
-    }
+			Event::fire('user.register', array($user, $activationCode));
 
-    public function getThanks() {
-        return View::make('account.thanks');
-    }
+			return Redirect::to('account/thanks');
+		} catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
+			return Redirect::to('account/register')->withErrors(['User with this login already exists.']);
+		}
+	}
 
-    public function getValidate($email, $key) {
-        try {
-            // Find the user using the user id
-            $user = Sentry::getUserProvider()->findByLogin($email);
+	public function getThanks() {
+		return View::make('account.thanks');
+	}
 
-            // Attempt to activate the user
-            if ($user->attemptActivation($key)) {
-                Sentry::login($user, true);
+	public function getValidate($email, $key) {
+		try {
+			// Find the user using the user id
+			$user = Sentry::getUserProvider()->findByLogin($email);
 
-                return Redirect::to('/help/welcome');
-            } else {
-                return Redirect::to('account/login');
-            }
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return Redirect::to('account/register')->withErrors(['User was not found.']);
-        } catch (\Cartalyst\SEntry\Users\UserAlreadyActivatedException $e) {
-            return Redirect::to('account/login')->withErrors(['User is already activated.']);
-        }
-    }
+			// Attempt to activate the user
+			if ($user->attemptActivation($key)) {
+				Sentry::login($user, true);
 
-    public function getForgot() {
-        return View::make('account.forgot');
-    }
+				return Redirect::to('/help/welcome');
+			} else {
+				return Redirect::to('account/login');
+			}
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+			return Redirect::to('account/register')->withErrors(['User was not found.']);
+		} catch (\Cartalyst\SEntry\Users\UserAlreadyActivatedException $e) {
+			return Redirect::to('account/login')->withErrors(['User is already activated.']);
+		}
+	}
 
-    public function postForgot() {
-        $input = Input::all();
+	public function getForgot() {
+		return View::make('account.forgot');
+	}
 
-        $rules = array(
-            'email' => 'required|email'
-        );
+	public function postForgot() {
+		$input = Input::all();
 
-        $validator = Validator::make($input, $rules);
+		$rules = array(
+			'email' => 'required|email'
+		);
 
-        if ($validator->fails()) {
-            return Redirect::to('account/forgot')->withErrors($validator);
-        }
+		$validator = Validator::make($input, $rules);
+
+		if ($validator->fails()) {
+			return Redirect::to('account/forgot')->withErrors($validator);
+		}
 
 
-        try {
-            // Find the user using the user email address
-            $user = Sentry::getUserProvider()->findByLogin($input['email']);
+		try {
+			// Find the user using the user email address
+			$user = Sentry::getUserProvider()->findByLogin($input['email']);
 
-            $forgotCode = $user->getResetPasswordCode();
-            Event::fire('user.forgot', array($user, $forgotCode));
+			$forgotCode = $user->getResetPasswordCode();
+			Event::fire('user.forgot', array($user, $forgotCode));
 
-            return Redirect::to('account/resetting');
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return Redirect::to('account/forgot')->withErrors(['User was not found.']);
-        }
-    }
+			return Redirect::to('account/resetting');
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+			return Redirect::to('account/forgot')->withErrors(['User was not found.']);
+		}
+	}
 
-    public function getResetting() {
-        return View::make('account.resetting');
-    }
+	public function getResetting() {
+		return View::make('account.resetting');
+	}
 
-    public function getReset($email, $code) {
-        return View::make('account.reset', array('email' => $email, 'code' => $code));
-    }
+	public function getReset($email, $code) {
+		return View::make('account.reset', array('email' => $email, 'code' => $code));
+	}
 
-    public function postReset() {
-        $input = Input::all();
+	public function postReset() {
+		$input = Input::all();
 
-        $rules = array(
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-            'password_confirm' => 'required|same:password',
-            'code' => 'required'
-        );
+		$rules = array(
+			'email' => 'required|email',
+			'password' => 'required|min:6',
+			'password_confirm' => 'required|same:password',
+			'code' => 'required'
+		);
 
-        $validator = Validator::make($input, $rules);
+		$validator = Validator::make($input, $rules);
 
-        if ($validator->fails()) {
-            return Redirect::to(URL::to('account/reset', array($input['email'], $input['code'])))->withErrors(
-                $validator
-            );
-        }
+		if ($validator->fails()) {
+			return Redirect::to(URL::to('account/reset', array($input['email'], $input['code'])))->withErrors(
+				$validator
+			);
+		}
 
-        try {
-            // Find the user using the user id
-            $user = Sentry::getUserProvider()->findByLogin($input['email']);
+		try {
+			// Find the user using the user id
+			$user = Sentry::getUserProvider()->findByLogin($input['email']);
 
-            // Check if the reset password code is valid
-            if ($user->checkResetPasswordCode($input['code'])) {
-                // Attempt to reset the user password
-                if ($user->attemptResetPassword($input['code'], $input['password'])) {
-                    return Redirect::to('account/login');
-                } else {
-                    return Redirect::to('account/forgot');
-                }
-            } else {
-                return Redirect::to(URL::to('account/reset', array($input['email'], $input['code'])))->withErrors(['Invalid reset key.']);
-            }
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return Redirect::to(URL::to('account/reset', array($input['email'], $input['code'])))->withErrors(['User was not found.']);
-        }
-    }
+			// Check if the reset password code is valid
+			if ($user->checkResetPasswordCode($input['code'])) {
+				// Attempt to reset the user password
+				if ($user->attemptResetPassword($input['code'], $input['password'])) {
+					return Redirect::to('account/login');
+				} else {
+					return Redirect::to('account/forgot');
+				}
+			} else {
+				return Redirect::to(URL::to('account/reset', array($input['email'], $input['code'])))->withErrors(['Invalid reset key.']);
+			}
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+			return Redirect::to(URL::to('account/reset', array($input['email'], $input['code'])))->withErrors(['User was not found.']);
+		}
+	}
 
-    public function getLogout() {
-        Sentry::logout();
+	public function getLogout() {
+		Sentry::logout();
 
-        return Redirect::to('');
-    }
+		return Redirect::to('');
+	}
 }

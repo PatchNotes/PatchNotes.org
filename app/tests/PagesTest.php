@@ -2,22 +2,22 @@
 
 class PagesTest extends TestCase {
 
-    public function testHomepage() {
-        $this->call('GET', '/');
+	public function testHomepage() {
+		$this->call('GET', '/');
 
-        $this->assertResponseOk();
-    }
+		$this->assertResponseOk();
+	}
 
-    public function testAboutTos() {
-        $this->call('GET', '/about/tos');
+	public function testAboutTos() {
+		$this->call('GET', '/about/tos');
 
-        $this->assertResponseOk();
-    }
+		$this->assertResponseOk();
+	}
 
-    public function testAboutPrivacy() {
-        $this->call('GET', '/about/privacy');
+	public function testAboutPrivacy() {
+		$this->call('GET', '/about/privacy');
 
-        $this->assertResponseOk();
-    }
+		$this->assertResponseOk();
+	}
 
 }

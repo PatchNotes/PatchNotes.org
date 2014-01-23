@@ -10,11 +10,10 @@ class PnUniqueIndexOnSubscriptions extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
-		Schema::table('subscriptions', function(Blueprint $table) {
-            $table->unique(array('project_id', 'user_id', 'subscription_level'));
-        });
+	public function up() {
+		Schema::table('subscriptions', function (Blueprint $table) {
+			$table->unique(array('project_id', 'user_id', 'subscription_level'));
+		});
 	}
 
 	/**
@@ -22,8 +21,7 @@ class PnUniqueIndexOnSubscriptions extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		//
 	}
 

@@ -42,7 +42,7 @@ return array(
 	|
 	*/
 
-	'files' => storage_path().'/sessions',
+	'files' => storage_path() . '/sessions',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -122,6 +122,6 @@ return array(
 
 	'domain' => null,
 
-    'expire_on_close' => false
+	'expire_on_close' => false
 
 );

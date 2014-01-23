@@ -27,10 +27,8 @@ class MigrationCartalystSentryInstallThrottle extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
-		Schema::create('throttle', function($table)
-		{
+	public function up() {
+		Schema::create('throttle', function ($table) {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
 			$table->string('ip_address')->nullable();
@@ -53,8 +51,7 @@ class MigrationCartalystSentryInstallThrottle extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::drop('throttle');
 	}
 

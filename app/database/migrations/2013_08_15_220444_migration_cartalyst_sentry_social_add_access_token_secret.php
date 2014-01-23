@@ -9,10 +9,8 @@ class MigrationCartalystSentrySocialAddAccessTokenSecret extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
-		Schema::table('social', function($table)
-		{
+	public function up() {
+		Schema::table('social', function ($table) {
 			$table->string('access_token_secret')->nullable();
 		});
 	}
@@ -22,10 +20,8 @@ class MigrationCartalystSentrySocialAddAccessTokenSecret extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
-		Schema::table('social', function($table)
-		{
+	public function down() {
+		Schema::table('social', function ($table) {
 			$table->dropColumn('access_token_secret');
 		});
 	}

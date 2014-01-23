@@ -21,10 +21,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Social extends Model {
 
-    protected $table = 'social';
+	protected $table = 'social';
 
-    public function user() {
-        return $this->belongsTo('User');
-    }
+	public function user() {
+		return $this->belongsTo('User');
+	}
 
 }

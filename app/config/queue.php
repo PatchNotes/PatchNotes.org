@@ -36,29 +36,29 @@ return array(
 
 		'beanstalkd' => array(
 			'driver' => 'beanstalkd',
-			'host'   => 'localhost',
-			'queue'  => 'default',
+			'host' => 'localhost',
+			'queue' => 'default',
 		),
 
 		'sqs' => array(
 			'driver' => 'sqs',
-			'key'    => 'your-public-key',
+			'key' => 'your-public-key',
 			'secret' => 'your-secret-key',
-			'queue'  => 'your-queue-url',
+			'queue' => 'your-queue-url',
 			'region' => 'us-east-1',
 		),
 
 		'iron' => array(
-			'driver'  => 'iron',
+			'driver' => 'iron',
 			'project' => 'your-project-id',
-			'token'   => 'your-token',
-			'queue'   => 'your-queue-name',
+			'token' => 'your-token',
+			'queue' => 'your-queue-name',
 		),
 
 	),
 
-    'failed' => array(
-        'database' => 'mysql', 'table' => 'failed_jobs',
-    ),
+	'failed' => array(
+		'database' => 'mysql', 'table' => 'failed_jobs',
+	),
 
 );
