@@ -20,14 +20,4 @@
 <?php $projects = $newProjects; ?>
 @include('projects/partials/list')
 
-<div class="row">
-    <div class="col-lg-12">
-        <h3>Upcoming Projects</h3>
-    </div>
-</div><!-- /.row -->
-
-<?php $projects = $popularProjects; ?>
-@include('projects/partials/list')
-
-
 @stop

@@ -2,17 +2,23 @@
 
 class UserSeeder extends Seeder {
 
-    private $numUsers = 100;
+    private $faker;
+
+    private $numUsers = 50;
+
+    public function __construct() {
+        $this->faker = Faker\Factory::create();
+    }
 
     public function run() {
 
         for($i = 0; $i < $this->numUsers; $i++) {
-            $unique = Str::quickRandom(rand(5,20));
+            $username = $this->faker->userName;
 
             Sentry::createUser(array(
-                'username' => $unique,
-                'password' => $unique,
-                'email' => "$unique@localhost.localhost",
+                'username' => $username,
+                'password' => $username,
+                'email' => $this->faker->email,
                 'activated' => true
             ));
         }

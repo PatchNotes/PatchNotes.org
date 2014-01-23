@@ -1,4 +1,17 @@
 <?php
+namespace Account;
+
+use App;
+use Redirect;
+use URL;
+use SentrySocial;
+use Input;
+use Validator;
+use View;
+use Sentry;
+use Validate;
+use Event;
+use Session;
 
 class AccountController extends BaseController {
 

@@ -10,6 +10,7 @@ use ProjectManager;
 use ProjectUpdate;
 use Redirect;
 use Response;
+use Rss;
 use Sentry;
 use Str;
 use Validator;
@@ -22,9 +23,38 @@ class UpdateController extends BaseController {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Return a list of the projects updates in the RSS format.
      *
-     * @return Response
+     * @param $project
+     * @return \Illuminate\Http\Response
+     */
+    public function indexRSS($project) {
+        $project = Project::where('slug', $project)->first();
+
+        $feed = Rss::feed('2.0', 'UTF-8');
+        $feed->channel(array(
+            'title' => $project->name,
+            'description' => $project->description,
+            'link' => action('Projects\\ProjectController@show', $project->slug)
+        ));
+
+        foreach($project->updates()->get() as $update) {
+            $feed->item(array(
+                'title' => $update->title,
+                'description' => $update->body,
+                'link' => action('Projects\\UpdateController@show', array($project->slug, $update->slug))
+            ));
+        }
+
+        return Response::make($feed, 200, array('Content-Type' => 'text/xml'));
+    }
+
+
+    /**
+     * Create a project update
+     *
+     * @param $slug
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store($slug) {
         $project = Project::where('slug', $slug)->firstOrFail();
