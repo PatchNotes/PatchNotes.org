@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\ProjectUpdate[] $updates
  * @property-read \Illuminate\Database\Eloquent\Collection|\ProjectManager[] $managers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Subscription[] $subscribers
  */
 class Project extends Model {
 
@@ -34,7 +35,7 @@ class Project extends Model {
 
 				$subscription->project_id = $this->id;
 				$subscription->user_id = $user->id;
-				$subscription->subscription_level = $level['subscription_level'];
+				$subscription->project_update_level = $level['project_update_level'];
 				$subscription->notification_level = $level['notification_level'];
 
 				$subscription->save();

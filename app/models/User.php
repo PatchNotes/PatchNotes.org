@@ -19,6 +19,7 @@
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentry\Groups\Eloquent\Group[] $groups
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Subscription[] $subscriptions
  */
 class User extends Cartalyst\Sentry\Users\Eloquent\User {
 
@@ -39,15 +40,15 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 	protected $defaultLevels = array(
 		array(
 			'notification_level' => 168,
-			'subscription_level' => 10
+			'project_update_level' => 10
 		),
 		array(
 			'notification_level' => 24,
-			'subscription_level' => 50
+			'project_update_level' => 50
 		),
 		array(
 			'notification_level' => 0,
-			'subscription_level' => 100
+			'project_update_level' => 100
 		),
 	);
 
@@ -60,6 +61,10 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 		return "http://www.gravatar.com/avatar/$hash";
 	}
 
+	public function getSubscriptionLevel(Project $project, $updateLevel) {
+
+	}
+
 	/**
 	 * Get the users default settings. If the user changes these they'll be
 	 * saved in the database with the NULL project_id
@@ -67,14 +72,34 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 	 * @return array
 	 */
 	public function getDefaultLevels() {
-
 		$subscriptions = Subscription::where('user_id', $this->id)->where('project_id', NULL)->get();
 
 		$dbSubscriptions = array();
 		foreach ($subscriptions as $subscription) {
-			$dbSubscriptions[$subscription->subscription_level] = $subscription->notification_level;
+			$dbSubscriptions[$subscription->project_update_level] = $subscription->notification_level;
 		}
 
 		return array_merge($dbSubscriptions, $this->defaultLevels);
+	}
+
+	/**
+	 * Fetch a users default notification level
+	 *
+	 * @param $updateLevel
+	 * @return NotificationLevel
+	 * @throws Exception
+	 */
+	public function getDefaultNotificationLevel($updateLevel) {
+		$subscription = Subscription::where('user_id', $this->id)->where('project_id', NULL)->where('project_update_level', $updateLevel)->first();
+
+		if($subscription) {
+			return NotificationLevel::where('level', $subscription->notification_level)->first();
+		}
+
+		foreach($this->defaultLevels as $level) {
+			if($level['project_update_level'] == $updateLevel) return NotificationLevel::where('level', $level['notification_level'])->first();
+		}
+
+		throw new Exception("No default level found, updateLevel must be out of range.");
 	}
 }

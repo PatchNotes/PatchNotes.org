@@ -15,6 +15,7 @@
  * @property \Carbon\Carbon $deleted_at
  * @property-read \Project $project
  * @property-read \User $author
+ * @property integer $level
  */
 class ProjectUpdate extends Eloquent {
 

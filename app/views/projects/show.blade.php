@@ -76,12 +76,21 @@
             </div>
         </div>
 
+	    @if(Sentry::check())
         <div id="subscribe" class="panel panel-primary" style="display:none">
             <div class="panel-heading">Subscribed to {{{ $project->name }}}</div>
             <div class="panel-body">
-                <p>Thanks for your subscription to {{{ $project->name }}}. Your default subscription intervals are below, you can also modify them in your panel.</p>
+                <p>Thanks for your subscription to {{{ $project->name }}}. Your default subscription intervals are below, you can also modify them on
+	                <a href="/account/dashboard">your dashboard</a>.</p>
+
+	            <ul>
+		            <li>Newsletter: {{ Sentry::getUser()->getDefaultNotificationLevel(10)->name }}</li>
+		            <li>Product Updates: {{ Sentry::getUser()->getDefaultNotificationLevel(50)->name }}</li>
+		            <li>Service Changes: {{ Sentry::getUser()->getDefaultNotificationLevel(100)->name }}</li>
+	            </ul>
             </div>
         </div>
+		@endif
 
         <div class="row text-center">
             <div class="col-sm-4">
@@ -138,7 +147,7 @@
                         <div class="form-group">
                             <label for="importance" class="col-lg-2 control-label">Level</label>
                             <div class="col-lg-10">
-                                @foreach(SubscriptionLevel::orderBy('level', 'asc')->get() as $rank)
+                                @foreach(ProjectUpdateLevel::orderBy('level', 'asc')->get() as $rank)
                                 <label for="rank-{{ $rank->level }}" data-toggle="tooltip" data-placement="right" title="{{ Lang::get('project.notification_levels.' . $rank->level) }}">
                                     <input type="radio" name="rank" value="{{ $rank->level }}" id="rank-{{ $rank->level }}"> {{ $rank->name }}
                                 </label>
