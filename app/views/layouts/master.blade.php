@@ -30,8 +30,16 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/projects">Projects</a></li>
-                        <li><a href="#contact">Contact</a></li>
+	                    <li>
+
+		                    {{ Form::open(array('method' => 'get', 'url' => '/search', 'class' => 'navbar-form', 'role' => 'search')) }}
+		                    <div class="form-group">
+			                    <input type="text" class="form-control" name="query" placeholder="Search Projects & Users">
+		                    </div>
+		                    {{ Form::close() }}
+	                    </li>
+                        <li><a href="/projects">Browse</a></li>
+                        <li><a href="http://blog.patchnotes.org/">Blog</a></li>
                     </ul>
 
                     @if(!Sentry::check())
@@ -79,13 +87,6 @@
                         <li><a href="/account/logout">Logout</a></li>
                     </ul>
                     @endif
-
-                    {{ Form::open(array('method' => 'get', 'url' => '/search', 'class' => 'navbar-form navbar-right', 'role' => 'search')) }}
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="query" placeholder="Search">
-                        </div>
-                    {{ Form::close() }}
-
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container -->
         </nav>
