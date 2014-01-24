@@ -1,22 +1,14 @@
 language: php
 php:
   - 5.5
-  - 5.4
 
 services: mysql
 
 before_script:
   - sh travis-setup.sh
-  - composer install
+  - composer install --no-interaction
   - mysql -e 'create database patchnotes_test;'
   - php artisan migrate --env=testing
-  - mkdir -p build/logs
-
-script:
-  - vendor/bin/phpunit --no-interaction --coverage-clover build/logs/clover.xml
-
-after_script:
-  - php vendor/bin/coveralls -v
 
 notifications:
   email: false
@@ -27,7 +19,7 @@ notifications:
     on_failure: always
     template:
     - "%{repository} (%{branch}:%{commit} by %{author}): %{message} (%{build_url})"
-    skip_join: false
+    skip_join: true
 
 env:
   global:
