@@ -48,6 +48,15 @@ class Project extends Model {
 		return true;
 	}
 
+	/**
+	 * Get a unique count of subscribers
+	 *
+	 * @return integer
+	 */
+	public function subscriberCount() {
+		return count($this->subscribers()->groupBy('user_id')->get());
+	}
+
 	public function subscribers() {
 		return $this->hasMany('Subscription');
 	}

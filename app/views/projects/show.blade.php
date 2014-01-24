@@ -96,7 +96,7 @@
             <div class="col-sm-4">
                 <div class="well well-sm">
                     Subscriptions <br>
-                    <h3>{{ $project->subscribers()->count() }}</h3>
+                    <h3>{{ $project->subscriberCount() }}</h3>
                 </div>
             </div>
             <div class="col-sm-4">
