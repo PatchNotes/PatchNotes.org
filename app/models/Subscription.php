@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Subscription
  * 
@@ -20,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \ProjectUpdateLevel $subscriptionLevel
  * @property-read \NotificationLevel $notificationLevel
  */
-class Subscription extends Model {
+class Subscription extends BaseModel {
 
 	public function user() {
 		return $this->belongsTo('User');

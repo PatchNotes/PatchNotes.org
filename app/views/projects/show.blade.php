@@ -7,9 +7,15 @@
         <h2>{{{ $project->name }}}<br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
-        <a href="{{ action('Projects\\SubscriptionController@store', array($project->slug)) }}" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
-            <i class="fa fa-plus"></i>
-        </a>
+	    @if(Sentry::check() && !$project->isSubscriber(Sentry::getUser()))
+	    <a href="{{ action('Projects\\SubscriptionController@store', array($project->slug)) }}" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
+		    <i class="fa fa-plus"></i>
+	    </a>
+	    @else
+	    <a href="{{ action('Projects\\SubscriptionController@destroy', array($project->slug)) }}" class="btn social-btn social-unsubscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
+		    <i class="fa fa-minus"></i>
+	    </a>
+	    @endif
         <a href="/projects/{{ $project->slug }}/updates.rss" class="btn social-btn social-rss">
             <i class="fa fa-rss"></i>
         </a>

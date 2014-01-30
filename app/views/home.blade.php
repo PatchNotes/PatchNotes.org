@@ -29,7 +29,15 @@
 	</div>
 </div>
 
-<hr>
+<div class="row">
+	<div class="col-lg-6">
+		<h2>For Project Maintainers</h2>
+	</div>
+	<div class="col-lg-6">
+		<h2>For Project Followers</h2>
+
+	</div>
+</div>
 
 <div class="row">
 	<div class="col-lg-12">

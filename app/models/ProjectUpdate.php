@@ -17,7 +17,7 @@
  * @property-read \User $author
  * @property integer $level
  */
-class ProjectUpdate extends Eloquent {
+class ProjectUpdate extends BaseModel {
 
 	protected $table = "project_updates";
 

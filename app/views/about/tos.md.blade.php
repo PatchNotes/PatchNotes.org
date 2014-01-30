@@ -25,7 +25,7 @@ Violation of any of the terms below will result in the termination of your Accou
 
  1. You must be 13 years or older to use this Service.
  2. You must provide a valid email address to use this Service.
- 3. You are responsible for maintaing the security of your account. Axxim is
+ 3. You are responsible for maintaining the security of your account. Axxim is
 not liable for any loss or damage from failure to comply with this security obligation.
  4. You may not use this Service for any illegal or unauthorized purpose.
 
@@ -37,9 +37,9 @@ with or without notice.
 
 ### Section C: Content Ownership
 
- 1. We claim no intellectual property rights over the matrial you provide to
+ 1. We claim no intellectual property rights over the material you provide to
 the Service. Your profile and materials uploaded remain yours. By posting
-content publically, you agree to allow others to view your projects and
+content publicly, you agree to allow others to view your projects and
 subscriptions.
  2. Axxim does not pre-screen content uploaded to the service, but Axxim and
 it's designee have the right (but not the obligation) in their sole discretion
@@ -57,15 +57,17 @@ suit or proceeding (provided that You may not settle any claim, demand, suit
 or proceeding unless the settlement unconditionally releases Axxim of all
 liability); and (c) provides to You all reasonable assistance, at Your expense.
  4. Service is open source, you may view the licenses related to the
-assets of this Service on GitHub[LINK HERE].
+assets of this Service on [GitHub].
 
 ### Section D: General Conditions
 
- 1. Questions about the Terms of Service should be sent to legal@patchnotes.net
+ 1. Questions about the Terms of Service should be sent to legal@patchnotes.org
  2. The failure of Axxim to exercise or enforce any right or provision of the
 Terms of Service shall not constitute waiver of such right or provision.
  3. If your bandwidth usage significantly exceeds the average bandwidth usage
 (as determined solely by Axxim) of other Axxim customers, we reserve the
 right to immediately disable your account.
+
+[GitHub]: https://github.com/PatchNotes/PatchNotes.org
 
 @stop

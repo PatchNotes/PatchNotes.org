@@ -12,8 +12,11 @@ $(document).ready(function() {
 		$("#code").slideToggle();
 	});
 
-	$('.social-subscribe').click(function(e) {
+	$('body').on('click', '.social-subscribe', function(e) {
 		e.preventDefault();
+
+        var $icon = $(this).children('i');
+        $icon.removeClass().addClass('fa fa-cog fa-spin');
 
         $.ajax({
             url: $(this).attr('href'),
@@ -21,13 +24,19 @@ $(document).ready(function() {
         }).done(function(response) {
                 if(response.success == false) {
                     alert(response.error);
+
+                    $icon.removeClass().addClass('fa fa-plus');
+
                     return;
                 }
 
                 $('#subscribe').slideToggle();
+                $icon.removeClass().addClass('fa fa-minus');
+                $(this).removeClass('social-subscribe').addClass('social-unsubscribe');
             });
 
 
 	});
+
 
 });

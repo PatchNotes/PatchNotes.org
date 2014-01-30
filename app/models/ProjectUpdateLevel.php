@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * An Eloquent Model: 'ProjectUpdateLevel'
  *
@@ -10,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
-class ProjectUpdateLevel extends Model {
+class ProjectUpdateLevel extends BaseModel {
 
 	protected $table = 'project_updates_levels';
 

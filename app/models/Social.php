@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * An Eloquent Model: 'Social'
  *
@@ -19,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $oauth2_expires
  * @property-read \User $user
  */
-class Social extends Model {
+class Social extends BaseModel {
 
 	protected $table = 'social';
 

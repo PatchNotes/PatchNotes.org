@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * An Eloquent Model: 'NotificationLevel'
  *
@@ -10,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
-class NotificationLevel extends Model {
+class NotificationLevel extends BaseModel {
 
 	protected $table = 'notification_levels';
 

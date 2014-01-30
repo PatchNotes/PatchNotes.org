@@ -13,6 +13,7 @@ app/config/production/
 app/config/local/
 app/database/local.sqlite
 app/config/packages/*/*/local/
+app/storage/github
 public/builds
 
 .idea/

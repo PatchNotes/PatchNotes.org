@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * An Eloquent Model: 'Project'
  *
@@ -18,7 +16,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\ProjectManager[] $managers
  * @property-read \Illuminate\Database\Eloquent\Collection|\Subscription[] $subscribers
  */
-class Project extends Model {
+class Project extends BaseModel {
+
+	public static $rules = array(
+		'name' => 'required',
+		'slug' => 'required|unique:projects',
+		'site_url' => 'required|active_url',
+		'description' => 'required',
+	);
 
 	/**
 	 * Register a users subscription to a project.
@@ -46,6 +51,10 @@ class Project extends Model {
 		}
 
 		return true;
+	}
+
+	public function isSubscriber(User $user) {
+		return (boolean)Subscription::where('user_id', $user->id)->where('project_id', $this->id)->first();
 	}
 
 	/**

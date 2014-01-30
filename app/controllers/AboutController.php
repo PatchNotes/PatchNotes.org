@@ -14,4 +14,4 @@ class AboutController extends BaseController {
 		return View::make('about/privacy', array('bodyclass' => 'small-container'));
 	}
 
-} 
+}

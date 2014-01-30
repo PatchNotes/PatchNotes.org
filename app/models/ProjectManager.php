@@ -1,5 +1,4 @@
 <?php
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * An Eloquent Model: 'ProjectManager'
@@ -12,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Project $project
  * @property-read \User $user
  */
-class ProjectManager extends Model {
+class ProjectManager extends BaseModel {
 
 	protected $table = 'project_managers';
 

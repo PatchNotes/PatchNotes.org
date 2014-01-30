@@ -8,7 +8,7 @@ Last updated November 7th, 2013
 This Privacy Policy ("Policy") explains how your personal information is
 collected, used and disclosed by Axxim and its subsidiaries and
 affiliated companies ("Axxim"). This Policy applies to the websites of
-Axxim, including http://patchnotes.net/ ("Sites") and Axxim's other
+Axxim, including <http://patchnotes.org/> ("Sites") and Axxim's other
 products, services or any other features, technologies or functionalities
 offered by us on our Sites or through any other means (collectively, "Services").
 This Policy does not apply to information you provide directly to third party
