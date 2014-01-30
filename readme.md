@@ -1,4 +1,4 @@
-## PatchNotes [![Stories in Ready](https://badge.waffle.io/PatchNotes/PatchNotes.org.png?label=ready)](http://waffle.io/PatchNotes/PatchNotes.org)
+## PatchNotes [![Stories in Ready](https://badge.waffle.io/PatchNotes/PatchNotes.org.png?label=ready)](http://waffle.io/PatchNotes/PatchNotes.org) [![Build Status](https://travis-ci.org/PatchNotes/PatchNotes.org.png?branch=master)](https://travis-ci.org/PatchNotes/PatchNotes.org)
 Follow up on your favorite projects & services
 
 

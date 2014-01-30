@@ -30,14 +30,14 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
-	                    <li>
+                        <li>
 
-		                    {{ Form::open(array('method' => 'get', 'url' => '/search', 'class' => 'navbar-form', 'role' => 'search')) }}
-		                    <div class="form-group">
-			                    <input type="text" class="form-control" name="query" placeholder="Search Projects & Users">
-		                    </div>
-		                    {{ Form::close() }}
-	                    </li>
+                            {{ Form::open(array('method' => 'get', 'url' => '/search', 'class' => 'navbar-form', 'role' => 'search')) }}
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="query" placeholder="Search Projects & Users">
+                            </div>
+                            {{ Form::close() }}
+                        </li>
                         <li><a href="/projects">Browse</a></li>
                         <li><a href="http://blog.patchnotes.org/">Blog</a></li>
                     </ul>
@@ -48,17 +48,16 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign Up / Sign In <b class="caret"></b></a>
                             <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
                                 <li>
-                                    <p>If you don't have an account, we'll make you one.</p>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+                                        	{{ Form::open(array('method' => 'post', 'url' => '/account/login', 'id' => 'login-nav', 'class' => 'form')) }}
                                                 <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+                                                    <label class="sr-only" for="headerLoginEmail">Email address</label>
+                                                    <input type="email" name="email" class="form-control" id="headerLoginEmail" placeholder="Email address" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                                    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                                                    <label class="sr-only" for="headerLoginPassword">Password</label>
+                                                    <input type="password" name="password" class="form-control" id="headerLoginPassword" placeholder="Password" required>
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>
@@ -66,9 +65,10 @@
                                                     </label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                                                    <button type="submit" name="login" class="btn btn-primary btn-block">Sign in</button>
+                                                    <button type="submit" name="register" class="btn btn-success btn-block">Register</button>
                                                 </div>
-                                            </form>
+                                            {{ Form::close() }}
                                         </div>
                                     </div>
                                 </li>

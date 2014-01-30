@@ -52,13 +52,6 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 		),
 	);
 
-	/**
-	 * @return bool|User
-	 */
-	public static function current() {
-		return (Sentry::check() ?  Sentry::getUser(): false);
-	}
-
 	public function subscriptions() {
 		return $this->hasMany('Subscription');
 	}

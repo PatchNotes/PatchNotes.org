@@ -77,6 +77,10 @@ class AccountController extends BaseController {
 	public function postLogin() {
 		$input = Input::all();
 
+		if(isset($input['register'])) {
+			return Redirect::to('account/register')->withInput();
+		}
+
 		$rules = array(
 			'email' => 'required|email',
 			'password' => 'required'
