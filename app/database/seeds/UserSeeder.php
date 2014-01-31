@@ -13,7 +13,7 @@ class UserSeeder extends Seeder {
 	public function run() {
 
 		for ($i = 0; $i < $this->numUsers; $i++) {
-			$username = $this->faker->userName;
+			$username = $this->faker->unique()->userName;
 
 			Sentry::createUser(array(
 				'username' => $username,
@@ -24,4 +24,4 @@ class UserSeeder extends Seeder {
 		}
 	}
 
-} 
+}

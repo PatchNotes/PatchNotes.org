@@ -3,7 +3,7 @@
 @section('content')
 
 ## PatchNotes Terms of Service
-Last updated November 7th, 2013
+Last updated January 29th, 2014
 
 By using PatchNotes.com ("Service") or any services of Axxim, LLC ("Axxim")
 you are agreeing to be bound by the following terms and conditions

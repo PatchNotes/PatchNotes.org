@@ -21,7 +21,7 @@ class Project extends BaseModel {
 	public static $rules = array(
 		'name' => 'required',
 		'slug' => 'required|unique:projects',
-		'site_url' => 'required|active_url',
+		'site_url' => 'required|url',
 		'description' => 'required',
 	);
 
@@ -32,7 +32,8 @@ class Project extends BaseModel {
 	 * @param $levels
 	 * @return bool
 	 */
-	public function subscribe(User $user, $levels) {
+	public function subscribe(User $user, $levels = array()) {
+		if(empty($levels)) $levels = $user->getDefaultLevels();
 		foreach ($levels as $level) {
 
 			try {
@@ -48,6 +49,16 @@ class Project extends BaseModel {
 				return false;
 			}
 
+		}
+
+		return true;
+	}
+
+	public function unsubscribe(User $user) {
+		$subscriptions = Subscription::where('user_id', $user->id)->where('project_id', $this->id)->get();
+
+		foreach($subscriptions as $subscription) {
+			$subscription->delete();
 		}
 
 		return true;

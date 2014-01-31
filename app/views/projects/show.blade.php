@@ -7,7 +7,7 @@
         <h2>{{{ $project->name }}}<br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
-	    @if(Sentry::check() && !$project->isSubscriber(Sentry::getUser()))
+	    @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
 	    <a href="{{ action('Projects\\SubscriptionController@store', array($project->slug)) }}" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
 		    <i class="fa fa-plus"></i>
 	    </a>

@@ -35,8 +35,14 @@ class SubscriptionController extends BaseController {
 		return Response::json(array('success' => true));
 	}
 
-	public function destroy() {
+	public function destroy($project) {
+		$project = Project::where('slug', $project)->first();
+		$success = $project->unsubscribe($this->user);
+		if (!$success) {
+			return Response::json(array('success' => false, 'error' => 'You\'re not subscribed to this project.'));
+		}
 
+		return Response::json(array('success' => true));
 	}
 
 } 

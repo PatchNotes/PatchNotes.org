@@ -115,7 +115,6 @@ class PatchNotesDatabase extends Migration {
 			$table->foreign('notification_level')->references('level')->on('notification_levels');
 
 			$table->timestamps();
-			$table->softDeletes();
 
 			$table->unique(array('project_id', 'user_id', 'project_update_level'));
 		});

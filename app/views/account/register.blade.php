@@ -18,11 +18,11 @@
         @endif
 
         {{ Form::open(array('url' => 'account/register', 'class' => 'form auth', 'role' => 'form')) }}
-        <input class="form-control" name="username" placeholder="Username" type="text" value="{{ Input::old('username') }}" />
+        <input class="form-control" name="username" placeholder="Username" type="text" value="{{ Input::old('username') }}" autofocus />
         <input class="form-control" name="email" placeholder="Email" type="email" value="{{ Input::old('email') }}" />
         <input class="form-control" name="password" placeholder="Password" type="password" value="{{ Input::old('password') }}" />
 
-        <p>Please review our <a href="/about/tos">Terms of Service</a> before your create your account.</p>
+        <p>Please review our <a href="/about/tos" target="_blank">Terms of Service</a> before your create your account.</p>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">
             Create An Account
@@ -34,6 +34,5 @@
         </div>
     </div>
 </div>
-
 
 @stop
