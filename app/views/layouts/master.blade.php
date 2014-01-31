@@ -103,7 +103,6 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <p>
-                            Copyright &copy; Axxim, LLC 2013 &middot;
                             <a target="_blank" href="http://twitter.com/patchnotesorg">Twitter</a> &middot;
                             <a target="_blank" href="https://github.com/PatchNotes/PatchNotes.org">GitHub</a>
                         </p>

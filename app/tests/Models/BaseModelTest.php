@@ -38,7 +38,7 @@ class BaseModelTest extends TestCase {
 		$result = $this->model->validate();
 
 		$this->assertFalse($result);
-		$this->assertEquals('messages', $this->model->errors);
+		$this->assertInternalType('Illuminate\\Support\\MessageBag', $this->model->getErrors());
 	}
 
 }

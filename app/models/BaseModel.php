@@ -14,7 +14,7 @@ class BaseModel extends Eloquent {
 	 *
 	 * @var Array
 	 */
-	protected static $rules = array();
+	static $rules = array();
 
 	/**
 	 * Validator instance
