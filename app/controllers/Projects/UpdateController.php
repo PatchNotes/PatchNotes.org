@@ -83,8 +83,7 @@ class UpdateController extends BaseController {
 
 		$update = $project->updates()->save($update);
 
-		$result = Event::fire('project.update.create', array($project, $update));
-		exit();
+		Event::fire('project.update.create', array($project, $update));
 
 		return Redirect::back();
 	}
