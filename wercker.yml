@@ -6,7 +6,9 @@ build:
       # and the code value contains the command that get executed
       - script:
           name: install dependencies
-          code: composer install --no-interaction --prefer-source
+          code: |-
+          	composer config github-oauth.github.com $GH_OAUTH
+            composer install --no-interaction --prefer-source
       - script:
           name: run unit tests
           code: phpunit
