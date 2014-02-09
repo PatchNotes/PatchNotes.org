@@ -24,11 +24,11 @@ class UpdateController extends BaseController {
 	/**
 	 * Return a list of the projects updates in the RSS format.
 	 *
-	 * @param $project
+	 * @param $projectSlug
 	 * @return \Illuminate\Http\Response
 	 */
-	public function indexRSS($project) {
-		$project = Project::where('slug', $project)->first();
+	public function indexRSS($projectSlug) {
+		$project = Project::where('slug', $projectSlug)->first();
 
 		$feed = Rss::feed('2.0', 'UTF-8');
 		$feed->channel(array(

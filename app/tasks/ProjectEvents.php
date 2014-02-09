@@ -21,11 +21,14 @@ class ProjectEvents {
 		}
 	}
 
-	public function sendUpdate($updateId, $userId) {
+	public function sendUpdate($job, $data) {
+		list($updateId, $userId) = $data;
 		$update = ProjectUpdate::find($updateId);
 		$user = User::find($userId);
 
 		// Do mail thing
+
+		$job->delete();
 	}
 
 	public function subscribe($events) {
