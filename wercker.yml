@@ -13,7 +13,7 @@ build:
           composer install --no-interaction --prefer-source
     - script:
         name: migrate database
-        code: php artisan migrate
+        code: php artisan migrate --env=wercker
     - script:
         name: run unit tests
         code: phpunit
