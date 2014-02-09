@@ -1,18 +1,26 @@
 box: wercker/php
+services:
+  - wercker/mysql
 build:
-    # The steps that will be executed on build
-    steps:
-      # A custom script step, name value is used in the UI
-      # and the code value contains the command that get executed
-      - script:
-          name: install dependencies
-          code: |-
-            composer config github-oauth.github.com $GH_OAUTH
-            composer install --no-interaction --prefer-source
-      - script:
-          name: run unit tests
-          code: phpunit
-      # Add more steps here:
-      #- script:
-      #    name: run unit tests
-      #    code: phpunit
+  # The steps that will be executed on build
+  steps:
+    # A custom script step, name value is used in the UI
+    # and the code value contains the command that get executed
+    - script:
+        name: install dependencies
+        code: |-
+          composer config github-oauth.github.com $GH_OAUTH
+          composer install --no-interaction --prefer-source
+    - script:
+        name: migrate database
+        code: php artisan migrate
+    - script:
+        name: run unit tests
+        code: phpunit
+  after-steps:
+    - wouter/irc-notify@0.0.9:
+        server: irc.freenode.net
+        port: 6667
+        nickname: wercbot
+        channel: patchnotes
+    

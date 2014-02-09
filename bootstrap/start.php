@@ -30,6 +30,12 @@ $env = $app->detectEnvironment(array(
 
 ));
 
+// If we're wercker
+if(isset($_ENV['WERCKER']) && $_ENV['WERCKER'] == true) {
+	$env = 'wercker';
+	$testEnvironment = 'wercker';
+}
+
 /*
 |--------------------------------------------------------------------------
 | Bind Paths
