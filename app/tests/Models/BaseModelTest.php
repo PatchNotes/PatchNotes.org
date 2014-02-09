@@ -5,6 +5,7 @@ use Mockery;
 use BaseModel;
 use TestCase;
 use Validator;
+use Illuminate\Support\MessageBag;
 
 class BaseModelTest extends TestCase {
 
@@ -38,7 +39,7 @@ class BaseModelTest extends TestCase {
 		$result = $this->model->validate();
 
 		$this->assertFalse($result);
-		$this->assertInternalType('Illuminate\\Support\\MessageBag', $this->model->getErrors());
+		$this->assertInstanceOf('Illuminate\Support\MessageBag', $this->model->getErrors());
 	}
 
 }

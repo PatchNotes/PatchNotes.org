@@ -31,7 +31,7 @@ $env = $app->detectEnvironment(array(
 ));
 
 // If we're wercker
-if(isset($_ENV['WERCKER']) && $_ENV['WERCKER'] == true) {
+if(!empty(getenv('WERCKER'))) {
 	$env = 'wercker';
 	$testEnvironment = 'wercker';
 }
