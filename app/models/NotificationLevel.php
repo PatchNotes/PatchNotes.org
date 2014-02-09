@@ -12,6 +12,6 @@ class NotificationLevel extends BaseModel {
 
 	protected $table = 'notification_levels';
 
-	protected $fillable = array('level', 'name');
+	protected $fillable = array('level', 'name', 'queue');
 
 } 

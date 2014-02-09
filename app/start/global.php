@@ -22,7 +22,9 @@ ClassLoader::addDirectories(array(
 ));
 
 $userEvents = new PatchNotes\Events\UserEvents();
+$projectEvents = new PatchNotes\Events\ProjectEvents();
 Event::subscribe($userEvents);
+Event::subscribe($projectEvents);
 
 /*
 |--------------------------------------------------------------------------

@@ -86,17 +86,30 @@ class PatchNotesDatabase extends Migration {
 
 			$table->integer('level')->unsigned()->unique();
 			$table->string('name');
+			$table->string('queue')->unique();
 
 			$table->timestamps();
 		});
 
 		$levels = array(
-			0 => "Immediate",
-			24 => "Daily Digest",
-			168 => "Weekly Digest"
+			array(
+				'level' => 0,
+				'name' => 'Immediate',
+				'queue' => 'pn_immediate'
+			),
+			array(
+				'level' => 24,
+				'name' => 'Daily Digest',
+				'queue' => 'pn_daily'
+			),
+			array(
+				'level' => 168,
+				'name' => 'Weekly Digest',
+				'queue' => 'pn_weekly'
+			)
 		);
-		foreach ($levels as $level => $name) {
-			NotificationLevel::create(compact('level', 'name'));
+		foreach ($levels as $level) {
+			NotificationLevel::create($level);
 		}
 
 		Schema::create('subscriptions', function (Blueprint $table) {

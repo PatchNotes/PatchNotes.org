@@ -83,6 +83,23 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 	}
 
 	/**
+	 * @param ProjectUpdate $update
+	 * @return NotificationLevel
+	 */
+	public function getNotificationLevel(ProjectUpdate $update) {
+		$subscription = Subscription::where('user_id', $this->id)
+			->where('project_id', $update->project->id)
+			->where('project_update_level', $update->level)
+			->first();
+
+		if(is_null($subscription)) {
+			return $this->getDefaultNotificationLevel($update->level);
+		}
+
+		return NotificationLevel::where('level', $subscription->notification_level)->first();
+	}
+
+	/**
 	 * Fetch a users default notification level
 	 *
 	 * @param $updateLevel

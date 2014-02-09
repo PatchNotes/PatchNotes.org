@@ -66,7 +66,7 @@ class UpdateController extends BaseController {
 		$rules = array(
 			'title' => 'required|max:200',
 			'description' => 'required|max:1000',
-			'rank' => 'exists:subscription_levels,level'
+			'rank' => 'exists:project_updates_levels,level'
 		);
 		$validator = Validator::make($input, $rules);
 		if ($validator->fails()) {
@@ -78,12 +78,13 @@ class UpdateController extends BaseController {
 		$update->title = $input['title'];
 		$update->body = $input['description'];
 		$update->slug = Str::slug($input['title']);
-		$update->subscription_level = $input['rank'];
+		$update->level = $input['rank'];
 		$update->user_id = Sentry::getUser()->id;
 
 		$update = $project->updates()->save($update);
 
-		Event::fire('project.update', array($update));
+		$result = Event::fire('project.update.create', array($project, $update));
+		exit();
 
 		return Redirect::back();
 	}

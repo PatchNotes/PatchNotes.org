@@ -20,7 +20,7 @@ class ProjectUpdateSeeder extends Seeder {
 				$faker = $this->faker->unique();
 				$title = $faker->sentence();
 
-				ProjectUpdate::create(array(
+				$update = ProjectUpdate::create(array(
 					'project_id' => $project->id,
 					'title' => $title,
 					'slug' => Str::slug($title),
@@ -28,6 +28,8 @@ class ProjectUpdateSeeder extends Seeder {
 					'level' => $this->levels[array_rand($this->levels)],
 					'user_id' => $project->managers()->first()->user_id
 				));
+
+				Event::fire('project.update.create', array($project, $update));
 			}
 		}
 	}
