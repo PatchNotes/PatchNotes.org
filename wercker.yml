@@ -7,7 +7,7 @@ build:
       - script:
           name: install dependencies
           code: |-
-          	composer config github-oauth.github.com $GH_OAUTH
+            composer config github-oauth.github.com $GH_OAUTH
             composer install --no-interaction --prefer-source
       - script:
           name: run unit tests
