@@ -1,4 +1,4 @@
-## PatchNotes [![Stories in Ready](https://badge.waffle.io/PatchNotes/PatchNotes.org.png?label=ready)](http://waffle.io/PatchNotes/PatchNotes.org) [![Build Status](https://travis-ci.org/PatchNotes/PatchNotes.org.png?branch=master)](https://travis-ci.org/PatchNotes/PatchNotes.org)
+## PatchNotes [![Stories in Ready](https://badge.waffle.io/PatchNotes/PatchNotes.org.png?label=ready)](http://waffle.io/PatchNotes/PatchNotes.org) [![wercker status](https://app.wercker.com/status/0d6d75950a89752cd448d2e85acced1a "wercker status")](https://app.wercker.com/project/bykey/0d6d75950a89752cd448d2e85acced1a)
 Follow up on your favorite projects & services
 
 
