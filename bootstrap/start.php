@@ -26,12 +26,13 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('764-875465','luke-desktop','clone1018-desktop','luke-laptop'),
+	'local' => array('764-875465','luke-desktop','clone1018-desktop','luke-laptop','precise64'),
 
 ));
 
 // If we're wercker
-if(!empty(getenv('WERCKER'))) {
+$wercker = getenv('WERCKER');
+if(!empty($wercker)) {
 	$env = 'wercker';
 	$testEnvironment = 'wercker';
 }

@@ -10,7 +10,5 @@
 //
 // The available directives right now are require, require_directory, and require_tree
 //
-//= require libraries/jquery.min.js
-//= require libraries/bootstrap.min.js
-//= require libraries/jquery.textfill.min.js
-//= require patchnotes.js
+//= require jquery
+//= require_tree .

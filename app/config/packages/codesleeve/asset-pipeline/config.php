@@ -1,5 +1,16 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| EnvironmentFilter
+|--------------------------------------------------------------------------
+|
+| This is used to run filters on specific environments. For example, if you
+| only want to run a filter on production and staging environments
+|
+| new EnvironmentFilter(new FilterExample, App::environment(), array('production', 'staging')),
+|
+*/
 use Codesleeve\AssetPipeline\Filters\EnvironmentFilter;
 
 return array(
@@ -42,62 +53,6 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| filters
-	|--------------------------------------------------------------------------
-	|
-	| In order for a file to be included with sprockets, it needs to be listed
-	| here and we can also do any preprocessing on files with the extension if
-	| we choose to.
-	|
-	*/
-	'filters' => array(
-		'.min.js' => array(),
-		'.min.css' => array(
-			new Codesleeve\AssetPipeline\Filters\URLRewrite,
-		),
-		'.js' => array(
-			new EnvironmentFilter(new Assetic\Filter\JSMinPlusFilter, App::environment()),
-		),
-		'.js.coffee' => array(
-			new Codesleeve\AssetPipeline\Filters\CoffeeScript,
-			new EnvironmentFilter(new Assetic\Filter\JSMinPlusFilter, App::environment()),
-		),
-		'.coffee' => array(
-			new Codesleeve\AssetPipeline\Filters\CoffeeScript,
-			new EnvironmentFilter(new Assetic\Filter\JSMinPlusFilter, App::environment()),
-		),
-		'.css' => array(
-			new Codesleeve\AssetPipeline\Filters\URLRewrite,
-			new EnvironmentFilter(new Assetic\Filter\CssMinFilter, App::environment()),
-		),
-		'.css.less' => array(
-			new Assetic\Filter\LessphpFilter,
-			new Codesleeve\AssetPipeline\Filters\URLRewrite,
-			new EnvironmentFilter(new Assetic\Filter\CssMinFilter, App::environment()),
-		),
-		'.css.scss' => array(
-			new Assetic\Filter\ScssphpFilter,
-			new Codesleeve\AssetPipeline\Filters\URLRewrite,
-			new EnvironmentFilter(new Assetic\Filter\CssMinFilter, App::environment()),
-		),
-		'.less' => array(
-			new Assetic\Filter\LessphpFilter,
-			new Codesleeve\AssetPipeline\Filters\URLRewrite,
-			new EnvironmentFilter(new Assetic\Filter\CssMinFilter, App::environment()),
-		),
-		'.scss' => array(
-			new Assetic\Filter\ScssphpFilter,
-			new Codesleeve\AssetPipeline\Filters\URLRewrite,
-			new EnvironmentFilter(new Assetic\Filter\CssMinFilter, App::environment()),
-		),
-		'.html' => array(
-			new Codesleeve\AssetPipeline\Filters\JST,
-			new EnvironmentFilter(new Assetic\Filter\JSMinPlusFilter, App::environment()),
-		)
-	),
-
-	/*
-	|--------------------------------------------------------------------------
 	| mimes
 	|--------------------------------------------------------------------------
 	|
@@ -108,8 +63,66 @@ return array(
 	|
 	*/
 	'mimes' => array(
-		'javascripts' => array('.js', '.js.coffee', '.coffee', '.html', '.min.js'),
-		'stylesheets' => array('.css', '.css.less', '.css.scss', '.less', '.scss', '.min.css'),
+	    'javascripts' => array('.js', '.js.coffee', '.coffee', '.html', '.min.js'),
+	    'stylesheets' => array('.css', '.css.less', '.css.scss', '.less', '.scss', '.min.css'),
+	),
+
+	/*
+	|--------------------------------------------------------------------------
+	| filters
+	|--------------------------------------------------------------------------
+	|
+	| In order for a file to be included with sprockets, it needs to be listed
+	| here and we can also do any preprocessing on files with the extension if
+	| we choose to.
+	|
+	*/
+	'filters' => array(
+		'.min.js' => array(
+
+		),
+		'.min.css' => array(
+			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
+		),
+		'.js' => array(
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\JSMinPlusFilter, App::environment()),
+		),
+		'.js.coffee' => array(
+			new Codesleeve\AssetPipeline\Filters\CoffeeScript,
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\JSMinPlusFilter, App::environment()),
+		),
+		'.coffee' => array(
+			new Codesleeve\AssetPipeline\Filters\CoffeeScript,
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\JSMinPlusFilter, App::environment()),
+		),
+		'.css' => array(
+			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
+		),
+		'.css.less' => array(
+			new Codesleeve\AssetPipeline\Filters\LessphpFilter,
+			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
+		),
+		'.css.scss' => array(
+			new Assetic\Filter\ScssphpFilter,
+			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
+		),
+		'.less' => array(
+			new Codesleeve\AssetPipeline\Filters\LessphpFilter,
+			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
+		),
+		'.scss' => array(
+			new Assetic\Filter\ScssphpFilter,
+			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
+		),
+		'.html' => array(
+			new Codesleeve\AssetPipeline\Filters\JST,
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\JSMinPlusFilter, App::environment()),
+		)
 	),
 
 	/*
@@ -117,19 +130,61 @@ return array(
 	| cache
 	|--------------------------------------------------------------------------
 	|
-	| By default we cache all assets. This will greatly increase performance; however,
-	| it is up to the developer to determine how the pipeline should tell Assetic to
-	| cache assets. You can create your own CacheInterface if the filesystem cache is
-	| not up to your standards. See more in CacheInterface.php at
+	| By default we cache all assets on 'production' environment. This will greatly
+	| increase performance; ultimately though, it is up to the developer to determine
+	| how the pipeline should tell Assetic to cache assets.
+	|
+	| Below is the cache_driver which allows the developer to control how exactly
+	| how we should cache assets.
+	|
+	*/
+	'cache' => 	array('production'),
+
+	/*
+	|--------------------------------------------------------------------------
+	| cache_server
+	|--------------------------------------------------------------------------
+	|
+	| You can create your own CacheInterface if the filesystem cache is not up to
+	| your standards. This is for caching asset files on the server-side.
+	|
+	| Please note that caching is used on **ALL** environments always. This is done
+	| to increase performance of the pipeline. Cached files will be busted when the
+	| file changes.
+	|
+	| However, manifest files are regenerated (not cached) when the environment is
+	| not found within the 'cache' array. This lets you develop on local and still
+	| utilize caching, so you don't have to regenerate all precompiled files while
+	| developing on your assets.
+	|
+	| See more in CacheInterface.php at
 	|
 	|    https://github.com/kriswallsmith/assetic/blob/master/src/Assetic/Cache
 	|
-	| If you want to turn on caching you could use this CacheInterface
-	|
-	|	'cache' => new Assetic\Cache\FilesystemCache(storage_path() . '/cache/asset-pipeline'),
 	|
 	*/
-	'cache' => new Codesleeve\AssetPipeline\Filters\FilesNotCached,
+	'cache_server' => new Assetic\Cache\FilesystemCache(App::make('path.storage') . '/cache/asset-pipeline'),
+
+	/*
+	|--------------------------------------------------------------------------
+	| cache_client
+	|--------------------------------------------------------------------------
+	|
+	| If you want to handle 304's and what not, to keep users from refetching
+	| your assets and saving your bandwidth you can use a cache_client driver
+	| that handles this. This doesn't handle assets on the server-side, use
+	| cache_server for that. This only works when the current environment is
+	| listed within `cache`
+	|
+	| Note that this needs to implement the interface
+	|
+	|	Codesleeve\Sprockets\Interfaces\ClientCacheInterface
+	|
+	| or this won't work correctly. It is a wrapper class around your cache_server
+	| driver and also uses the AssetCache class to help access files.
+	|
+	*/
+	'cache_client' => new Codesleeve\AssetPipeline\Filters\ClientCacheFilter,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -159,9 +214,13 @@ return array(
 	*/
 	'directives' => array(
 		'require ' => new Codesleeve\Sprockets\Directives\RequireFile,
-		'require_directory' => new Codesleeve\Sprockets\Directives\RequireDirectory,
-		'require_tree' => new Codesleeve\Sprockets\Directives\RequireTree,
+		'require_directory ' => new Codesleeve\Sprockets\Directives\RequireDirectory,
+		'require_tree ' => new Codesleeve\Sprockets\Directives\RequireTree,
+		'require_tree_df ' => new Codesleeve\Sprockets\Directives\RequireTreeDf,
 		'require_self' => new Codesleeve\Sprockets\Directives\RequireSelf,
+		'include ' => new Codesleeve\Sprockets\Directives\IncludeFile,
+		'stub ' => new Codesleeve\Sprockets\Directives\Stub,
+		'depend_on ' => new Codesleeve\Sprockets\Directives\DependOn,
 	),
 
 	/*
@@ -191,6 +250,20 @@ return array(
 	|
 	*/
 	'stylesheet_link_tag' => new Codesleeve\AssetPipeline\Composers\StylesheetComposer,
+
+	/*
+	|--------------------------------------------------------------------------
+	| image_tag
+	|--------------------------------------------------------------------------
+	|
+	| This allows us to completely control how the image_tag function
+	| works for asset pipeline.
+	|
+	| It is probably safe just to leave this alone unless you are familar with
+	| what is actually going on here.
+	|
+	*/
+	'image_tag' => new Codesleeve\AssetPipeline\Composers\ImageComposer,
 
 	/*
 	|--------------------------------------------------------------------------

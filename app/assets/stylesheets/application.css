@@ -9,6 +9,5 @@
  * gets included (e.g. say you have require_tree . then the code will appear after all the directories 
  * but before any files alphabetically greater than 'application.css' 
  *
- *= require bootstrap.css
- *= require patchnotes.less
+ *= require_tree .
  */

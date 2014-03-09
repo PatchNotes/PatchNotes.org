@@ -4,7 +4,7 @@ namespace Account;
 use Sentry;
 use User;
 
-class DashboardController extends BaseController {
+class SettingController extends BaseController {
 
 	/**
 	 * @var User

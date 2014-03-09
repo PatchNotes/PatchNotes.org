@@ -1,5 +1,7 @@
 <?php
 
+use LaravelBook\Ardent\Ardent;
+
 /**
  * An Eloquent Model: 'ProjectUpdate'
  *
@@ -17,7 +19,7 @@
  * @property-read \User $author
  * @property integer $level
  */
-class ProjectUpdate extends BaseModel {
+class ProjectUpdate extends Ardent {
 
 	protected $table = "project_updates";
 

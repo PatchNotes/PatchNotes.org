@@ -11,6 +11,33 @@ class PatchNotesDatabase extends Migration {
 	 * @return void
 	 */
 	public function up() {
+        Schema::create('organizations', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
+            $table->increments('id');
+
+            $table->string('name');
+            $table->string('slug');
+            $table->string('site_url');
+            $table->string('email');
+            $table->mediumText('description');
+            $table->timestamps();
+
+            $table->unique('name');
+        });
+        Schema::create('organization_users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
+            $table->integer('user_id')->unsigned();
+            $table->integer('organization_id')->unsigned();
+            $table->boolean('creator');
+
+            $table->primary(array('user_id', 'organization_id'));
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('organization_id')->references('id')->on('organizations');
+        });
+
 		Schema::create('projects', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
 
@@ -131,9 +158,6 @@ class PatchNotesDatabase extends Migration {
 
 			$table->unique(array('project_id', 'user_id', 'project_update_level'));
 		});
-
-
-
 	}
 
 	/**

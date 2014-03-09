@@ -1,5 +1,7 @@
 <?php
 
+use LaravelBook\Ardent\Ardent;
+
 /**
  * Class Subscription
  * 
@@ -18,7 +20,7 @@
  * @property-read \ProjectUpdateLevel $subscriptionLevel
  * @property-read \NotificationLevel $notificationLevel
  */
-class Subscription extends BaseModel {
+class Subscription extends Ardent {
 
 	public function user() {
 		return $this->belongsTo('User');

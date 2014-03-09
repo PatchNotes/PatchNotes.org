@@ -1,5 +1,7 @@
 <?php
 
+use LaravelBook\Ardent\Ardent;
+
 /**
  * An Eloquent Model: 'Project'
  *
@@ -16,7 +18,7 @@
  * @property-read \Illuminate\Database\Eloquent\Collection|\ProjectManager[] $managers
  * @property-read \Illuminate\Database\Eloquent\Collection|\Subscription[] $subscribers
  */
-class Project extends BaseModel {
+class Project extends Ardent {
 
 	public static $rules = array(
 		'name' => 'required',

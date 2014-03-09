@@ -17,8 +17,10 @@
 		"aws/aws-sdk-php": "2.4.*@dev",
 		"thujohn/rss": "dev-master",
 		"knplabs/github-api": "*",
+        "adamwathan/bootforms": "dev-master",
 
-		"barryvdh/laravel-ide-helper": "1.*"
+        "laravelbook/ardent": "dev-master",
+        "barryvdh/laravel-ide-helper": "1.*"
 	},
     "require-dev": {
         "phpunit/phpunit": "3.7.*",

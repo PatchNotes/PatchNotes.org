@@ -1,5 +1,7 @@
 <?php
 
+use LaravelBook\Ardent\Ardent;
+
 /**
  * An Eloquent Model: 'Social'
  *
@@ -17,7 +19,7 @@
  * @property \Carbon\Carbon $oauth2_expires
  * @property-read \User $user
  */
-class Social extends BaseModel {
+class Social extends Ardent {
 
 	protected $table = 'social';
 

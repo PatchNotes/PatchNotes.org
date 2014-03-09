@@ -115,6 +115,8 @@ return array(
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Thujohn\Rss\RssServiceProvider',
 
+        'AdamWathan\BootForms\BootFormsServiceProvider',
+
 	),
 
 	/*
@@ -183,6 +185,8 @@ return array(
 		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 		'SentrySocial' => 'Cartalyst\SentrySocial\Facades\Laravel\SentrySocial',
 		'Rss' => 'Thujohn\Rss\RssFacade',
+
+        'BootForm' => 'AdamWathan\BootForms\Facades\BootForm',
 
 	),
 

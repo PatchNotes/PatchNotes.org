@@ -1,5 +1,7 @@
 <?php
 
+use LaravelBook\Ardent\Ardent;
+
 /**
  * An Eloquent Model: 'ProjectUpdateLevel'
  *
@@ -8,7 +10,7 @@
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
-class ProjectUpdateLevel extends BaseModel {
+class ProjectUpdateLevel extends Ardent {
 
 	protected $table = 'project_updates_levels';
 

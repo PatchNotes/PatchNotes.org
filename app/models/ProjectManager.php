@@ -1,5 +1,7 @@
 <?php
 
+use LaravelBook\Ardent\Ardent;
+
 /**
  * An Eloquent Model: 'ProjectManager'
  *
@@ -11,7 +13,7 @@
  * @property-read \Project $project
  * @property-read \User $user
  */
-class ProjectManager extends BaseModel {
+class ProjectManager extends Ardent {
 
 	protected $table = 'project_managers';
 
