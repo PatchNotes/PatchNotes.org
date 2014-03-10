@@ -21,7 +21,7 @@
  * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentry\Groups\Eloquent\Group[] $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\Subscription[] $subscriptions
  */
-class User extends Cartalyst\Sentry\Users\Eloquent\User {
+class User extends SentryUser implements Models\Interfaces\Participant {
 
 	/**
 	 * The database table used by the model.
@@ -53,7 +53,7 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 	);
 
     public function projects() {
-        return $this->morphTo('Project', 'owner');
+        return $this->morphMany('Project', 'owner');
     }
 
     public function organizations() {
@@ -68,6 +68,14 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 		$hash = md5($this->attributes['email']);
 		return "http://www.gravatar.com/avatar/$hash";
 	}
+
+    public function getNameAttribute() {
+        return $this->username;
+    }
+
+    public function getSlugAttribute() {
+        return $this->username;
+    }
 
 	public function getSubscriptionLevel(Project $project, $updateLevel) {
 
@@ -127,4 +135,17 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 
 		throw new Exception("No default level found, updateLevel must be out of range.");
 	}
+
+    /**
+     * Verify we're unique in both users and orgs
+     *
+     * @return bool
+     */
+    public function beforeSave() {
+        $org = Organization::where('slug', $this->slug)->first();
+
+        if($org) {
+            return false;
+        }
+    }
 }

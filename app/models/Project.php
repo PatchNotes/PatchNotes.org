@@ -27,7 +27,27 @@ class Project extends Ardent {
 		'description' => 'required',
 	);
 
-	/**
+    /**
+     * @param $orgOrUser
+     * @return bool|User|Organization
+     * @throws Exception
+     */
+    public static function resolveOwner($orgOrUser) {
+        $user = User::where('username', $orgOrUser)->first();
+        $organization = Organization::where('slug', $orgOrUser)->first();
+
+        if($user && $organization) {
+            throw new Exception("Found user and org record for {$orgOrUser}.");
+        } elseif($user && !$organization) {
+            return $user;
+        } elseif(!$user && $organization) {
+            return $organization;
+        }
+
+        return false;
+    }
+
+    /**
 	 * Register a users subscription to a project.
 	 *
 	 * @param User $user

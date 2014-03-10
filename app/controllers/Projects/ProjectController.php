@@ -4,7 +4,6 @@ namespace Projects;
 use dflydev\markdown\MarkdownParser;
 use Input;
 use Project;
-use ProjectManager;
 use Redirect;
 use Response;
 use Sentry;
@@ -12,6 +11,9 @@ use Social;
 use Str;
 use Validator;
 use View;
+use User;
+use Organization;
+use App;
 
 class ProjectController extends BaseController {
 
@@ -42,12 +44,12 @@ class ProjectController extends BaseController {
 
 		$possibleOwners = array(
 			'Users' => array(
-				$user->id => $user->username
+				'user:' . $user->id => $user->username
 			)
 		);
 		foreach ($user->organizations as $org) {
-			if(!isset($possibleOwners['Groups'])) $possibleOwners['Groups'] = array();
-			$possibleOwners['Groups'][$org->id] = $org->name;
+			if(!isset($possibleOwners['Organizations'])) $possibleOwners['Organizations'] = array();
+			$possibleOwners['Organizations']['organization:' . $org->id] = $org->name;
 		}
 
 		$githubUser = Social::whereRaw('provider = ? and user_id = ?', array('github', $user->id))->first();
@@ -78,35 +80,38 @@ class ProjectController extends BaseController {
 	 * @return Response
 	 */
 	public function store() {
-		$input = Input::all();
-		$input['slug'] = Str::slug($input['name']);
+        $validator = Validator::make(array(
+            'owner' => Input::get('owner')
+        ), array(
+            'owner' => array('regex:/(user|organization)\:\d+/')
+        ));
+        if($validator->fails()) {
+            App::abort(400, "Don't do that.");
+        }
 
-		$rules = array(
-			'name' => 'required',
-			'slug' => 'required|unique:projects',
-			'url' => 'required|url',
-			'description' => 'required',
-		);
-		$validator = Validator::make($input, $rules, array(
-			'slug.unique' => 'Your project name must not evaluate to a taken slug.'
-		));
-		if ($validator->fails()) {
-			return Redirect::back()->withErrors($validator);
+        $inpOwner = explode(':', Input::get('owner'));
+
+        if($inpOwner[0] === 'user') {
+            $owner = User::find($inpOwner[1]);
+        } else {
+            $owner = Organization::find($inpOwner[1]);
+        }
+        if(!$owner) {
+            return Redirect::back()->withErrors(array('User/Organization not found.'));
+        }
+
+        $project = new Project();
+
+		$project->name = Input::get('name');
+		$project->slug = Str::slug(Input::get('name'));
+		$project->description = Input::get('description');
+		$project->site_url = Input::get('url');
+
+		if ($owner->projects()->save($project)) {
+            return Redirect::action('Projects\\ProjectController@show', array($project->slug));
+        } else {
+			return Redirect::back()->withErrors($project->errors());
 		}
-
-		$project = new Project();
-
-		$project->name = $input['name'];
-		$project->slug = $input['slug'];
-		$project->description = $input['description'];
-		$project->site_url = $input['url'];
-
-		$project->save();
-		if (!$project) {
-			return Redirect::back()->withErrors(array('Name already exists.'));
-		}
-
-		return Redirect::action('Projects\\ProjectController@show', array($project->slug));
 	}
 
 	/**
@@ -116,12 +121,20 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function show($slug) {
-		$project = Project::where('slug', $slug)->first();
+	public function show($orgOrUser, $slug) {
+        $owner = Project::resolveOwner($orgOrUser);
+        if(!$owner) {
+            App::abort(404, 'Project not found.');
+        }
+
+        $project = $owner->projects()->where('slug', $slug)->first();
+        if(!$project) {
+            App::abort(404, 'Project not found.');
+        }
 
 		$parser = new MarkdownParser();
 
-		return View::make('projects/show', compact('project', 'parser'));
+		return View::make('projects/show', compact('project', 'owner', 'parser'));
 	}
 
 	/**
@@ -131,7 +144,7 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function edit($id) {
+	public function edit($orgOrUser, $id) {
 		//
 	}
 
@@ -142,7 +155,7 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function update($id) {
+	public function update($orgOrUser, $id) {
 		//
 	}
 
@@ -153,7 +166,7 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function destroy($id) {
+	public function destroy($orgOrUser, $id) {
 		//
 	}
 }

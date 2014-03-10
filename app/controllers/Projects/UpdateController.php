@@ -27,7 +27,7 @@ class UpdateController extends BaseController {
 	 * @param $projectSlug
 	 * @return \Illuminate\Http\Response
 	 */
-	public function indexRSS($projectSlug) {
+	public function indexRSS($orgOrUser, $projectSlug) {
 		$project = Project::where('slug', $projectSlug)->first();
 
 		$feed = Rss::feed('2.0', 'UTF-8');
@@ -97,7 +97,7 @@ class UpdateController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function show($projectSlug, $updateSlug) {
+	public function show($orgOrUser, $projectSlug, $updateSlug) {
 		$project = Project::where('slug', $projectSlug)->first();
 		$update = $project->updates()->where('slug', $updateSlug)->first();
 

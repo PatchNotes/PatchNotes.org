@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-lg-7">
-        <h2>{{{ $project->name }}}<br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
+        <h2 id="projectHeader"><a href="/projects/{{{ $owner->slug }}}">{{{ $owner->username }}}</a> / <a href="/projects/{{{ $owner->slug }}}/{{{ $project->slug }}}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
 	    @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
@@ -113,14 +113,13 @@
             </div>
             <div class="col-sm-4">
                 <div class="well well-sm">
-                    Managers <br>
-                    <h3>{{ $project->managers()->count() }}</h3>
+
                 </div>
             </div>
         </div>
 
         @if(Sentry::check())
-            @if($project->isManager(Sentry::getUser()))
+            {{-- @if($project->isManager(Sentry::getUser())) --}}
                 <div class="panel panel-default">
                     <div class="panel-heading">New Project Update</div>
                     <div class="panel-body">
@@ -171,17 +170,12 @@
                         {{ Form::close() }}
                     </div>
                 </div>
-            @endif
+            {{-- @endif --}}
         @endif
 
         <div class="panel panel-default">
             <div class="panel-heading">Project Managers</div>
             <div class="panel-body">
-                @foreach($project->managers as $manager)
-                <a href="/users/{{{ $manager->user->username }}}">
-                    <img src="{{ $manager->user->getGravatar() }}" alt="{{{ $manager->user->username }}}'s Avatar"  data-toggle="tooltip" data-placement="top" title="" data-original-title="{{{ $manager->user->username }}}'s Avatar"/>
-                </a>
-                @endforeach
             </div>
         </div>
 
