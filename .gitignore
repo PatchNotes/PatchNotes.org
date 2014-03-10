@@ -4,6 +4,7 @@ composer.phar
 composer.lock
 .DS_Store
 Thumbs.db
+.vagrant
 
 # Project Stuff
 _ide_helper.php

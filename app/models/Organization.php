@@ -16,6 +16,10 @@ class Organization extends Ardent {
 		'description' => '',
 	);
 
+    public function projects() {
+        return $this->morphTo('Project', 'owner');
+    }
+
     public static function fetchByCreator(User $user) {
 
         return array();

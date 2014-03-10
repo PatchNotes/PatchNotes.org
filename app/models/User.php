@@ -52,6 +52,14 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 		),
 	);
 
+    public function projects() {
+        return $this->morphTo('Project', 'owner');
+    }
+
+    public function organizations() {
+        return $this->belongsToMany('Organization', 'organization_users');
+    }
+
 	public function subscriptions() {
 		return $this->hasMany('Subscription');
 	}

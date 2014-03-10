@@ -49,23 +49,11 @@ class PatchNotesDatabase extends Migration {
 			$table->text('content')->nullable();
 			$table->string('site_url')->nullable();
 
-			$table->timestamps();
-			$table->softDeletes();
-		});
-
-		Schema::create('project_managers', function (Blueprint $table) {
-			$table->engine = 'InnoDB';
-
-			$table->integer('user_id')->unsigned();
-			$table->integer('project_id')->unsigned();
-
-			$table->unique(array('user_id', 'project_id'));
+            $table->integer('owner_id')->unsigned();
+            $table->string('owner_type');
 
 			$table->timestamps();
 			$table->softDeletes();
-
-			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('project_id')->references('id')->on('projects');
 		});
 
 		Schema::create('project_updates_levels', function (Blueprint $table) {

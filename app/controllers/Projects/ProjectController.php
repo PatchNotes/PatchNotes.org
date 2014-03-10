@@ -40,6 +40,16 @@ class ProjectController extends BaseController {
 
 		$user = Sentry::getUser();
 
+		$possibleOwners = array(
+			'Users' => array(
+				$user->id => $user->username
+			)
+		);
+		foreach ($user->organizations as $org) {
+			if(!isset($possibleOwners['Groups'])) $possibleOwners['Groups'] = array();
+			$possibleOwners['Groups'][$org->id] = $org->name;
+		}
+
 		$githubUser = Social::whereRaw('provider = ? and user_id = ?', array('github', $user->id))->first();
 		if ($githubUser) {
 			$client = new \Github\Client(
@@ -59,7 +69,7 @@ class ProjectController extends BaseController {
 			}
 		}
 
-		return View::make('projects/create', compact('githubRepos'));
+		return View::make('projects/create', compact('githubRepos', 'possibleOwners'));
 	}
 
 	/**
@@ -95,11 +105,6 @@ class ProjectController extends BaseController {
 		if (!$project) {
 			return Redirect::back()->withErrors(array('Name already exists.'));
 		}
-
-		$manager = new ProjectManager();
-		$manager->user_id = Sentry::getUser()->id;
-		$manager->project_id = $project->id;
-		$manager->save();
 
 		return Redirect::action('Projects\\ProjectController@show', array($project->slug));
 	}
