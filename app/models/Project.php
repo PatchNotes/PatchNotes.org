@@ -28,16 +28,16 @@ class Project extends Ardent {
 	);
 
     /**
-     * @param $orgOrUser
+     * @param $participant
      * @return bool|User|Organization
      * @throws Exception
      */
-    public static function resolveOwner($orgOrUser) {
-        $user = User::where('username', $orgOrUser)->first();
-        $organization = Organization::where('slug', $orgOrUser)->first();
+    public static function resolveParticipant($participant) {
+        $user = User::where('username', $participant)->first();
+        $organization = Organization::where('slug', $participant)->first();
 
         if($user && $organization) {
-            throw new Exception("Found user and org record for {$orgOrUser}.");
+            throw new Exception("Found user and org record for {$participant}.");
         } elseif($user && !$organization) {
             return $user;
         } elseif(!$user && $organization) {

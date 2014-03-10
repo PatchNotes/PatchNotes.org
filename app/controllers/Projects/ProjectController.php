@@ -121,8 +121,8 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function show($orgOrUser, $slug) {
-        $owner = Project::resolveOwner($orgOrUser);
+	public function show($participant, $slug) {
+        $owner = Project::resolveParticipant($participant);
         if(!$owner) {
             App::abort(404, 'Project not found.');
         }
@@ -144,7 +144,7 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function edit($orgOrUser, $id) {
+	public function edit($participant, $id) {
 		//
 	}
 
@@ -155,7 +155,7 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function update($orgOrUser, $id) {
+	public function update($participant, $id) {
 		//
 	}
 
@@ -166,7 +166,7 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function destroy($orgOrUser, $id) {
+	public function destroy($participant, $id) {
 		//
 	}
 }

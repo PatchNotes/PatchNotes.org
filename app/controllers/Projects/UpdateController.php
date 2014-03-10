@@ -24,10 +24,11 @@ class UpdateController extends BaseController {
 	/**
 	 * Return a list of the projects updates in the RSS format.
 	 *
+     * @param $participant
 	 * @param $projectSlug
 	 * @return \Illuminate\Http\Response
 	 */
-	public function indexRSS($orgOrUser, $projectSlug) {
+	public function indexRSS($participant, $projectSlug) {
 		$project = Project::where('slug', $projectSlug)->first();
 
 		$feed = Rss::feed('2.0', 'UTF-8');
@@ -55,8 +56,8 @@ class UpdateController extends BaseController {
 	 * @param $slug
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function store($slug) {
-		$project = Project::where('slug', $slug)->firstOrFail();
+	public function store($participant, $project) {
+		$project = Project::where('slug', $project)->firstOrFail();
 		if (!$project->isManager(Sentry::getUser())) {
 			App::abort(401);
 		}
@@ -88,18 +89,21 @@ class UpdateController extends BaseController {
 		return Redirect::back();
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param $projectSlug
-	 * @param $updateSlug
-	 * @internal param int $id
-	 *
-	 * @return Response
-	 */
-	public function show($orgOrUser, $projectSlug, $updateSlug) {
-		$project = Project::where('slug', $projectSlug)->first();
-		$update = $project->updates()->where('slug', $updateSlug)->first();
+    /**
+     * Display the specified resource.
+     *
+     * @param $participant
+     * @param $project
+     * @param $update
+     * @internal param $projectSlug
+     * @internal param $updateSlug
+     * @internal param int $id
+     *
+     * @return Response
+     */
+	public function show($participant, $project, $update) {
+		$project = Project::where('slug', $project)->first();
+		$update = $project->updates()->where('slug', $update)->first();
 
 		$parser = new MarkdownParser();
 
@@ -118,7 +122,7 @@ class UpdateController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function edit($id) {
+	public function edit($participant, $project, $update) {
 		//
 	}
 
@@ -129,7 +133,7 @@ class UpdateController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function update($id) {
+	public function update($participant, $project, $update) {
 		//
 	}
 
@@ -140,7 +144,7 @@ class UpdateController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function destroy($id) {
+	public function destroy($participant, $project, $update) {
 		//
 	}
 }

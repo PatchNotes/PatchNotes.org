@@ -6,7 +6,7 @@ use Redirect;
 
 class ShareController extends BaseController {
 
-	public function getTwitter($projectSlug) {
+	public function getTwitter($participant, $projectSlug) {
 		$project = Project::where('slug', $projectSlug)->first();
 
 		$url = action('Projects\\ProjectController@show', array($project->slug));
@@ -17,7 +17,7 @@ class ShareController extends BaseController {
 		return Redirect::to($url);
 	}
 
-	public function getFacebook($projectSlug) {
+	public function getFacebook($participant, $projectSlug) {
 		$project = Project::where('slug', $projectSlug)->first();
 
 		$url = action('Projects\\ProjectController@show', array($project->slug));
@@ -28,7 +28,7 @@ class ShareController extends BaseController {
 		return Redirect::to($redirect);
 	}
 
-	public function getGoogle($projectSlug) {
+	public function getGoogle($participant, $projectSlug) {
 		$project = Project::where('slug', $projectSlug)->first();
 
 		$url = urlencode(action('Projects\\ProjectController@show', array($project->slug)));

@@ -25,7 +25,7 @@ class SubscriptionController extends BaseController {
 		Redirect::to('/');
 	}
 
-	public function store($project) {
+	public function store($participant, $project) {
 		$project = Project::where('slug', $project)->first();
 		$success = $project->subscribe($this->user, $this->user->getDefaultLevels());
 		if (!$success) {
@@ -35,7 +35,7 @@ class SubscriptionController extends BaseController {
 		return Response::json(array('success' => true));
 	}
 
-	public function destroy($project) {
+	public function destroy($participant, $project) {
 		$project = Project::where('slug', $project)->first();
 		$success = $project->unsubscribe($this->user);
 		if (!$success) {
