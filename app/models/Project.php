@@ -27,6 +27,10 @@ class Project extends Ardent {
 		'description' => 'required',
 	);
 
+    public function getHrefAttribute() {
+        return action('Projects\\ProjectController@show', array($this->owner->slug, $this->slug));
+    }
+
     /**
      * @param $participant
      * @return bool|User|Organization

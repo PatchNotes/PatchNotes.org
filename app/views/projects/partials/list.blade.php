@@ -2,7 +2,7 @@
     @foreach($projects as $project)
 
     <div class="col-md-3">
-        <a href="/projects/{{ $project->slug }}" class="thumbnail project">
+        <a href="{{ $project->href }}" class="thumbnail project">
             <div class="caption">
                 <h2 class="textfill"><span>{{{ $project->name }}}</span></h2>
                 <p>{{{ Str::limit($project->description, 50) }}}</p>

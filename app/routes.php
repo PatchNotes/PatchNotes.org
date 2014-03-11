@@ -24,7 +24,7 @@ Route::group(array(), function () {
 
 /* Projects */
 Route::group(array(), function () {
-	Route::resource('projects', 'Projects\\ProjectController');
+    Route::get('projects', 'Projects\\ProjectController@index');
 
     Route::get('projects/{participant}/{name}', 'Projects\\ProjectController@show');
     Route::get('projects/{participant}/{name}/edit', 'Projects\\ProjectController@edit');
