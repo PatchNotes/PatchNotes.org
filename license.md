@@ -1,3 +1,13 @@
+Any files including their own license or mentioned below are not released into the public domain:
+- provider/assets/javascripts/bootstrap.min.js
+- provider/assets/javascripts/jquery.min.js
+- provider/assets/javascripts/jquery.textfill.min.js
+- provider/assets/javascripts/typeahead.js
+- provider/assets/stylesheets/bootstrap.min.css
+
+PatchNotes uses the Laravel framework with the default base Laravel app, all code not found in
+https://github.com/laravel/laravel is subject to the following license:
+
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
