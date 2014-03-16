@@ -37,7 +37,7 @@ class AccountController extends BaseController {
 			App::abort(404, "Provider not found.");
 		}
 
-		// Callback is required for providers such as Facebook and a few others (it's required
+		// Callback is rquired for providers such as Facebook and a few others (it's required
 		// by the spec, but some providers ommit this).
 		$callback = URL::current();
 
