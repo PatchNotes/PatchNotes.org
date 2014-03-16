@@ -1,4 +1,1 @@
-* text=auto
-
-# Use linux line endings on all operating sytems
-text eol=lf
+* text eol=lf
