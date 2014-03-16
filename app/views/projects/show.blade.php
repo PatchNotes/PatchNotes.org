@@ -4,25 +4,25 @@
 
 <div class="row">
     <div class="col-lg-7">
-        <h2 id="projectHeader"><a href="/projects/{{{ $owner->slug }}}">{{{ $owner->username }}}</a> / <a href="/projects/{{{ $owner->slug }}}/{{{ $project->slug }}}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
+        <h2 id="projectHeader"><a href="/projects/{{{ $owner->slug }}}">{{{ $owner->username }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
 	    @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
-	    <a href="{{ action('Projects\\SubscriptionController@store', array($project->slug)) }}" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
+	    <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
 		    <i class="fa fa-plus"></i>
 	    </a>
 	    @else
-	    <a href="{{ action('Projects\\SubscriptionController@destroy', array($project->slug)) }}" class="btn social-btn social-unsubscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
+	    <a href="{{ action('Projects\\SubscriptionController@destroy', array($owner->slug, $project->slug)) }}" class="btn social-btn social-unsubscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
 		    <i class="fa fa-minus"></i>
 	    </a>
 	    @endif
-        <a href="/projects/{{ $project->slug }}/updates.rss" class="btn social-btn social-rss">
+        <a href="{{ $project->href }}/updates.rss" class="btn social-btn social-rss">
             <i class="fa fa-rss"></i>
         </a>
-        <a href="{{ action('Projects\\ShareController@getTwitter', array($project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank">
+        <a href="{{ action('Projects\\ShareController@getTwitter', array($owner->slug, $project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank">
             <i class="fa fa-twitter"></i>
         </a>
-        <a href="{{ action('Projects\\ShareController@getGoogle', array($project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank">
+        <a href="{{ action('Projects\\ShareController@getGoogle', array($owner->slug, $project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank">
             <i class="fa fa-google-plus"></i>
         </a>
         <a href="" class="btn social-btn social-code">

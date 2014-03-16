@@ -21,7 +21,8 @@
  * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentry\Groups\Eloquent\Group[] $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\Subscription[] $subscriptions
  */
-class User extends SentryUser implements Models\Interfaces\Participant {
+class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Interfaces\Participant
+{
 
 	/**
 	 * The database table used by the model.
@@ -52,33 +53,70 @@ class User extends SentryUser implements Models\Interfaces\Participant {
 		),
 	);
 
-    public function projects() {
-        return $this->morphMany('Project', 'owner');
-    }
+	public function __construct(array $attributes = array())
+	{
 
-    public function organizations() {
-        return $this->belongsToMany('Organization', 'organization_users');
-    }
+		parent::__construct($attributes);
 
-	public function subscriptions() {
+		self::events();
+
+	}
+
+	public function projects()
+	{
+		return $this->morphMany('Project', 'owner');
+	}
+
+	public function organizations()
+	{
+		return $this->belongsToMany('Organization', 'organization_users');
+	}
+
+	public function subscriptions()
+	{
 		return $this->hasMany('Subscription');
 	}
 
-	public function getGravatar() {
+	public function getGravatar()
+	{
 		$hash = md5($this->attributes['email']);
 		return "http://www.gravatar.com/avatar/$hash";
 	}
 
-    public function getNameAttribute() {
-        return $this->username;
-    }
+	public function getNameAttribute()
+	{
+		return $this->username;
+	}
 
-    public function getSlugAttribute() {
-        return $this->username;
-    }
+	public function getSlugAttribute()
+	{
+		return $this->username;
+	}
 
-	public function getSubscriptionLevel(Project $project, $updateLevel) {
+	public function getSubscriptionLevel(Project $project, $updateLevel)
+	{
 
+	}
+
+	public function isMember(Project $project)
+	{
+		if($project->owner instanceof Organization) {
+
+			foreach($project->owner->users() as $user) {
+				if($user->id === $this->id) {
+					return true;
+				}
+			}
+
+		} elseif($project->owner instanceof User) {
+			if($project->owner->id === $this->id) {
+				return true;
+			}
+		} else {
+			throw new Exception("Project doesn't have an owner.");
+		}
+
+		return false;
 	}
 
 	/**
@@ -87,7 +125,8 @@ class User extends SentryUser implements Models\Interfaces\Participant {
 	 *
 	 * @return array
 	 */
-	public function getDefaultLevels() {
+	public function getDefaultLevels()
+	{
 		$subscriptions = Subscription::where('user_id', $this->id)->where('project_id', NULL)->get();
 
 		$dbSubscriptions = array();
@@ -102,13 +141,14 @@ class User extends SentryUser implements Models\Interfaces\Participant {
 	 * @param ProjectUpdate $update
 	 * @return NotificationLevel
 	 */
-	public function getNotificationLevel(ProjectUpdate $update) {
+	public function getNotificationLevel(ProjectUpdate $update)
+	{
 		$subscription = Subscription::where('user_id', $this->id)
 			->where('project_id', $update->project->id)
 			->where('project_update_level', $update->level)
 			->first();
 
-		if(is_null($subscription)) {
+		if (is_null($subscription)) {
 			return $this->getDefaultNotificationLevel($update->level);
 		}
 
@@ -122,30 +162,44 @@ class User extends SentryUser implements Models\Interfaces\Participant {
 	 * @return NotificationLevel
 	 * @throws Exception
 	 */
-	public function getDefaultNotificationLevel($updateLevel) {
+	public function getDefaultNotificationLevel($updateLevel)
+	{
 		$subscription = Subscription::where('user_id', $this->id)->where('project_id', NULL)->where('project_update_level', $updateLevel)->first();
 
-		if($subscription) {
+		if ($subscription) {
 			return NotificationLevel::where('level', $subscription->notification_level)->first();
 		}
 
-		foreach($this->defaultLevels as $level) {
-			if($level['project_update_level'] == $updateLevel) return NotificationLevel::where('level', $level['notification_level'])->first();
+		foreach ($this->defaultLevels as $level) {
+			if ($level['project_update_level'] == $updateLevel) return NotificationLevel::where('level', $level['notification_level'])->first();
 		}
 
 		throw new Exception("No default level found, updateLevel must be out of range.");
 	}
 
-    /**
-     * Verify we're unique in both users and orgs
-     *
-     * @return bool
-     */
-    public function beforeSave() {
-        $org = Organization::where('slug', $this->slug)->first();
+	/**
+	 * Verify we're unique in both users and orgs
+	 *
+	 * @return bool
+	 */
+	private static function events()
+	{
 
-        if($org) {
-            return false;
-        }
-    }
+		self::creating(function ($user) {
+			$org = Organization::where('slug', $user->slug)->first();
+
+			if ($org) {
+				return false;
+			}
+		});
+
+		self::updating(function ($user) {
+			$org = Organization::where('slug', $user->slug)->first();
+
+			if ($org) {
+				return false;
+			}
+		});
+
+	}
 }

@@ -15,27 +15,38 @@ use Str;
 use Validator;
 use View;
 
-class UpdateController extends BaseController {
+class UpdateController extends BaseController
+{
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->beforeFilter('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
 	}
 
 	/**
 	 * Return a list of the projects updates in the RSS format.
 	 *
-     * @param $participant
+	 * @param $participant
 	 * @param $projectSlug
 	 * @return \Illuminate\Http\Response
 	 */
-	public function indexRSS($participant, $projectSlug) {
-		$project = Project::where('slug', $projectSlug)->first();
+	public function indexRSS($participant, $projectSlug)
+	{
+		$owner = Project::resolveParticipant($participant);
+		if (!$owner) {
+			return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+		}
+
+		$project = $owner->projects()->where('slug', $project)->first();
+		if (!$project) {
+			return Response::json(array('success' => false, 'error' => 'Project not found.'));
+		}
 
 		$feed = Rss::feed('2.0', 'UTF-8');
 		$feed->channel(array(
 			'title' => $project->name,
 			'description' => $project->description,
-			'link' => action('Projects\\ProjectController@show', $project->slug)
+			'link' => $project->href
 		));
 
 		foreach ($project->updates()->get() as $update) {
@@ -56,9 +67,18 @@ class UpdateController extends BaseController {
 	 * @param $slug
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function store($participant, $project) {
-		$project = Project::where('slug', $project)->firstOrFail();
-		if (!$project->isManager(Sentry::getUser())) {
+	public function store($participant, $project)
+	{
+		$owner = Project::resolveParticipant($participant);
+		if (!$owner) {
+			return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+		}
+
+		$project = $owner->projects()->where('slug', $project)->first();
+		if (!$project) {
+			return Response::json(array('success' => false, 'error' => 'Project not found.'));
+		}
+		if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
 			App::abort(401);
 		}
 
@@ -89,19 +109,20 @@ class UpdateController extends BaseController {
 		return Redirect::back();
 	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param $participant
-     * @param $project
-     * @param $update
-     * @internal param $projectSlug
-     * @internal param $updateSlug
-     * @internal param int $id
-     *
-     * @return Response
-     */
-	public function show($participant, $project, $update) {
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param $participant
+	 * @param $project
+	 * @param $update
+	 * @internal param $projectSlug
+	 * @internal param $updateSlug
+	 * @internal param int $id
+	 *
+	 * @return Response
+	 */
+	public function show($participant, $project, $update)
+	{
 		$project = Project::where('slug', $project)->first();
 		$update = $project->updates()->where('slug', $update)->first();
 
@@ -122,8 +143,20 @@ class UpdateController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function edit($participant, $project, $update) {
-		//
+	public function edit($participant, $project, $update)
+	{
+		$owner = Project::resolveParticipant($participant);
+		if (!$owner) {
+			return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+		}
+
+		$project = $owner->projects()->where('slug', $project)->first();
+		if (!$project) {
+			return Response::json(array('success' => false, 'error' => 'Project not found.'));
+		}
+		if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
+			App::abort(401);
+		}
 	}
 
 	/**
@@ -133,8 +166,20 @@ class UpdateController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function update($participant, $project, $update) {
-		//
+	public function update($participant, $project, $update)
+	{
+		$owner = Project::resolveParticipant($participant);
+		if (!$owner) {
+			return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+		}
+
+		$project = $owner->projects()->where('slug', $project)->first();
+		if (!$project) {
+			return Response::json(array('success' => false, 'error' => 'Project not found.'));
+		}
+		if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
+			App::abort(401);
+		}
 	}
 
 	/**
@@ -144,7 +189,19 @@ class UpdateController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function destroy($participant, $project, $update) {
-		//
+	public function destroy($participant, $project, $update)
+	{
+		$owner = Project::resolveParticipant($participant);
+		if (!$owner) {
+			return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+		}
+
+		$project = $owner->projects()->where('slug', $project)->first();
+		if (!$project) {
+			return Response::json(array('success' => false, 'error' => 'Project not found.'));
+		}
+		if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
+			App::abort(401);
+		}
 	}
 }

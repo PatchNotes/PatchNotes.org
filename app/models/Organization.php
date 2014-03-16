@@ -6,44 +6,75 @@ use LaravelBook\Ardent\Ardent;
  * An Eloquent Model: 'Organization'
  *
  */
-class Organization extends Ardent implements Models\Interfaces\Participant {
+class Organization extends Ardent implements Models\Interfaces\Participant
+{
 
 	public static $rules = array(
 		'name' => 'required',
 		'slug' => 'required|unique:organizations',
 		'site_url' => 'url',
-        'email' => 'email',
+		'email' => 'email',
 		'description' => '',
 	);
 
-    public function projects() {
-        return $this->morphMany('Project', 'owner');
-    }
+	public function __construct(array $attributes = array())
+	{
 
-    public function getNameAttribute() {
-        return $this->name;
-    }
+		parent::__construct($attributes);
 
-    public function getSlugAttribute() {
-        return $this->slug;
-    }
+		self::events();
 
-    public static function fetchByCreator(User $user) {
+	}
 
-        return array();
-    }
+	public function projects()
+	{
+		return $this->morphMany('Project', 'owner');
+	}
 
-    /**
-     * Verify we're unique in both users and organizations
-     *
-     * @return bool
-     */
-    public function beforeSave() {
-        $user = User::where('slug', $this->slug)->first();
+	public function getNameAttribute()
+	{
+		return $this->name;
+	}
 
-        if($user) {
-            return false;
-        }
-    }
+	public function getSlugAttribute()
+	{
+		return $this->slug;
+	}
+
+	public static function fetchByCreator(User $user)
+	{
+
+		return array();
+	}
+
+	public function users() {
+		return $this->hasMany('OrganizationUser');
+	}
+
+	/**
+	 * Verify we're unique in both users and organizations
+	 *
+	 * @return bool
+	 */
+	public static function events()
+	{
+
+		self::creating(function ($org) {
+			$user = User::where('slug', $org->slug)->first();
+
+			if ($user) {
+				return false;
+			}
+		});
+
+		self::updating(function ($org) {
+			$user = User::where('slug', $org->slug)->first();
+
+			if ($user) {
+				return false;
+			}
+		});
+
+	}
 
 }
