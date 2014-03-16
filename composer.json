@@ -9,16 +9,13 @@
     ],
 	"require": {
 		"laravel/framework": "4.1.*",
-
 		"cartalyst/sentry": "2.0.*",
 		"axxim/markdown-blade": "dev-master",
 		"codesleeve/asset-pipeline": "dev-master",
-        "cartalyst/sentry-social": "dev-master",
 		"aws/aws-sdk-php": "2.4.*@dev",
 		"thujohn/rss": "dev-master",
 		"knplabs/github-api": "*",
         "adamwathan/bootforms": "dev-master",
-
         "laravelbook/ardent": "dev-master",
         "barryvdh/laravel-ide-helper": "1.*"
 	},
