@@ -24,13 +24,15 @@ Route::group(array(), function () {
 
 /* Projects */
 Route::group(array(), function () {
-    Route::get('projects', 'Projects\\ProjectController@index');
+	Route::get('projects', 'Projects\\ProjectController@index');
+	Route::get('projects/create', 'Projects\\ProjectController@create');
+	Route::post('projects', 'Projects\\ProjectController@store');
 
-    Route::get('projects/{participant}/{name}', 'Projects\\ProjectController@show');
-    Route::get('projects/{participant}/{name}/edit', 'Projects\\ProjectController@edit');
-    Route::put('projects/{participant}/{name}', 'Projects\\ProjectController@update');
-    Route::patch('projects/{participant}/{name}', 'Projects\\ProjectController@update');
-    Route::delete('projects/{participant}/{name}', 'Projects\\ProjectController@destroy');
+	Route::get('projects/{participant}/{name}', 'Projects\\ProjectController@show');
+	Route::get('projects/{participant}/{name}/edit', 'Projects\\ProjectController@edit');
+	Route::put('projects/{participant}/{name}', 'Projects\\ProjectController@update');
+	Route::patch('projects/{participant}/{name}', 'Projects\\ProjectController@update');
+	Route::delete('projects/{participant}/{name}', 'Projects\\ProjectController@destroy');
 
 	Route::resource('projects/{participant}/{name}/updates', 'Projects\\UpdateController');
 	Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');
