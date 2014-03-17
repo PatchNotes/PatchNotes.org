@@ -18,7 +18,7 @@
         "adamwathan/bootforms": "dev-master",
         "laravelbook/ardent": "dev-master",
         "barryvdh/laravel-ide-helper": "1.*",
-        "artdarek/oauth-4-laravel": "1.0.*"
+        "lusitanian/oauth": "~0.2"
 	},
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
@@ -34,7 +34,10 @@
 			"app/database/seeds",
 			"app/tests/TestCase.php",
 			"app/tasks"
-		]
+		],
+        "psr-4": {
+            "PatchNotes\\": "app/PatchNotes/"
+        }
 	},
 	"scripts": {
 		"post-install-cmd": [

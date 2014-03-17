@@ -111,7 +111,6 @@ return array(
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Thujohn\Rss\RssServiceProvider',
         'AdamWathan\BootForms\BootFormsServiceProvider',
-		'Artdarek\OAuth\OAuthServiceProvider',
 	),
 
 	/*
@@ -178,8 +177,7 @@ return array(
 		'View' => 'Illuminate\Support\Facades\View',
 		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 		'Rss' => 'Thujohn\Rss\RssFacade',
-        'BootForm' => 'AdamWathan\BootForms\Facades\BootForm',
-		'OAuth' => 'Artdarek\OAuth\Facade\OAuth',
+        'BootForm' => 'AdamWathan\BootForms\Facades\BootForm'
 	),
 
 );
