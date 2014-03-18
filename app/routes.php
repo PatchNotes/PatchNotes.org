@@ -8,10 +8,17 @@ Route::group(array('prefix' => 'account'), function () {
 	Route::controller('', 'Account\\AccountController');
 	Route::controller('settings', 'Account\\SettingController');
 });
+
+Route::group(array('prefix' => 'auth'), function () {
+	Route::get('{provider}', 'Account\\AuthController@getOAuthStart');
+	Route::get('{provider}/callback', 'Account\\AuthController@getOAuthCallback');
+});
+
 Route::group(array('prefix' => 'users'), function () {
 	Route::get('', 'UserController@getIndex');
 	Route::get('users/{username}', 'UserController@getUser');
 });
+
 Route::group(array(), function () {
 	Route::resource('organizations', 'OrganizationController');
 });

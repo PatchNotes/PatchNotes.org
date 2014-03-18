@@ -74,9 +74,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    {{ Form::open(array('method' => 'post', 'url' => 'account/auth/github')) }}
-                                    <input type="submit" class="btn btn-primary btn-block" id="sign-in-github" value="Sign in via GitHub">
-                                    {{ Form::close() }}
+									<a href="/auth/github" class="btn btn-primary btn-block">Sign in via GitHub</a>
                                 </li>
                             </ul>
                         </li>
