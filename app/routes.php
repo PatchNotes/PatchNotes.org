@@ -13,6 +13,7 @@ Route::group(array('prefix' => 'auth'), function () {
 	Route::get('validation-required', 'Account\\AuthController@getValidationRequired');
 	Route::get('oauth-error', 'Account\\AuthController@getOauthError');
 	Route::get('account-connected', 'Account\\AuthController@getAccountConnected');
+	Route::get('validate-account/{key}', 'Account\\AuthController@getValidateAccount');
 	Route::get('{provider}', 'Account\\AuthController@getOAuthStart');
 	Route::get('{provider}/callback', 'Account\\AuthController@getOAuthCallback');
 });

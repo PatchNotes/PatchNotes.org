@@ -3,6 +3,7 @@ namespace Account;
 
 use App;
 use Input;
+use Mail;
 use PatchNotes\Users\UserCreator;
 use PatchNotes\Users\UserCreatorListenerInterface;
 use Redirect;
@@ -74,7 +75,10 @@ class AuthController extends BaseController implements UserCreatorListenerInterf
 	 */
 	public function oauthUserRequiresValidation($oauthUser)
 	{
-		// TODO SEND AN EMAIL WITH VALIDATION INFO!
+		Mail::send('emails.auth.oauth-validation', array('oauth' => $oauthUser), function ($m) use ($oauthUser) {
+			$m->to($oauthUser->user->email)->subject('PatchNotes oAuth validation');
+		});
+
 		return Redirect::to('auth/validation-required');
 	}
 
@@ -142,5 +146,16 @@ class AuthController extends BaseController implements UserCreatorListenerInterf
 	public function getOauthError()
 	{
 		return View::make('auth.error');
+	}
+
+	public function getValidateAccount($key)
+	{
+		$userCreator = new UserCreator($this);
+		return $userCreator->validateAuth($key);
+	}
+
+	public function accountValidated()
+	{
+		return Redirect::to('auth/account-connected');
 	}
 }

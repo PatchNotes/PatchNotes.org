@@ -131,4 +131,19 @@ class UserCreator
 
 		return $oauth;
 	}
+
+	/**
+	 * Validate account connection from key
+	 *
+	 * @param $key
+	 * @return mixed
+	 */
+	public function validateAuth($key)
+	{
+		$oauth = UserOauth::where('validation_key', $key)->firstOrFail();
+		$oauth->validated = 1;
+		$oauth->save();
+
+		return $this->listener->accountValidated();
+	}
 }
