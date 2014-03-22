@@ -62,6 +62,11 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
 
 	}
 
+	public function oauthAccounts()
+	{
+		return $this->hasMany('UserOauth', 'user_id', 'id');
+	}
+
 	public function projects()
 	{
 		return $this->morphMany('Project', 'owner');
