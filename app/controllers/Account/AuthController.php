@@ -3,49 +3,144 @@ namespace Account;
 
 use App;
 use Input;
+use PatchNotes\Users\UserCreator;
+use PatchNotes\Users\UserCreatorListenerInterface;
 use Redirect;
 use Request;
+use Sentry;
 use URL;
+use View;
 
-class AuthController extends BaseController
+class AuthController extends BaseController implements UserCreatorListenerInterface
 {
-	public function __construct()
-	{
-		$provider = Request::segment(2);
-		// TODO Validate available providers
-		$this->provider = App::make("PatchNotes\OAuth\\{$provider}Provider");
-	}
-
+	/**
+	 * Start the oAuth process
+	 *
+	 * @param $provider string
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
 	public function getOAuthStart($provider)
 	{
-		return Redirect::to($this->provider->getAuthorizationUri());
+		$provider = App::make("PatchNotes\OAuth\\{$provider}Provider"); // TODO validate if logins/registrations are allowed
+		return Redirect::to($provider->getAuthorizationUri());
 	}
 
+	/**
+	 * oAuth callback
+	 *
+	 * @param $provider string
+	 * @return \PatchNotes\Users\func|void
+	 */
 	public function getOAuthCallback($provider)
 	{
-		if (!Input::has('code')) return App::abort(404);
+		$provider = App::make("PatchNotes\OAuth\\{$provider}Provider"); // TODO validate if logins/registrations are allowed
 
-		if (!$this->provider->authorizeUser(Input::get('code')))
+		if (!Input::has('code'))
 		{
-			App::abort(404, 'OAuth authorization has failed'); // TODO A pretty error page
+			return Redirect::to('auth/oauth-error')->withErrors(['Authorization code missing']);
 		}
 
-		$oauthUser = $this->provider->getUserDetails();
+		if (!$provider->authorizeUser(Input::get('code')))
+		{
+			return Redirect::to('auth/oauth-error')->withErrors(['Authorization code was rejected by the ' . $provider]);
+		}
 
-		return 'Welcome to PatchNotes from ' . $oauthUser['provider'] . ' OAuth user ' . $oauthUser['username'];
+		$oauthUser = $provider->getUserDetails();
 
-		// TODO pass the oauth user details to the account listener
-		// TODO Redirect with a 301 so that callback URL isn't in history
+		$userCreator = new UserCreator($this);
+		return $userCreator->createUserFromOAuth($oauthUser);
 	}
 
-	public function localAccountExistsConfirmMerge()
+	/**
+	 * oAuth user is valid: perform login
+	 *
+	 * @param $oauthUser object
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function oauthUserIsValid($oauthUser)
 	{
-		// TODO send email and redirect
+		$user = Sentry::findUserById($oauthUser->user->id);
+		Sentry::loginAndRemember($user);
+
+		return Redirect::to('/');
 	}
 
-	public function localAccountCreated()
+	/**
+	 * oAuth user connected but requires validation: send email and redirect
+	 * to the validation-required page
+	 *
+	 * @param $oauthUser object
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function oauthUserRequiresValidation($oauthUser)
 	{
-		// TODO do login
-		// TODO redirect to their account
+		// TODO SEND AN EMAIL WITH VALIDATION INFO!
+		return Redirect::to('auth/validation-required');
+	}
+
+	/**
+	 * User has been connected to a new oAuth account
+	 *
+	 * @param $oauthUser object
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function oauthAssociationCreated($oauthUser)
+	{
+		return Redirect::to('auth/account-connected');
+	}
+
+	/**
+	 * User has registered an account via oAuth
+	 *
+	 * @param $user object
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function userRegisteredFromOauth($user)
+	{
+		$user = Sentry::findUserById($user->id);
+		Sentry::loginAndRemember($user);
+
+		return Redirect::to('/');
+	}
+
+	/**
+	 * Registration via oAuth failed
+	 *
+	 * @param $errors array
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function userRegistrationFromOauthFailed($errors)
+	{
+		return Redirect::to('auth/oauth-error')->withErrors($errors);
+	}
+
+	/**
+	 * Tell user that validation is required
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function getValidationRequired()
+	{
+		return View::make('auth.validation-required');
+	}
+
+	/**
+	 * Tell user that the account is now connected
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function getAccountConnected()
+	{
+		return View::make('auth.account-connected');
+	}
+
+	/**
+	 * Tell the user that there was an error authentication via oAuth
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function getOauthError()
+	{
+		return View::make('auth.error');
 	}
 }
