@@ -4,13 +4,14 @@ namespace PatchNotes\OAuth;
 use Config;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\CurlClient;
-use OAuth\Common\Http\Exception;
 use OAuth\Common\Storage\Session;
 use OAuth\ServiceFactory;
 use URL;
 
 abstract class AbstractProvider
 {
+	public $title = "OAuth Provider";
+
 	/**
 	 * OAuth consumer
 	 *
@@ -25,27 +26,19 @@ abstract class AbstractProvider
 	 */
 	protected $userAccessToken;
 
-	/**
-	 * Create a new OAuth consumer
-	 *
-	 * @param mixed $callback
-	 * @param mixed $scope
-	 * @param mixed $id
-	 * @param mixed $secret
-	 */
+
 	public function __construct($callback = null, $scope = null, $id = null, $secret = null)
 	{
 		$id = $id ?: Config::get('oauth.GitHub.client_id');
 		$secret = $secret ?: Config::get('oauth.GitHub.client_secret');
 		$callback = $callback ?: Config::get('oauth.GitHub.callback');
 		$scope = $scope ?: Config::get('oauth.GitHub.scope');
-
 		$callback = URL::to($callback);
 
-		$serviceFactory = new ServiceFactory;
-		$storage = new Session;
+		$serviceFactory = new ServiceFactory();
+		$storage = new Session();
 		$credentials = new Credentials($id, $secret, $callback);
-		$serviceFactory->setHttpClient(new CurlClient);
+		$serviceFactory->setHttpClient(new CurlClient());
 
 		$this->consumer = $serviceFactory->createService($this->provider, $credentials, $storage, $scope);
 	}
@@ -71,10 +64,10 @@ abstract class AbstractProvider
 		try {
 			$token = $this->consumer->requestAccessToken($code);
 			$this->userAccessToken = $token->getAccessToken();
+			return true;
 		} catch (Exception\TokenResponseException $e) {
 			return false;
 		}
-		return true;
 	}
 
 	/**
