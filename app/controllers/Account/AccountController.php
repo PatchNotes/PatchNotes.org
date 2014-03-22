@@ -15,59 +15,8 @@ use View;
 
 class AccountController extends BaseController {
 
-	private $providers = array('github');
-
 	public function __construct() {
 		$this->beforeFilter('guest', ['only' => ['getLogin', 'postLogin', 'getRegister', 'postRegister']]);
-	}
-
-	public function postAuth($provider) {
-		if (!in_array($provider, $this->providers)) {
-			App::abort(404, "Provider not found.");
-		}
-
-		$callback = URL::to("account/callback/$provider");
-		$url = SentrySocial::getAuthorizationUrl($provider, $callback);
-
-		return Redirect::to($url);
-	}
-
-	public function getCallback($provider) {
-		if (!in_array($provider, $this->providers)) {
-			App::abort(404, "Provider not found.");
-		}
-
-		// Callback is required for providers such as Facebook and a few others (it's required
-		// by the spec, but some providers ommit this).
-		$callback = URL::current();
-
-		try {
-			$user = SentrySocial::authenticate($provider, URL::current(), function (\Cartalyst\SentrySocial\Links\LinkInterface $link, $provider, $token, $slug) {
-				$user = $link->getUser(); // Modify the user in question
-
-				// You could add your custom data
-				$data = $provider->getUserDetails($token);
-
-				$user->username = $data->nickname;
-
-				$user->save();
-			});
-
-			return Redirect::to('/');
-		} catch (\Cartalyst\SentrySocial\AccessMissingException $e) {
-			// Missing OAuth parameters were missing from the query string.
-			// Either the person rejected the app, or the URL has been manually
-			// accesed.
-			if ($error = Input::get('error')) {
-				return Redirect::to('/account/reject')->withErrors($error);
-			}
-
-			App::abort(404);
-		}
-	}
-
-	public function getReject() {
-		return View::make('account/reject', array('bodyclass' => 'small-container'));
 	}
 
 	public function getLogin() {

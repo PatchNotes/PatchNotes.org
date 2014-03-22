@@ -105,18 +105,12 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-
 		'Axxim\MarkdownBlade\MarkdownBladeServiceProvider',
-
 		'Cartalyst\Sentry\SentryServiceProvider',
-		'Cartalyst\SentrySocial\SentrySocialServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
-
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Thujohn\Rss\RssServiceProvider',
-
         'AdamWathan\BootForms\BootFormsServiceProvider',
-
 	),
 
 	/*
@@ -181,13 +175,9 @@ return array(
 		'URL' => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View' => 'Illuminate\Support\Facades\View',
-
 		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-		'SentrySocial' => 'Cartalyst\SentrySocial\Facades\Laravel\SentrySocial',
 		'Rss' => 'Thujohn\Rss\RssFacade',
-
-        'BootForm' => 'AdamWathan\BootForms\Facades\BootForm',
-
+        'BootForm' => 'AdamWathan\BootForms\Facades\BootForm'
 	),
 
 );

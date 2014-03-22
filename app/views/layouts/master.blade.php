@@ -46,7 +46,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign Up / Sign In <b class="caret"></b></a>
-                            <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                            <ul class="dropdown-menu account-menu">
                                 <li>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -74,9 +74,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    {{ Form::open(array('method' => 'post', 'url' => 'account/auth/github')) }}
-                                    <input type="submit" class="btn btn-primary btn-block" id="sign-in-github" value="Sign in via GitHub">
-                                    {{ Form::close() }}
+									<a href="/auth/github" class="btn btn-primary btn-block">Sign in via GitHub</a>
                                 </li>
                             </ul>
                         </li>
