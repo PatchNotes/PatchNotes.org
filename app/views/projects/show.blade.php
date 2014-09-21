@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-lg-7">
-        <h2 id="projectHeader"><a href="/projects/{{{ $owner->slug }}}">{{{ $owner->username }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
+        <h2 id="projectHeader"><a href="{{ $owner->href }}">{{{ $owner->username }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
 	    @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
@@ -60,7 +60,7 @@
                                 {{{ $update->body }}}
 
                                 <hr>
-                                <p><a href="{{ action('Projects\\UpdateController@show', array($project->slug, $update->slug)) }}">{{ $update->created_at->toRSSString() }}</a></p>
+                                <p><a href="{{ action('Projects\\UpdateController@show', array($owner->slug, $project->slug, $update->slug)) }}">{{ $update->created_at->toRSSString() }}</a></p>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                     @endforeach
                 </div>
                 @endif
-                
+
             </div>
         </div>
     </div>
@@ -134,7 +134,7 @@
                         @endif
 
 
-                        {{ Form::open(array('action' => array('Projects\\UpdateController@store', $project->slug), 'class' => 'form-horizontal', 'role' => 'form')) }}
+                        {{ Form::open(array('action' => array('Projects\\UpdateController@store', $owner->name, $project->slug), 'class' => 'form-horizontal', 'role' => 'form')) }}
                         <input type="hidden" name="project_id" value="{{ $project->id }}"/>
                         <div class="form-group">
                             <label for="updateTitle" class="col-lg-2 control-label">Title</label>

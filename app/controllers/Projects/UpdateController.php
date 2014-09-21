@@ -53,7 +53,7 @@ class UpdateController extends BaseController
 			$feed->item(array(
 				'title' => $update->title,
 				'description' => $update->body,
-				'link' => action('Projects\\UpdateController@show', array($project->slug, $update->slug))
+				'link' => action('Projects\\UpdateController@show', array($owner->slug, $project->slug, $update->slug))
 			));
 		}
 
@@ -78,7 +78,7 @@ class UpdateController extends BaseController
 		if (!$project) {
 			return Response::json(array('success' => false, 'error' => 'Project not found.'));
 		}
-		if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
+		if (Sentry::getUser()->isMember($project) === false) {
 			App::abort(401);
 		}
 
@@ -154,7 +154,7 @@ class UpdateController extends BaseController
 		if (!$project) {
 			return Response::json(array('success' => false, 'error' => 'Project not found.'));
 		}
-		if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
+		if (Sentry::getUser()->isMember($project) === false) {
 			App::abort(401);
 		}
 	}
@@ -177,7 +177,7 @@ class UpdateController extends BaseController
 		if (!$project) {
 			return Response::json(array('success' => false, 'error' => 'Project not found.'));
 		}
-		if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
+		if (Sentry::getUser()->isMember($project) === false) {
 			App::abort(401);
 		}
 	}
@@ -200,7 +200,7 @@ class UpdateController extends BaseController
 		if (!$project) {
 			return Response::json(array('success' => false, 'error' => 'Project not found.'));
 		}
-		if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
+		if (Sentry::getUser()->isMember($project) === false) {
 			App::abort(401);
 		}
 	}

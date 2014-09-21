@@ -11,6 +11,7 @@ var paths = {
     scripts: [
         'assets/libraries/jquery/dist/jquery.min.js',
         'assets/libraries/bootstrap/dist/js/bootstrap.min.js',
+        'assets/libraries/jquery-textfill/source/jquery.textfill.min.js',
         'assets/js/**/*'
     ],
     images: 'assets/img/**/*'

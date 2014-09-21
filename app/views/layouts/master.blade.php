@@ -115,7 +115,7 @@
                 <div class="text-center">
                     PatchNotes is an Open Company &middot; Crafted in Dallas, TX <br>
                     <div data-gittip-username="PatchNotes" data-gittip-widget="custom">
-                        PatchNotes is funded on <a class="gittip-profile-link" target="_blank"><span class="gittip-receiving">$0.00</span> / wk</a> via <a class="gittip-link" target="_blank">Gittip</a>.
+                        PatchNotes is funded on <a class="gratipay-profile-link" target="_blank"><span class="gratipay-receiving">$0.00</span> / wk</a> via <a class="gratipay-link" target="_blank">Gratipay</a>.
                     </div>
                 </div>
             </footer>
@@ -125,7 +125,7 @@
         <script src="/assets/js/patchnotes.min.js"></script>
         @yield('scripts')
 
-        <script src="//gttp.co/v1.js"></script>
+        <script src="//grtp.co/v1.js"></script>
     </body>
 
 </html>

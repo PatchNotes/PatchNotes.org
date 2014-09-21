@@ -8,4 +8,6 @@ interface Participant {
 
     public function getSlugAttribute();
 
+    public function getHrefAttribute();
+
 }
