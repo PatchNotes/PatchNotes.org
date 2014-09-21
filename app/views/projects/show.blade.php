@@ -173,14 +173,7 @@
             {{-- @endif --}}
         @endif
 
-        <div class="panel panel-default">
-            <div class="panel-heading">Project Managers</div>
-            <div class="panel-body">
-            </div>
-        </div>
-
     </div>
-
 
 </div>
 

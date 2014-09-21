@@ -54,7 +54,7 @@ gulp.task('images', ['clean'], function() {
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
-    gulp.watch(paths.less, ['less']);
+    gulp.watch("assets/less/**/*.less", ['less']);
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.images, ['images']);
 });

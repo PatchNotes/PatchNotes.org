@@ -37,7 +37,7 @@ class UpdateController extends BaseController
 			return Response::json(array('success' => false, 'error' => 'Participant not found.'));
 		}
 
-		$project = $owner->projects()->where('slug', $project)->first();
+		$project = $owner->projects()->where('slug', $projectSlug)->first();
 		if (!$project) {
 			return Response::json(array('success' => false, 'error' => 'Project not found.'));
 		}
