@@ -1,6 +1,7 @@
 box: wercker/php
 services:
   - wercker/mysql
+  - wercker/nodejs
 build:
   # The steps that will be executed on build
   steps:
@@ -14,6 +15,7 @@ build:
         code: |-
           composer config github-oauth.github.com $GH_OAUTH
           composer install --no-interaction --prefer-source
+    - npm-install
     - script:
         name: migrate database
         code: php artisan migrate --env=wercker
@@ -26,4 +28,27 @@ build:
         port: 6667
         nickname: wercbot
         channel: patchnotes
-    
+deploy:
+  steps:
+    - add-to-known_hosts:
+        hostname: patchnotes.org
+    - mktemp:
+        envvar: PRIVATEKEY_PATH
+    - create-file:
+        name: write key
+        filename: $PRIVATEKEY_PATH
+        content: $DO_PRIVATE
+        overwrite: true
+    - script:
+        name: stop application
+        code: |
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/website/ && php artisan down"
+    - script:
+        name: transfer application
+        code: |
+          pwd
+          ls -la
+    - script:
+        name: start application
+        code: |
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/website/ && php artisan up"

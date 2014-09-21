@@ -59,6 +59,8 @@ class PatchNotesDatabase extends Migration {
 		Schema::create('project_updates_levels', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
 
+			$table->increments('id');
+
 			$table->integer('level')->unsigned()->unique();
 			$table->string('name');
 
@@ -98,6 +100,8 @@ class PatchNotesDatabase extends Migration {
 
 		Schema::create('notification_levels', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
+
+			$table->increments('id');
 
 			$table->integer('level')->unsigned()->unique();
 			$table->string('name');

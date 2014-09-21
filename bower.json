@@ -1,0 +1,19 @@
+{
+  "name": "PatchNotes.org",
+  "version": "0.0.0",
+  "homepage": "https://github.com/PatchNotes/PatchNotes.org",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/libraries",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-textfill": "~0.6.0",
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1"
+  }
+}

@@ -24,11 +24,9 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
-
-	'local' => array('764-875465','luke-desktop','clone1018-desktop','luke-laptop','precise64'),
-
-));
+$env = $app->detectEnvironment(function() {
+    return getenv('LARA_ENV') ?: 'local';
+});
 
 // If we're wercker
 $wercker = getenv('WERCKER');

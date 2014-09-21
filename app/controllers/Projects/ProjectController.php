@@ -56,6 +56,7 @@ class ProjectController extends BaseController
 			$possibleOwners['Organizations']['organization:' . $org->id] = $org->name;
 		}
 
+		/*
 		$githubUser = Social::whereRaw('provider = ? and user_id = ?', array('github', $user->id))->first();
 		if ($githubUser) {
 			$client = new \Github\Client(
@@ -74,6 +75,7 @@ class ProjectController extends BaseController
 				);
 			}
 		}
+		*/
 
 		return View::make('projects/create', compact('githubRepos', 'possibleOwners'));
 	}
@@ -113,7 +115,7 @@ class ProjectController extends BaseController
 		$project->site_url = Input::get('url');
 
 		if ($owner->projects()->save($project)) {
-			return Redirect::action('Projects\\ProjectController@show', array($project->slug));
+			return Redirect::action('Projects\\ProjectController@show', array($owner->slug, $project->slug));
 		} else {
 			return Redirect::back()->withErrors($project->errors());
 		}

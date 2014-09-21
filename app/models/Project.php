@@ -100,7 +100,7 @@ class Project extends Ardent {
 	 * @return integer
 	 */
 	public function subscriberCount() {
-		return count($this->subscribers()->groupBy('user_id')->get());
+		return count($this->subscribers()->distinct()->get(array('user_id')));
 	}
 
 	public function subscribers() {

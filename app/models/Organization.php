@@ -41,6 +41,10 @@ class Organization extends Ardent implements Models\Interfaces\Participant
 		return $this->slug;
 	}
 
+	public function getHrefAttribute() {
+        return action('UserController@show', array($this->slug));
+    }
+
 	public static function fetchByCreator(User $user)
 	{
 

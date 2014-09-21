@@ -9,8 +9,8 @@
     <hr>
 
     <p>
-        Posted by: <a href="/user/{{{ $update->author->username }}}">{{{ $update->author->username }}}</a> 
-        for <a href="/projects/{{ $project->slug }}">{{{ $project->name }}}</a> 
+        Posted by: <a href="{{ $update->author->href }}">{{{ $update->author->username }}}</a>
+        for <a href="{{ $project->href }}">{{{ $project->name }}}</a>
         on {{ $update->created_at->toRSSString() }}
     </p>
 

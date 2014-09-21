@@ -6,14 +6,14 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 
 
-	$('.social-code').click(function(e) {
-		e.preventDefault(); 
+    $('.social-code').click(function(e) {
+        e.preventDefault();
 
-		$("#code").slideToggle();
-	});
+        $("#code").slideToggle();
+    });
 
-	$('body').on('click', '.social-subscribe', function(e) {
-		e.preventDefault();
+    $('body').on('click', '.social-subscribe', function(e) {
+        e.preventDefault();
 
         var $icon = $(this).children('i');
         $icon.removeClass().addClass('fa fa-cog fa-spin');
@@ -34,7 +34,7 @@ $(document).ready(function() {
                 $icon.removeClass().addClass('fa fa-minus');
                 $(this).removeClass('social-subscribe').addClass('social-unsubscribe');
             });
-	});
+    });
 
     $('body').on('click', '.social-unsubscribe', function(e) {
         e.preventDefault();
