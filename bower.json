@@ -1,0 +1,14 @@
+{
+  "name": "PatchNotes.org",
+  "version": "0.0.0",
+  "homepage": "https://github.com/PatchNotes/PatchNotes.org",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/libraries",
+    "test",
+    "tests"
+  ]
+}

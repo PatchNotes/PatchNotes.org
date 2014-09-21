@@ -8,7 +8,11 @@ var del = require('del');
 
 var paths = {
     less: ['assets/less/patchnotes.less'],
-    scripts: ['assets/js/**/*'],
+    scripts: [
+        'assets/libraries/jquery/dist/jquery.min.js',
+        'assets/libraries/bootstrap/dist/js/bootstrap.min.js',
+        'assets/js/**/*'
+    ],
     images: 'assets/img/**/*'
 };
 

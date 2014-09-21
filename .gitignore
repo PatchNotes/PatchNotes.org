@@ -16,5 +16,6 @@ app/database/local.sqlite
 app/config/packages/*/*/local/
 app/storage/github
 public/assets
+assets/libraries
 
 .idea/
