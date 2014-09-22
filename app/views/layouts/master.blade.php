@@ -74,7 +74,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-									<a href="/auth/github" class="btn btn-primary btn-block">Sign in via GitHub</a>
+									<a href="/auth/GitHub" class="btn btn-primary btn-block">Sign in via GitHub</a>
                                 </li>
                             </ul>
                         </li>
