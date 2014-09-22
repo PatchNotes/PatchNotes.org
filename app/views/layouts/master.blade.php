@@ -16,6 +16,15 @@
     <body class="{{ (isset($bodyclass) ? $bodyclass : '' ) }}">
 
         <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+            <div class="alert alert-danger" role="alert">
+                <div class="container">
+                    <div class="text-center">
+                        <strong>Danger!</strong><br>
+                        <p>This website is still "<em>under construction</em>" so things could be unreliable or completely broken. <br>
+                        If you'd like to help out or just watch our progress, check us out <a href="https://github.com/PatchNotes/PatchNotes.org" target="_blank">on GitHub</a>.</p>
+                    </div>
+                </div>
+            </div>
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
