@@ -17,6 +17,9 @@ build:
           composer install --no-interaction --prefer-source
     - npm-install
     - script:
+        name: download external assets
+        code: bower install
+    - script:
         name: compile assets
         code: gulp compile
     - script:
