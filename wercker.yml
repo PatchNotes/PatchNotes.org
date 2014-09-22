@@ -46,7 +46,7 @@ deploy:
     - script:
         name: transfer application
         code: |
-          rsync -a /pipeline/build/* patchnotes@patchnotes.org:/srv/www/patchnotes.org/website/
+          rsync -a -e "ssh -i $PRIVATEKEY_PATH" /pipeline/build/* patchnotes@patchnotes.org:/srv/www/patchnotes.org/website/
     - script:
         name: start application
         code: |
