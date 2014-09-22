@@ -17,6 +17,9 @@ build:
           composer install --no-interaction --prefer-source
     - npm-install
     - script:
+        name: compile assets
+        code: gulp compile
+    - script:
         name: migrate database
         code: php artisan migrate --env=wercker
     - script:
