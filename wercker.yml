@@ -16,12 +16,9 @@ build:
           composer config github-oauth.github.com $GH_OAUTH
           composer install --no-interaction --prefer-source
     - npm-install
-    - script:
-        name: download external assets
-        code: bower install
-    - script:
-        name: compile assets
-        code: gulp compile
+    - plasticine/bower-install@0.0.4
+    - hgen/gulp:
+        tasks: compile
     - script:
         name: migrate database
         code: php artisan migrate --env=wercker
