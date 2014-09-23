@@ -91,13 +91,13 @@ Vagrant.configure("2") do |config|
   # Use NFS for the shared folder
   config.vm.synced_folder ".", "/vagrant",
             id: "core",
-            :nfs => true,
+            type: "nfs",
             :mount_options => ['nolock,vers=3,udp,noatime']
 
   # If using VirtualBox
   config.vm.provider :virtualbox do |vb|
 
-    vb.name = "Vaprobash"
+    vb.name = "patchnotes"
 
     # Set server memory
     vb.customize ["modifyvm", :id, "--memory", server_memory]
