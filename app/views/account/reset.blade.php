@@ -15,7 +15,7 @@ Reset Password
 
 
         @if($errors->count() > 0)
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             <ul>
                 @foreach($errors->all() as $message)
                 <li>{{$message}}</li>

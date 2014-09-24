@@ -8,7 +8,7 @@
         <p>You'll be able to use this account to both add services and subscribe to existing ones. You'll need a valid email.</p>
 
         @if($errors->count() > 0)
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             <ul>
                 @foreach($errors->all() as $message)
                 <li>{{$message}}</li>

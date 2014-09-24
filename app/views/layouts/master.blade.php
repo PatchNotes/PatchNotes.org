@@ -16,7 +16,7 @@
     <body class="{{ (isset($bodyclass) ? $bodyclass : '' ) }}">
 
         <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" role="alert" style="border-radius: 0; margin-bottom: 0;">
                 <div class="container">
                     <div class="text-center">
                         <strong>Danger!</strong><br>
