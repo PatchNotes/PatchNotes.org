@@ -22,20 +22,20 @@ use LaravelBook\Ardent\Ardent;
  */
 class Subscription extends Ardent {
 
-	public function user() {
-		return $this->belongsTo('User');
-	}
+    public function user() {
+        return $this->belongsTo('User');
+    }
 
-	public function project() {
-		return $this->belongsTo('Project');
-	}
+    public function project() {
+        return $this->belongsTo('Project');
+    }
 
-	public function subscriptionLevel() {
-		return $this->hasOne('ProjectUpdateLevel');
-	}
+    public function subscriptionLevel() {
+        return $this->hasOne('ProjectUpdateLevel');
+    }
 
-	public function notificationLevel() {
-		return $this->hasOne('NotificationLevel');
-	}
+    public function notificationLevel() {
+        return $this->hasOne('NotificationLevel');
+    }
 
 } 

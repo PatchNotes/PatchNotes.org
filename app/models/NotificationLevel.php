@@ -13,8 +13,8 @@ use LaravelBook\Ardent\Ardent;
  */
 class NotificationLevel extends Ardent {
 
-	protected $table = 'notification_levels';
+    protected $table = 'notification_levels';
 
-	protected $fillable = array('level', 'name', 'queue');
+    protected $fillable = array('level', 'name', 'queue');
 
 } 

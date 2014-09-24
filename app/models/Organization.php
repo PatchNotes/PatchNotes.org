@@ -9,76 +9,76 @@ use LaravelBook\Ardent\Ardent;
 class Organization extends Ardent implements Models\Interfaces\Participant
 {
 
-	public static $rules = array(
-		'name' => 'required',
-		'slug' => 'required|unique:organizations',
-		'site_url' => 'url',
-		'email' => 'email',
-		'description' => '',
-	);
+    public static $rules = array(
+        'name' => 'required',
+        'slug' => 'required|unique:organizations',
+        'site_url' => 'url',
+        'email' => 'email',
+        'description' => '',
+    );
 
-	public function __construct(array $attributes = array())
-	{
+    public function __construct(array $attributes = array())
+    {
 
-		parent::__construct($attributes);
+        parent::__construct($attributes);
 
-		self::events();
+        self::events();
 
-	}
+    }
 
-	public function projects()
-	{
-		return $this->morphMany('Project', 'owner');
-	}
+    public function projects()
+    {
+        return $this->morphMany('Project', 'owner');
+    }
 
-	public function getNameAttribute()
-	{
-		return $this->name;
-	}
+    public function getNameAttribute()
+    {
+        return $this->name;
+    }
 
-	public function getSlugAttribute()
-	{
-		return $this->slug;
-	}
+    public function getSlugAttribute()
+    {
+        return $this->slug;
+    }
 
-	public function getHrefAttribute() {
+    public function getHrefAttribute() {
         return action('UserController@show', array($this->slug));
     }
 
-	public static function fetchByCreator(User $user)
-	{
+    public static function fetchByCreator(User $user)
+    {
 
-		return array();
-	}
+        return array();
+    }
 
-	public function users() {
-		return $this->hasMany('OrganizationUser');
-	}
+    public function users() {
+        return $this->hasMany('OrganizationUser');
+    }
 
-	/**
-	 * Verify we're unique in both users and organizations
-	 *
-	 * @return bool
-	 */
-	public static function events()
-	{
+    /**
+     * Verify we're unique in both users and organizations
+     *
+     * @return bool
+     */
+    public static function events()
+    {
 
-		self::creating(function ($org) {
-			$user = User::where('slug', $org->slug)->first();
+        self::creating(function ($org) {
+            $user = User::where('slug', $org->slug)->first();
 
-			if ($user) {
-				return false;
-			}
-		});
+            if ($user) {
+                return false;
+            }
+        });
 
-		self::updating(function ($org) {
-			$user = User::where('slug', $org->slug)->first();
+        self::updating(function ($org) {
+            $user = User::where('slug', $org->slug)->first();
 
-			if ($user) {
-				return false;
-			}
-		});
+            if ($user) {
+                return false;
+            }
+        });
 
-	}
+    }
 
 }

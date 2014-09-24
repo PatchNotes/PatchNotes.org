@@ -7,15 +7,15 @@
         <h2 id="projectHeader"><a href="{{ $owner->href }}">{{{ $owner->username }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
-	    @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
-	    <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
-		    <i class="fa fa-plus"></i>
-	    </a>
-	    @else
-	    <a href="{{ action('Projects\\SubscriptionController@destroy', array($owner->slug, $project->slug)) }}" class="btn social-btn social-unsubscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
-		    <i class="fa fa-minus"></i>
-	    </a>
-	    @endif
+        @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
+        <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
+            <i class="fa fa-plus"></i>
+        </a>
+        @else
+        <a href="{{ action('Projects\\SubscriptionController@destroy', array($owner->slug, $project->slug)) }}" class="btn social-btn social-unsubscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
+            <i class="fa fa-minus"></i>
+        </a>
+        @endif
         <a href="{{ $project->href }}/updates.rss" class="btn social-btn social-rss">
             <i class="fa fa-rss"></i>
         </a>
@@ -82,21 +82,21 @@
             </div>
         </div>
 
-	    @if(Sentry::check())
+        @if(Sentry::check())
         <div id="subscribe" class="panel panel-primary" style="display:none">
             <div class="panel-heading">Subscribed to {{{ $project->name }}}</div>
             <div class="panel-body">
                 <p>Thanks for your subscription to {{{ $project->name }}}. Your default subscription intervals are below, you can also modify them on
-	                <a href="/account/dashboard">your dashboard</a>.</p>
+                    <a href="/account/dashboard">your dashboard</a>.</p>
 
-	            <ul>
-		            <li>Newsletter: {{ Sentry::getUser()->getDefaultNotificationLevel(10)->name }}</li>
-		            <li>Product Updates: {{ Sentry::getUser()->getDefaultNotificationLevel(50)->name }}</li>
-		            <li>Service Changes: {{ Sentry::getUser()->getDefaultNotificationLevel(100)->name }}</li>
-	            </ul>
+                <ul>
+                    <li>Newsletter: {{ Sentry::getUser()->getDefaultNotificationLevel(10)->name }}</li>
+                    <li>Product Updates: {{ Sentry::getUser()->getDefaultNotificationLevel(50)->name }}</li>
+                    <li>Service Changes: {{ Sentry::getUser()->getDefaultNotificationLevel(100)->name }}</li>
+                </ul>
             </div>
         </div>
-		@endif
+        @endif
 
         <div class="row text-center">
             <div class="col-sm-4">

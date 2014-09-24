@@ -12,8 +12,8 @@ use LaravelBook\Ardent\Ardent;
  */
 class ProjectUpdateLevel extends Ardent {
 
-	protected $table = 'project_updates_levels';
+    protected $table = 'project_updates_levels';
 
-	protected $fillable = array('level', 'name');
+    protected $fillable = array('level', 'name');
 
 } 

@@ -5,9 +5,9 @@ use TestCase;
 use Organization;
 
 class OrganizationTest extends TestCase {
-	public function testIsInvalidWithoutAName() {
-		$org = new Organization();
+    public function testIsInvalidWithoutAName() {
+        $org = new Organization();
 
-		$this->assertFalse($org->validate());
-	}
+        $this->assertFalse($org->validate());
+    }
 }

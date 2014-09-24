@@ -12,12 +12,12 @@
 */
 
 App::before(function ($request) {
-	//
+    //
 });
 
 
 App::after(function ($request, $response) {
-	//
+    //
 });
 
 /*
@@ -32,20 +32,20 @@ App::after(function ($request, $response) {
 */
 
 Route::filter('auth', function () {
-	if (!Sentry::getUser()) {
-		Session::put('redirect', URL::full());
-		return Redirect::guest('account/login');
-	}
+    if (!Sentry::getUser()) {
+        Session::put('redirect', URL::full());
+        return Redirect::guest('account/login');
+    }
 
-	if ($redirect = Session::get('redirect')) {
-		Session::forget('redirect');
-		return Redirect::to($redirect);
-	}
+    if ($redirect = Session::get('redirect')) {
+        Session::forget('redirect');
+        return Redirect::to($redirect);
+    }
 });
 
 
 Route::filter('auth.basic', function () {
-	return Auth::basic();
+    return Auth::basic();
 });
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ Route::filter('auth.basic', function () {
 */
 
 Route::filter('guest', function () {
-	if (Auth::check()) return Redirect::to('/');
+    if (Auth::check()) return Redirect::to('/');
 });
 
 /*
@@ -74,7 +74,7 @@ Route::filter('guest', function () {
 */
 
 Route::filter('csrf', function () {
-	if (Session::token() != Input::get('_token')) {
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+    if (Session::token() != Input::get('_token')) {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
 });

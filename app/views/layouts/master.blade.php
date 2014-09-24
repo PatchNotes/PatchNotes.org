@@ -59,7 +59,7 @@
                                 <li>
                                     <div class="row">
                                         <div class="col-md-12">
-                                        	{{ Form::open(array('method' => 'post', 'url' => '/account/login', 'id' => 'login-nav', 'class' => 'form')) }}
+                                            {{ Form::open(array('method' => 'post', 'url' => '/account/login', 'id' => 'login-nav', 'class' => 'form')) }}
                                                 <div class="form-group">
                                                     <label class="sr-only" for="headerLoginEmail">Email address</label>
                                                     <input type="email" name="email" class="form-control" id="headerLoginEmail" placeholder="Email address" required>
@@ -83,7 +83,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-									<a href="/auth/GitHub" class="btn btn-primary btn-block">Sign in via GitHub</a>
+                                    <a href="/auth/GitHub" class="btn btn-primary btn-block">Sign in via GitHub</a>
                                 </li>
                             </ul>
                         </li>

@@ -20,12 +20,12 @@ use LaravelBook\Ardent\Ardent;
  */
 class Project extends Ardent {
 
-	public static $rules = array(
-		'name' => 'required',
-		'slug' => 'required|unique:projects',
-		'site_url' => 'required|url',
-		'description' => 'required',
-	);
+    public static $rules = array(
+        'name' => 'required',
+        'slug' => 'required|unique:projects',
+        'site_url' => 'required|url',
+        'description' => 'required',
+    );
 
     public function getHrefAttribute() {
         return action('Projects\\ProjectController@show', array($this->owner->slug, $this->slug));
@@ -52,64 +52,64 @@ class Project extends Ardent {
     }
 
     /**
-	 * Register a users subscription to a project.
-	 *
-	 * @param User $user
-	 * @param $levels
-	 * @return bool
-	 */
-	public function subscribe(User $user, $levels = array()) {
-		if(empty($levels)) $levels = $user->getDefaultLevels();
-		foreach ($levels as $level) {
+     * Register a users subscription to a project.
+     *
+     * @param User $user
+     * @param $levels
+     * @return bool
+     */
+    public function subscribe(User $user, $levels = array()) {
+        if(empty($levels)) $levels = $user->getDefaultLevels();
+        foreach ($levels as $level) {
 
-			try {
-				$subscription = new Subscription();
+            try {
+                $subscription = new Subscription();
 
-				$subscription->project_id = $this->id;
-				$subscription->user_id = $user->id;
-				$subscription->project_update_level = $level['project_update_level'];
-				$subscription->notification_level = $level['notification_level'];
+                $subscription->project_id = $this->id;
+                $subscription->user_id = $user->id;
+                $subscription->project_update_level = $level['project_update_level'];
+                $subscription->notification_level = $level['notification_level'];
 
-				$subscription->save();
-			} catch (\Illuminate\Database\QueryException $e) {
-				return false;
-			}
+                $subscription->save();
+            } catch (\Illuminate\Database\QueryException $e) {
+                return false;
+            }
 
-		}
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public function unsubscribe(User $user) {
-		$subscriptions = Subscription::where('user_id', $user->id)->where('project_id', $this->id)->get();
+    public function unsubscribe(User $user) {
+        $subscriptions = Subscription::where('user_id', $user->id)->where('project_id', $this->id)->get();
 
-		foreach($subscriptions as $subscription) {
-			$subscription->delete();
-		}
+        foreach($subscriptions as $subscription) {
+            $subscription->delete();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public function isSubscriber(User $user) {
-		return (boolean)Subscription::where('user_id', $user->id)->where('project_id', $this->id)->first();
-	}
+    public function isSubscriber(User $user) {
+        return (boolean)Subscription::where('user_id', $user->id)->where('project_id', $this->id)->first();
+    }
 
-	/**
-	 * Get a unique count of subscribers
-	 *
-	 * @return integer
-	 */
-	public function subscriberCount() {
-		return count($this->subscribers()->distinct()->get(array('user_id')));
-	}
+    /**
+     * Get a unique count of subscribers
+     *
+     * @return integer
+     */
+    public function subscriberCount() {
+        return count($this->subscribers()->distinct()->get(array('user_id')));
+    }
 
-	public function subscribers() {
-		return $this->hasMany('Subscription');
-	}
+    public function subscribers() {
+        return $this->hasMany('Subscription');
+    }
 
-	public function updates() {
-		return $this->hasMany('ProjectUpdate');
-	}
+    public function updates() {
+        return $this->hasMany('ProjectUpdate');
+    }
 
     public function owner() {
         return $this->morphTo();

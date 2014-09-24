@@ -7,12 +7,12 @@
         <h2>Login</h2>
 
         @if($errors->count() > 0)
-		<ul>
-		    @foreach($errors->all() as $message)
-		    <li>{{$message}}</li>
-		    @endforeach
-		</ul>
-		@endif
+        <ul>
+            @foreach($errors->all() as $message)
+            <li>{{$message}}</li>
+            @endforeach
+        </ul>
+        @endif
 
         <div class="account-wall">
             {{ Form::open(array('url' => 'account/login', 'class' => 'form-login auth')) }}

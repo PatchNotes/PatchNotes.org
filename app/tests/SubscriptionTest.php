@@ -2,8 +2,8 @@
 
 class SubscriptionTest extends TestCase {
 
-	public function testSubscription() {
-		$this->assertTrue(true);
-	}
+    public function testSubscription() {
+        $this->assertTrue(true);
+    }
 
 }
