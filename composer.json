@@ -1,6 +1,6 @@
 {
 	"name": "patchnotes",
-	"license": "Unlicensed",
+	"license": "MIT",
     "repositories": [
         {
             "type": "composer",
@@ -8,19 +8,18 @@
         }
     ],
 	"require": {
-		"laravel/framework": "4.1.*",
-		"cartalyst/sentry": "2.0.*",
+		"laravel/framework": "4.2.*",
+		"cartalyst/sentry": "2.1.4",
 		"axxim/markdown-blade": "dev-master",
-		"codesleeve/asset-pipeline": "dev-master",
 		"aws/aws-sdk-php": "2.4.*@dev",
 		"thujohn/rss": "dev-master",
 		"knplabs/github-api": "*",
         "adamwathan/bootforms": "dev-master",
         "laravelbook/ardent": "dev-master",
-        "barryvdh/laravel-ide-helper": "1.*",
         "lusitanian/oauth": "~0.2"
 	},
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "1.*",
         "phpunit/phpunit": "3.7.*",
         "mockery/mockery": "dev-master@dev",
         "fzaninotto/faker": "1.4.*@dev"
@@ -55,5 +54,5 @@
 	"config": {
 		"preferred-install": "dist"
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "stable"
 }

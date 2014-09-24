@@ -67,6 +67,8 @@ return array(
 
 	'key' => '',
 
+    'cipher' => MCRYPT_RIJNDAEL_256,
+
 	/*
 	|--------------------------------------------------------------------------
 	| Autoloaded Service Providers
@@ -107,7 +109,6 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Axxim\MarkdownBlade\MarkdownBladeServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
-		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Thujohn\Rss\RssServiceProvider',
         'AdamWathan\BootForms\BootFormsServiceProvider',
