@@ -9,8 +9,8 @@
             <h1 id="lead">Development changes fast</h1>
             <h2 id="sublead">PatchNotes helps you keep up</h2>
 
-            <p>Here's some other bullshit to pull you into our product and tell you more about the service at the same
-                time.</p>
+            <p>This is a catchy message in order to help you to want to use our service. It should be about this length
+            with several clear sentences and points. Almost there now, we can do it. Yes, there we go.</p>
         </div>
         <div class="col-lg-4">
             {{ Form::open(array('url' => 'account/register', 'class' => 'form auth', 'role' => 'form')) }}

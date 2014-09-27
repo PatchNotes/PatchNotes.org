@@ -16,4 +16,4 @@ class UserController extends BaseController {
         return View::make('users/profile', compact('user'));
     }
 
-} 
+}

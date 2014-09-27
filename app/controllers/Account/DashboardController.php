@@ -1,10 +1,12 @@
 <?php
 namespace Account;
 
-use Sentry;
-use User;
+use Sentry,
+    User,
+    View,
+    Response;
 
-class SettingController extends BaseController {
+class DashboardController extends BaseController {
 
     /**
      * @var User
@@ -18,7 +20,7 @@ class SettingController extends BaseController {
     }
 
     public function getIndex() {
-
+        return View::make("account/dashboard/index");
     }
 
     public function getProfile() {
@@ -26,13 +28,13 @@ class SettingController extends BaseController {
     }
 
     public function getSubscriptions() {
-        $subscriptions = $this->user->subscriptions()->get();
+        $subscriptions = $this->user->subscriptions()->paginate(15);
 
-        var_dump($subscriptions);
+        return View::make("account/dashboard/subscriptions", compact("subscriptions"));
     }
 
     public function postSubscriptions() {
 
     }
 
-} 
+}
