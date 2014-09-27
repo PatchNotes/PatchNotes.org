@@ -1,8 +1,6 @@
 @extends('layouts/master')
 
 @section('content')
-
-
 <div id="pullEmIn" class="jumbotron hero-spacer">
     <div class="row">
         <div class="col-lg-8">

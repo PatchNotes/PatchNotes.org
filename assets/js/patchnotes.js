@@ -15,6 +15,7 @@ $(document).ready(function() {
     $('body').on('click', '.social-subscribe', function(e) {
         e.preventDefault();
 
+        var self = this;
         var $icon = $(this).children('i');
         $icon.removeClass().addClass('fa fa-cog fa-spin');
 
@@ -30,15 +31,17 @@ $(document).ready(function() {
                     return;
                 }
 
-                $('#subscribe').slideToggle();
+                $('#unsubscribe').slideUp();
+                $('#subscribe').slideDown();
                 $icon.removeClass().addClass('fa fa-minus');
-                $(this).removeClass('social-subscribe').addClass('social-unsubscribe');
+                $(self).removeClass('social-subscribe').addClass('social-unsubscribe');
             });
     });
 
     $('body').on('click', '.social-unsubscribe', function(e) {
         e.preventDefault();
 
+        var self = this;
         var $icon = $(this).children('i');
         $icon.removeClass().addClass('fa fa-cog fa-spin');
 
@@ -54,9 +57,10 @@ $(document).ready(function() {
                     return;
                 }
 
-                $('#subscribe').slideToggle();
+                $('#subscribe').slideUp();
+                $('#unsubscribe').slideDown();
                 $icon.removeClass().addClass('fa fa-plus');
-                $(this).removeClass('social-unsubscribe').addClass('social-subscribe');
+                $(self).removeClass('social-unsubscribe').addClass('social-subscribe');
             });
     });
 

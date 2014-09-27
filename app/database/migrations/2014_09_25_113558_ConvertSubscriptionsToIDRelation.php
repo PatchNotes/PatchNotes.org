@@ -34,12 +34,12 @@ class ConvertSubscriptionsToIDRelation extends Migration {
         }
 
         Schema::table('subscriptions', function(Blueprint $table) {
-            $table->removeUniqueIndex();
+            $table->dropUnique('subscriptions_project_id_user_id_project_update_level_unique');
 
             $table->dropColumn('notification_level');
             $table->dropColumn('project_update_level');
 
-            $table->addUniqueIndex();
+            $table->unique(array('project_id', 'user_id', 'project_update_level_id'));
         });
     }
 

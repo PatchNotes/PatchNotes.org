@@ -140,7 +140,7 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
 
         $dbSubscriptions = array();
         foreach ($subscriptions as $subscription) {
-            $dbSubscriptions[$subscription->project_update_level] = $subscription->notification_level;
+            $dbSubscriptions[$subscription->project_update_level_id] = $subscription->notification_level_id;
         }
 
         return array_merge($dbSubscriptions, $this->defaultLevels);
@@ -154,14 +154,14 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
     {
         $subscription = Subscription::where('user_id', $this->id)
             ->where('project_id', $update->project->id)
-            ->where('project_update_level', $update->level)
+            ->where('project_update_level_id', $update->id)
             ->first();
 
         if (is_null($subscription)) {
             return $this->getDefaultNotificationLevel($update->level);
         }
 
-        return NotificationLevel::where('level', $subscription->notification_level)->first();
+        return NotificationLevel::where('id', $subscription->notification_level_id)->first();
     }
 
     /**
@@ -171,16 +171,17 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
      * @return NotificationLevel
      * @throws Exception
      */
-    public function getDefaultNotificationLevel($updateLevel)
+    public function getDefaultNotificationLevel($level)
     {
-        $subscription = Subscription::where('user_id', $this->id)->where('project_id', NULL)->where('project_update_level', $updateLevel)->first();
+        $projectUpdateLevel = ProjectUpdateLevel::where('level', $level)->firstOrFail();
+        $subscription = Subscription::where('user_id', $this->id)->where('project_id', NULL)->where('project_update_level_id', $projectUpdateLevel->id)->first();
 
         if ($subscription) {
             return NotificationLevel::where('level', $subscription->notification_level)->first();
         }
 
         foreach ($this->defaultLevels as $level) {
-            if ($level['project_update_level'] == $updateLevel) return NotificationLevel::where('level', $level['notification_level'])->first();
+            if ($level['project_update_level'] == $projectUpdateLevel->level) return NotificationLevel::where('level', $level['notification_level'])->first();
         }
 
         throw new Exception("No default level found, updateLevel must be out of range.");

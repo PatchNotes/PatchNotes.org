@@ -11,7 +11,7 @@ class ProjectEvents {
 
     public function onUpdate(\Project $project, \ProjectUpdate $update) {
         // Get all users of the project
-        $subs = Subscription::where('project_id', $project->id)->where('project_update_level', $update->level)->get();
+        $subs = Subscription::where('project_id', $project->id)->where('project_update_level_id', $update->id)->get();
         foreach($subs as $sub) {
             $notificationLevel = $sub->user->getNotificationLevel($update);
             $queue = Config::get('patchnotes.aws.queue.' . $notificationLevel->queue);
@@ -36,4 +36,4 @@ class ProjectEvents {
         $events->listen('project.update.send', 'PatchNotes\Events\ProjectEvents@sendUpdate');
     }
 
-} 
+}

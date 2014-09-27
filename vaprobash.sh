@@ -5,6 +5,7 @@ cd /vagrant
 composer install --prefer-source --no-interaction
 
 # Due to an issue in vaprobash
+sudo apt-get install npm
 mkdir /home/vagrant/npm
 npm install
 

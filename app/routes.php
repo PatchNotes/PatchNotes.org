@@ -46,7 +46,10 @@ Route::group(array(), function () {
     Route::delete('projects/{participant}/{name}', 'Projects\\ProjectController@destroy');
 
     Route::resource('projects/{participant}/{name}/updates', 'Projects\\UpdateController');
+
     Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');
+    Route::delete('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController@destroy');
+
     Route::controller('projects/{participant}/{name}/share', 'Projects\\ShareController');
     Route::get('projects/{participant}/{name}/updates.rss', 'Projects\\UpdateController@indexRSS');
 });
