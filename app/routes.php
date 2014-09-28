@@ -5,8 +5,8 @@ Route::get('/search', 'SearchController@getSearch');
 
 /* Accounts & Users */
 Route::group(array('prefix' => 'account'), function () {
-    Route::controller('', 'Account\\AccountController');
-    Route::controller('settings', 'Account\\SettingController');
+
+    Route::controller('dashboard', 'Account\\DashboardController');
 });
 
 Route::group(array('prefix' => 'auth'), function () {
@@ -46,7 +46,10 @@ Route::group(array(), function () {
     Route::delete('projects/{participant}/{name}', 'Projects\\ProjectController@destroy');
 
     Route::resource('projects/{participant}/{name}/updates', 'Projects\\UpdateController');
+
     Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');
+    Route::delete('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController@destroy');
+
     Route::controller('projects/{participant}/{name}/share', 'Projects\\ShareController');
     Route::get('projects/{participant}/{name}/updates.rss', 'Projects\\UpdateController@indexRSS');
 });

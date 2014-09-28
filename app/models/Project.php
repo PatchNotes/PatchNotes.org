@@ -62,13 +62,17 @@ class Project extends Ardent {
         if(empty($levels)) $levels = $user->getDefaultLevels();
         foreach ($levels as $level) {
 
+            $projectUpdateLevel = ProjectUpdateLevel::where('level', $level['project_update_level'])->firstOrFail();
+            $notificationLevel = NotificationLevel::where('level', $level['notification_level'])->firstOrFail();
+
+
             try {
                 $subscription = new Subscription();
 
                 $subscription->project_id = $this->id;
                 $subscription->user_id = $user->id;
-                $subscription->project_update_level = $level['project_update_level'];
-                $subscription->notification_level = $level['notification_level'];
+                $subscription->project_update_level_id = $projectUpdateLevel->id;
+                $subscription->notification_level_id = $notificationLevel->id;
 
                 $subscription->save();
             } catch (\Illuminate\Database\QueryException $e) {

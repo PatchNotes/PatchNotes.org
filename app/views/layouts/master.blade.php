@@ -90,7 +90,7 @@
                     </ul>
                     @else
                     <ul class="nav navbar-nav pull-right">
-                        <li><a href="/panel">Account</a></li>
+                        <li><a href="/account/dashboard">Dashboard</a></li>
                         <li><a href="/account/logout">Logout</a></li>
                     </ul>
                     @endif

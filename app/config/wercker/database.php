@@ -1,21 +1,22 @@
 <?php
 
+$url = parse_url(getenv("WERCKER_POSTGRESQL_URL"));
+
 return array(
 
-    'default' => 'mysql',
+    'default' => 'pgsql',
 
     'connections' => array(
 
-        'mysql' => array(
-            'driver' => 'mysql',
-            'host' => getenv('WERCKER_MYSQL_HOST'),
-            'port' => getenv('WERCKER_MYSQL_PORT'),
-            'database' => getenv('WERCKER_MYSQL_DATABASE'),
-            'username' => getenv('WERCKER_MYSQL_USERNAME'),
-            'password' => getenv('WERCKER_MYSQL_PASSWORD'),
+        'pgsql' => array(
+            'driver' => 'pgsql',
+            'host' => $url['host'],
+            'database' => substr($url["path"], 1),
+            'username' => $url['user'],
+            'password' => $url['pass'],
             'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
             'prefix' => '',
+            'schema' => 'public',
         ),
 
     ),

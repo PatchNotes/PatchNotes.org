@@ -96,6 +96,12 @@
                 </ul>
             </div>
         </div>
+        <div id="unsubscribe" class="panel panel-primary" style="display:none">
+            <div class="panel-heading">Unsubcribed to {{{ $project->name }}}</div>
+            <div class="panel-body">
+                <p>All of your subscriptions to {{{ $project->name }}} have been removed. You won't receive any more emails.</p>
+            </div>
+        </div>
         @endif
 
         <div class="row text-center">
