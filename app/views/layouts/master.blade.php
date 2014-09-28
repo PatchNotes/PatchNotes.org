@@ -8,8 +8,7 @@
 
         <title>PatchNotes</title>
 
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
         <link href="/assets/css/patchnotes.min.css" rel="stylesheet">
     </head>
 
@@ -83,7 +82,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="/auth/GitHub" class="btn btn-primary btn-block">Sign in via GitHub</a>
+                                    <a href="/auth/GitHub" class="btn btn-block btn-social btn-github"><i class="fa fa-github"></i> Sign in with GitHub</a>
                                 </li>
                             </ul>
                         </li>

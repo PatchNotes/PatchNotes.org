@@ -16,15 +16,17 @@ var paths = {
     images: 'assets/img/**/*'
 };
 
-// Not all tasks need to use streams
-// A gulpfile is just another node program and you can use all packages available on npm
 gulp.task('clean', function(cb) {
-    // You can use multiple globbing patterns as you would with `gulp.src`
-    del(['public/assets'], cb);
+    return del(['public/assets/**/*'], cb);
+});
+
+gulp.task('fonts', ['clean'], function() {
+    gulp.src('assets/libraries/fontawesome/fonts/**/*.{ttf,woff,eof,svg}')
+        .pipe(gulp.dest('public/assets/fonts'));
 });
 
 gulp.task('less', ['clean'], function() {
-    return gulp.src(paths.less)
+    gulp.src(paths.less)
         .pipe(less())
         //.pipe(uglify())
         .pipe(concat('patchnotes.min.css'))
@@ -34,7 +36,7 @@ gulp.task('less', ['clean'], function() {
 gulp.task('scripts', ['clean'], function() {
     // Minify and copy all JavaScript (except vendor scripts)
     // with sourcemaps all the way down
-    return gulp.src(paths.scripts)
+    gulp.src(paths.scripts)
         .pipe(uglify())
         .pipe(concat('patchnotes.min.js'))
         .pipe(gulp.dest('public/assets/js'));
@@ -60,4 +62,4 @@ gulp.task('watch', function() {
 
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['watch', 'less', 'scripts', 'images']);
-gulp.task('compile', ['less', 'scripts', 'images']);
+gulp.task('compile', ['fonts', 'less', 'scripts', 'images']);
