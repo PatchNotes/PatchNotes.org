@@ -60,7 +60,7 @@ deploy:
     - script:
         name: reset permissions
         code: |
-          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "chmod -Rf 775 /srv/www/patchnotes.org/website/app/storage/"
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "chmod -Rf 775 /srv/www/patchnotes.org/website/app/storage/ || :"
     - script:
         name: start application
         code: |
