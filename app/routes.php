@@ -5,8 +5,9 @@ Route::get('/search', 'SearchController@getSearch');
 
 /* Accounts & Users */
 Route::group(array('prefix' => 'account'), function () {
-
     Route::controller('dashboard', 'Account\\DashboardController');
+
+    Route::controller('', 'Account\\AccountController');
 });
 
 Route::group(array('prefix' => 'auth'), function () {
