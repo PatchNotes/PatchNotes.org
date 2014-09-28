@@ -13,7 +13,7 @@ class ReindexProjectUpdateLevel extends Migration {
 	public function up()
 	{
 		Schema::table('project_updates', function(Blueprint $table) {
-			$table->integer('project_update_level_id')->after('level')->unsigned();
+			$table->integer('project_update_level_id')->after('level')->unsigned()->nullable();
 
 			$table->foreign('project_update_level_id')->references('id')->on('project_updates_levels');
 		});
