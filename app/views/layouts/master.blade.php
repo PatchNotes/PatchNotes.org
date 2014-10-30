@@ -47,6 +47,7 @@
                             {{ Form::close() }}
                         </li>
                         <li><a href="/projects">Browse</a></li>
+                        <li><a href="/organizations">Organizations</a></li>
                         <li><a href="http://blog.patchnotes.org/">Blog</a></li>
                     </ul>
 
@@ -61,11 +62,11 @@
                                             {{ Form::open(array('method' => 'post', 'url' => '/account/login', 'id' => 'login-nav', 'class' => 'form')) }}
                                                 <div class="form-group">
                                                     <label class="sr-only" for="headerLoginEmail">Email address</label>
-                                                    <input type="email" name="email" class="form-control" id="headerLoginEmail" placeholder="Email address" required>
+                                                    <input type="email" name="email" class="form-control" id="headerLoginEmail" placeholder="Email address">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="sr-only" for="headerLoginPassword">Password</label>
-                                                    <input type="password" name="password" class="form-control" id="headerLoginPassword" placeholder="Password" required>
+                                                    <input type="password" name="password" class="form-control" id="headerLoginPassword" placeholder="Password">
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>

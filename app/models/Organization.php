@@ -13,7 +13,7 @@ class Organization extends Ardent implements Models\Interfaces\Participant
         'name' => 'required',
         'slug' => 'required|unique:organizations',
         'site_url' => 'url',
-        'email' => 'email',
+        'email' => 'required|email',
         'description' => '',
     );
 
@@ -36,15 +36,18 @@ class Organization extends Ardent implements Models\Interfaces\Participant
         return $this->name;
     }
 
+    public function setSlugAttribute($slug) {
+        return $this->attributes['slug'] = $slug;
+    }
+
     public function getSlugAttribute()
     {
-        return $this->slug;
+        return $this->attributes['slug'];
     }
 
     public function getHrefAttribute() {
         return action('UserController@show', array($this->slug));
     }
-
     public static function fetchByCreator(User $user)
     {
 
@@ -64,7 +67,7 @@ class Organization extends Ardent implements Models\Interfaces\Participant
     {
 
         self::creating(function ($org) {
-            $user = User::where('slug', $org->slug)->first();
+            $user = User::where('username', $org->slug)->first();
 
             if ($user) {
                 return false;
@@ -72,7 +75,7 @@ class Organization extends Ardent implements Models\Interfaces\Participant
         });
 
         self::updating(function ($org) {
-            $user = User::where('slug', $org->slug)->first();
+            $user = User::where('username', $org->slug)->first();
 
             if ($user) {
                 return false;

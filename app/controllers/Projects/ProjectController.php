@@ -1,7 +1,7 @@
 <?php
 namespace Projects;
 
-use dflydev\markdown\MarkdownParser;
+//use dflydev\markdown\MarkdownParser;
 use Input;
 use Project;
 use Redirect;
@@ -140,9 +140,9 @@ class ProjectController extends BaseController
             App::abort(404, 'Project not found.');
         }
 
-        $parser = new MarkdownParser();
+        //$parser = new MarkdownParser();
 
-        return View::make('projects/show', compact('project', 'owner', 'parser'));
+        return View::make('projects/show', compact('project', 'owner'));
     }
 
     /**

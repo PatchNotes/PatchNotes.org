@@ -1,6 +1,8 @@
 @extends('layouts/master')
 
 @section('content')
+
+@if(!Sentry::check())
 <div id="pullEmIn" class="jumbotron hero-spacer">
     <div class="row">
         <div class="col-lg-8">
@@ -26,14 +28,17 @@
         </div>
     </div>
 </div>
+@endif
 
-<div class="row">
-    <div class="col-lg-6">
-        <h2>For Project Maintainers</h2>
+<p class="text-info">These divs below should swap out for the various focuses PatchNotes has.</p>
+<div id="feature-cycle" class="row">
+    <div id="feature-producer" class="col-lg-6">
+        <h2>Producers: <em class="feature-topic"></em></h2>
+        <p class="feature-text"></p>
     </div>
-    <div class="col-lg-6">
-        <h2>For Project Followers</h2>
-
+    <div id="feature-consumer" class="col-lg-6">
+        <h2>Consumers: <em class="feature-topic"></em></h2>
+        <p class="feature-text"></p>
     </div>
 </div>
 
@@ -46,4 +51,61 @@
 <?php $projects = $newProjects; ?>
 @include('projects/partials/list')
 
+@stop
+
+@section('scripts')
+<script>
+$(function documentReady() {
+    var featureCycles = {
+        topics: ["Security Alerts","Bug Fixes"],
+        producers: {
+            "Security Alerts": "Here's something for the producers",
+            "Bug Fixes": "Something about bug fixes for producers."
+        },
+        consumers: {
+            "Security Alerts": "Here's something for the consumers",
+            "Bug Fixes": "Something about bug fixes for consumers."
+        }
+    };
+
+    var cycleInterval = 0,
+        currentCycle = 0;
+
+    function startCycle() {
+        cycleInterval = setInterval(changeCycle, 10000);
+    }
+
+    function stopCycle() {
+        clearInterval(cycleInterval);
+    }
+
+    function changeCycle() {
+        currentCycle++;
+        if(currentCycle > (featureCycles.topics.length - 1)) {
+            currentCycle = 0;
+        }
+
+        setFeature(currentCycle);
+    }
+
+    function setFeature(i) {
+        var currentTopic = featureCycles.topics[currentCycle];
+
+        $('#feature-producer').find('.feature-topic').text(currentTopic);
+        $('#feature-producer').find('.feature-text').text(featureCycles.producers[currentTopic]);
+
+        $('#feature-consumer').find('.feature-topic').text(currentTopic);
+        $('#feature-consumer').find('.feature-text').text(featureCycles.consumers[currentTopic]);
+    }
+
+    setFeature(0);
+    startCycle();
+
+    $('#featureCycle').hover(function cycleHover() {
+        stopCycle();
+    }, function cycleUnhover() {
+        startCycle();
+    });
+});
+</script>
 @stop
