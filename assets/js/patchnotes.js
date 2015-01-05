@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
-    $('.textfill').textfill();
+    $('.project-header').textfill({
+        maxFontPixels: 28
+    });
 
 
     $('[data-toggle="tooltip"]').tooltip();

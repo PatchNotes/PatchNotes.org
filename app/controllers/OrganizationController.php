@@ -34,11 +34,19 @@ class OrganizationController extends BaseController {
     public function store() {
         $org = new Organization();
         $org->name = Input::get('name');
+        $org->email = Input::get('email');
         $org->slug = Str::slug(Input::get('name'));
         $org->site_url = Input::get('site_url');
         $org->description = Input::get('description');
 
         if($org->save()) {
+            $user = Sentry::getUser();
+            $orgUser = new OrganizationUser();
+            $orgUser->user->attach($user);
+            $orgUser->organization->attach($org);
+            $orgUser->creator = true;
+            $orgUser->save();
+
             return Redirect::to('organizations/' . $org->slug);
         } else {
             return Redirect::back()->withErrors($org->errors());

@@ -1,10 +1,10 @@
-<div class="row projects">
+<div class="row projects-list">
     @foreach($projects as $project)
 
     <div class="col-md-3">
         <a href="{{ $project->href }}" class="thumbnail project">
-            <div class="caption">
-                <h2 class="textfill"><span>{{{ $project->name }}}</span></h2>
+            <div class="project-caption">
+                <h2 class="project-header"><span>{{{ $project->name }}}</span></h2>
                 <p>{{{ Str::limit($project->description, 50) }}}</p>
             </div>
             <div class="modal-footer" style="text-align: left">

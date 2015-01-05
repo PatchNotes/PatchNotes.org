@@ -5,8 +5,8 @@
 
 <div class="row">
     <div class="col-lg-9">
-
-        We'll explain organizations here.
+        <h2>Organizations</h2>
+        <p>Companies and Teams working on the same projects.</p>
     </div>
     <div class="col-lg-3">
         @if(Sentry::check())

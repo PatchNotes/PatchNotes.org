@@ -8,8 +8,7 @@
 
         <title>PatchNotes</title>
 
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
         <link href="/assets/css/patchnotes.min.css" rel="stylesheet">
     </head>
 
@@ -48,6 +47,7 @@
                             {{ Form::close() }}
                         </li>
                         <li><a href="/projects">Browse</a></li>
+                        <li><a href="/organizations">Organizations</a></li>
                         <li><a href="http://blog.patchnotes.org/">Blog</a></li>
                     </ul>
 
@@ -62,11 +62,11 @@
                                             {{ Form::open(array('method' => 'post', 'url' => '/account/login', 'id' => 'login-nav', 'class' => 'form')) }}
                                                 <div class="form-group">
                                                     <label class="sr-only" for="headerLoginEmail">Email address</label>
-                                                    <input type="email" name="email" class="form-control" id="headerLoginEmail" placeholder="Email address" required>
+                                                    <input type="email" name="email" class="form-control" id="headerLoginEmail" placeholder="Email address">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="sr-only" for="headerLoginPassword">Password</label>
-                                                    <input type="password" name="password" class="form-control" id="headerLoginPassword" placeholder="Password" required>
+                                                    <input type="password" name="password" class="form-control" id="headerLoginPassword" placeholder="Password">
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>
@@ -83,7 +83,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="/auth/GitHub" class="btn btn-primary btn-block">Sign in via GitHub</a>
+                                    <a href="/auth/GitHub" class="btn btn-block btn-social btn-github"><i class="fa fa-github"></i> Sign in with GitHub</a>
                                 </li>
                             </ul>
                         </li>

@@ -10,7 +10,6 @@
     "require": {
         "laravel/framework": "4.2.*",
         "cartalyst/sentry": "2.1.4",
-        "axxim/markdown-blade": "dev-master",
         "aws/aws-sdk-php": "2.4.*@dev",
         "thujohn/rss": "dev-master",
         "knplabs/github-api": "*",
