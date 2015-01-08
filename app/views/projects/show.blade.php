@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-lg-7">
-        <h2 id="projectHeader"><a href="{{ $owner->href }}">{{{ $owner->username }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
+        <h2 id="projectHeader"><a href="{{ $owner->href }}">{{{ $owner->name }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
     </div>
     <div class="col-lg-5">
         @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))

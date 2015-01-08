@@ -20,6 +20,27 @@
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentry\Groups\Eloquent\Group[] $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\Subscription[] $subscriptions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\UserOauth[] $oauthAccounts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Project[] $projects
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Organization[] $organizations
+ * @property-read mixed $name
+ * @property-read mixed $slug
+ * @property-read mixed $href
+ * @method static \Illuminate\Database\Query\Builder|\User whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereUsername($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereFirstName($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereLastName($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereEmail($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User wherePassword($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User wherePermissions($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereActivated($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereActivationCode($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereActivatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereLastLogin($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User wherePersistCode($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereResetPasswordCode($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereUpdatedAt($value) 
  */
 class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Interfaces\Participant
 {

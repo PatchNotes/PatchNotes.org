@@ -11,7 +11,8 @@ class SubscriptionSeeder extends Seeder {
             $subs = rand(0,10);
 
             for($i = 0; $i < $subs; $i++) {
-                $user = User::orderBy(DB::raw('RAND()'))->get()[0];
+                // This should be fine since we're not generating a lot of users
+                $user = User::all()->random(1);
 
                 $project->subscribe($user);
             }

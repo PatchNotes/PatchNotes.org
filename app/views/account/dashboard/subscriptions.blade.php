@@ -21,7 +21,7 @@
     <tbody>
         @foreach($subscriptions as $subscription)
         <tr>
-            <td>{{ $subscription->project->name }}</td>
+            <td><a href="{{ $subscription->project->href }}">{{ $subscription->project->name }}</a></td>
             <td>{{ $subscription->project_update_level->name }}</td>
             <td>{{ $subscription->notification_level->name }}</td>
             <td>{{ $subscription->created_at }}</td>

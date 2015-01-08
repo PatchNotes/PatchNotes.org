@@ -10,6 +10,7 @@ use User;
 class ProjectEvents {
 
     public function onUpdate(\Project $project, \ProjectUpdate $update) {
+        return;
         // Get all users of the project
         $subs = Subscription::where('project_id', $project->id)->where('project_update_level_id', $update->id)->get();
         foreach($subs as $sub) {

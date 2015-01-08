@@ -18,6 +18,17 @@ use LaravelBook\Ardent\Ardent;
  * @property-read \Project $project
  * @property-read \User $author
  * @property integer $level
+ * @property integer $project_update_level_id
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereProjectId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereTitle($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereSlug($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereBody($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereUserId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereDeletedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereProjectUpdateLevelId($value) 
  */
 class ProjectUpdate extends Ardent {
 

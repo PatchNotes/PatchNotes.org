@@ -19,11 +19,9 @@ class Organization extends Ardent implements Models\Interfaces\Participant
 
     public function __construct(array $attributes = array())
     {
-
         parent::__construct($attributes);
 
         self::events();
-
     }
 
     public function projects()
@@ -31,31 +29,39 @@ class Organization extends Ardent implements Models\Interfaces\Participant
         return $this->morphMany('Project', 'owner');
     }
 
-    public function getNameAttribute()
-    {
-        return $this->name;
-    }
-
+    // Fill in attributes
+    // ==================
     public function setSlugAttribute($slug) {
         return $this->attributes['slug'] = $slug;
     }
 
-    public function getSlugAttribute()
-    {
+    public function getNameAttribute() {
+        return $this->attributes['name'];
+    }
+
+    public function getSlugAttribute() {
         return $this->attributes['slug'];
     }
 
     public function getHrefAttribute() {
-        return action('UserController@show', array($this->slug));
+        return action('OrganizationController@show', array($this->slug));
     }
-    public static function fetchByCreator(User $user)
-    {
 
-        return array();
-    }
+    // Pivot
+    // =====
 
     public function users() {
-        return $this->hasMany('OrganizationUser');
+        return $this->belongsToMany('User')->withPivot(['creator']);
+    }
+
+    public function creator() {
+        $org = $this;
+        $user = Organization::with(array('users' => function($query) use($org) {
+            $query->where('creator', true);
+            $query->where('organization_id', $org->id);
+        }))->find(1);
+
+        return $user;
     }
 
     /**

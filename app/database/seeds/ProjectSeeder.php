@@ -9,24 +9,35 @@ class ProjectSeeder extends Seeder {
     }
 
     public function run() {
-        $users = User::all();
+        $participants = $this->getSomeParticipants(UserSeeder::numUsers / 2);
 
-        foreach($users as $user) {
+        foreach($participants as $owner) {
             $faker = $this->faker->unique();
             $unique = $faker->domainWord;
 
-            $project = Project::create(array(
-                'name' => $unique,
-                'slug' => Str::slug($unique),
-                'description' => $faker->sentence(),
-                'site_url' => $faker->url
-            ));
+            $project = new Project;
+            $project->name = ucwords($unique);
+            $project->slug = Str::slug($unique);
+            $project->description = $faker->sentence();
+            $project->site_url = $faker->url;
 
-            ProjectManager::create(array(
-                'user_id' => $user->id,
-                'project_id' => $project->id
-            ));
+            $owner->projects()->save($project);
         }
+    }
+    private function getSomeParticipants($numParticipants) {
+        $participants = [];
+
+        for ($i=0; $i < $numParticipants; $i++) {
+            $rand = rand(0,1);
+
+            if($rand == 0) {
+                $participants[] = User::orderBy(DB::raw(DatabaseSeeder::getRandCommand()))->get()[0];
+            } else {
+                $participants[] = Organization::orderBy(DB::raw(DatabaseSeeder::getRandCommand()))->get()[0];
+            }
+        }
+
+        return $participants;
     }
 
 }

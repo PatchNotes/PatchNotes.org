@@ -15,6 +15,7 @@
     <body class="{{ (isset($bodyclass) ? $bodyclass : '' ) }}">
 
         <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+            @if(App::environment() == 'production')
             <div class="alert alert-danger" role="alert" style="border-radius: 0; margin-bottom: 0;">
                 <div class="container">
                     <div class="text-center">
@@ -24,6 +25,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">

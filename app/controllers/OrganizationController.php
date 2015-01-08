@@ -63,8 +63,6 @@ class OrganizationController extends BaseController {
             // Return 404
         }
 
-        var_dump($org);
-
         return View::make('organizations/show', compact('org'));
     }
 

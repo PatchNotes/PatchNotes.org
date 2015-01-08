@@ -32,7 +32,7 @@ class Project extends Ardent {
     }
 
     /**
-     * @param $participant
+     * @param string $participant
      * @return bool|User|Organization
      * @throws Exception
      */
