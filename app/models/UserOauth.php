@@ -8,7 +8,7 @@
  * @property integer $user_id
  * @property string $provider
  * @property integer $provider_user_id
- * @property string $provider_user_details
+ * @property object $provider_user_details
  * @property string $validation_key
  * @property boolean $validated
  * @property \Carbon\Carbon $created_at

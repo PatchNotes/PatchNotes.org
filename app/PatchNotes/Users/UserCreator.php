@@ -124,7 +124,7 @@ class UserCreator
             'user_id'                 => $userId,
             'provider'                 => $details['provider'],
             'provider_user_id'         => $details['user_id'],
-            'provider_user_details' => json_encode($details),
+            'provider_user_details' => $details,
             'validated'             => $validated ? 1 : 0,
             'validation_key'        => str_random(32)
         ));
