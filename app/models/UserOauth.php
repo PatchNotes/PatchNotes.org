@@ -35,4 +35,26 @@ class UserOauth extends Eloquent
     {
         return $this->hasOne('User', 'id', 'user_id');
     }
+
+    /**
+     * Provided User Details Attribute Accessor
+     *
+     * @param string $value The JSON string stored in the social field of the table.
+     *
+     * @return array An array containing the social details
+     */
+    public function getProviderUserDetailsAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    /**
+     * Provided User Details Attribute Mutator
+     *
+     * @param array $value The array containing the social details
+     */
+    public function setProviderUserDetailsAttribute($value)
+    {
+        $this->attributes['provider_user_details'] = json_encode($value);
+    }
 }

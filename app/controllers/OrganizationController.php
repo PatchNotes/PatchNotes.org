@@ -41,11 +41,8 @@ class OrganizationController extends BaseController {
 
         if($org->save()) {
             $user = Sentry::getUser();
-            $orgUser = new OrganizationUser();
-            $orgUser->user->attach($user);
-            $orgUser->organization->attach($org);
-            $orgUser->creator = true;
-            $orgUser->save();
+
+            $org->users()->attach($user, ['creator' => true]);
 
             return Redirect::to('organizations/' . $org->slug);
         } else {

@@ -95,7 +95,7 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
 
     public function organizations()
     {
-        return $this->belongsToMany('Organization', 'organization_users');
+        return $this->belongsToMany('Organization', 'organization_user');
     }
 
     public function subscriptions()

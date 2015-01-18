@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-6">
         {{ BootForm::open()->action(action("OrganizationController@store"))->render() }}
-            {{ BootForm::text('Organization Name', 'name') }}
+            {{ BootForm::text('Organization Name', 'name')->autofocus('autofocus') }}
             {{ BootForm::text('Organization Email', 'email') }}
             {{ BootForm::text('Organization URL', 'site_url') }}
             {{ BootForm::textarea('Organization Description', 'description')->placeholder("A description or your organization or group. Completely optional.") }}

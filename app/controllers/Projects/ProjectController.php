@@ -56,14 +56,13 @@ class ProjectController extends BaseController
             $possibleOwners['Organizations']['organization:' . $org->id] = $org->name;
         }
 
-        /*
-        $githubUser = Social::whereRaw('provider = ? and user_id = ?', array('github', $user->id))->first();
+        $githubUser = $user->oauthAccounts()->where('provider', 'GitHub')->first();
         if ($githubUser) {
             $client = new \Github\Client(
-                new \Github\HttpClient\CachedHttpClient(array('cache_dir' => storage_path('github')))
+                new \Github\HttpClient\CachedHttpClient(array('cache_dir' => storage_path('GitHub')))
             );
 
-            $repos = $client->api('user')->repositories($user->username);
+            $repos = $client->api('user')->repositories($githubUser->provider_user_details->username);
             foreach ($repos as $repo) {
                 if ($repo['fork']) continue;
 
@@ -75,7 +74,6 @@ class ProjectController extends BaseController
                 );
             }
         }
-        */
 
         return View::make('projects/create', compact('githubRepos', 'possibleOwners'));
     }

@@ -64,6 +64,12 @@ class Organization extends Ardent implements Models\Interfaces\Participant
         return $user;
     }
 
+    // Helper
+    // ======
+    public static function fetchByCreator(User $creator) {
+        return $creator->organizations()->wherePivot('creator', true)->get();
+    }
+
     /**
      * Verify we're unique in both users and organizations
      *
