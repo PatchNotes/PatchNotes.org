@@ -140,7 +140,7 @@
                         @endif
 
 
-                        {{ Form::open(array('action' => array('Projects\\UpdateController@store', $owner->name, $project->slug), 'class' => 'form-horizontal', 'role' => 'form')) }}
+                        {{ Form::open(array('action' => array('Projects\\UpdateController@store', $owner->slug, $project->slug), 'class' => 'form-horizontal', 'role' => 'form')) }}
                         <input type="hidden" name="project_id" value="{{ $project->id }}"/>
                         <div class="form-group">
                             <label for="updateTitle" class="col-lg-2 control-label">Title</label>
@@ -159,8 +159,8 @@
                             <label for="importance" class="col-lg-2 control-label">Level</label>
                             <div class="col-lg-10">
                                 @foreach(ProjectUpdateLevel::orderBy('level', 'asc')->get() as $rank)
-                                <label for="rank-{{ $rank->level }}" data-toggle="tooltip" data-placement="right" title="{{ Lang::get('project.notification_levels.' . $rank->level) }}">
-                                    <input type="radio" name="rank" value="{{ $rank->level }}" id="rank-{{ $rank->level }}"> {{ $rank->name }}
+                                <label for="level-{{ $rank->level }}" data-toggle="tooltip" data-placement="right" title="{{ Lang::get('project.notification_levels.' . $rank->level) }}">
+                                    <input type="radio" name="level" value="{{ $rank->level }}" id="level-{{ $rank->level }}"> {{ $rank->name }}
                                 </label>
                                 <br>
                                 @endforeach

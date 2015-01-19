@@ -2,6 +2,7 @@
 namespace Projects;
 
 //use dflydev\markdown\MarkdownParser;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Input;
 use Project;
 use Redirect;
@@ -126,16 +127,12 @@ class ProjectController extends BaseController
      *
      * @return Response
      */
-    public function show($participant, $slug)
+    public function show($participantSlug, $projectSlug)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            App::abort(404, 'Project not found.');
-        }
-
-        $project = $owner->projects()->where('slug', $slug)->first();
-        if (!$project) {
-            App::abort(404, 'Project not found.');
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 
         //$parser = new MarkdownParser();
@@ -150,17 +147,14 @@ class ProjectController extends BaseController
      *
      * @return Response
      */
-    public function edit($participant, $project)
+    public function edit($participantSlug, $projectSlug)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
         if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
             App::abort(401);
         }
@@ -173,17 +167,14 @@ class ProjectController extends BaseController
      *
      * @return Response
      */
-    public function update($participant, $project)
+    public function update($participantSlug, $projectSlug)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
         if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
             App::abort(401);
         }
@@ -196,17 +187,15 @@ class ProjectController extends BaseController
      *
      * @return Response
      */
-    public function destroy($participant, $project)
+    public function destroy($participantSlug, $projectSlug)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
+
         if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
             App::abort(401);
         }

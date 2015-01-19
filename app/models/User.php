@@ -132,7 +132,7 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
     {
         if($project->owner instanceof Organization) {
 
-            foreach($project->owner->users() as $user) {
+            foreach($project->owner->users as $user) {
                 if($user->id === $this->id) {
                     return true;
                 }

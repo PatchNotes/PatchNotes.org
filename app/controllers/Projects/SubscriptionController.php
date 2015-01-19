@@ -2,6 +2,7 @@
 
 namespace Projects;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Project;
 use Redirect;
 use Response;
@@ -32,18 +33,13 @@ class SubscriptionController extends BaseController
         Redirect::to('/');
     }
 
-    public function store($participant, $project)
+    public function store($participantSlug, $projectSlug)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
-
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
-
 
         $success = $project->subscribe($this->user, $this->user->getDefaultLevels());
         if (!$success) {
@@ -53,18 +49,13 @@ class SubscriptionController extends BaseController
         return Response::json(array('success' => true));
     }
 
-    public function destroy($participant, $project)
+    public function destroy($participantSlug, $projectSlug)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
-
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
-
 
         $success = $project->unsubscribe($this->user);
         if (!$success) {

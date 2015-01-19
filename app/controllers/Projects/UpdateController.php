@@ -2,8 +2,8 @@
 namespace Projects;
 
 use App;
-use dflydev\markdown\MarkdownParser;
 use Event;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Input;
 use Project;
 use ProjectUpdate;
@@ -30,17 +30,9 @@ class UpdateController extends BaseController
      * @param $projectSlug
      * @return \Illuminate\Http\Response
      */
-    public function indexRSS($participant, $projectSlug)
+    public function indexRSS($participantSlug, $projectSlug)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
-        }
-
-        $project = $owner->projects()->where('slug', $projectSlug)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
+        list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
 
         $feed = Rss::feed('2.0', 'UTF-8');
         $feed->channel(array(
@@ -67,19 +59,16 @@ class UpdateController extends BaseController
      * @param $slug
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($participant, $project)
+    public function store($participantSlug, $projectSlug)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
         if (Sentry::getUser()->isMember($project) === false) {
-            App::abort(401);
+            return Response::json(['success' => false, 'error' => 'User is not member of organization.']);
         }
 
         $input = Input::all();
@@ -87,19 +76,21 @@ class UpdateController extends BaseController
         $rules = array(
             'title' => 'required|max:200',
             'description' => 'required|max:1000',
-            'rank' => 'exists:project_updates_levels,level'
+            'level' => 'exists:project_updates_levels,level'
         );
         $validator = Validator::make($input, $rules);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }
 
+        $projectUpdateLevel = \ProjectUpdateLevel::whereLevel($input['level'])->firstOrFail();
+
         $update = new ProjectUpdate();
 
         $update->title = $input['title'];
         $update->body = $input['description'];
         $update->slug = Str::slug($input['title']);
-        $update->level = $input['rank'];
+        $update->project_update_level_id = $projectUpdateLevel->id;
         $update->user_id = Sentry::getUser()->id;
 
         $update = $project->updates()->save($update);
@@ -121,9 +112,10 @@ class UpdateController extends BaseController
      *
      * @return Response
      */
-    public function show($participant, $project, $update)
+    public function show($participantSlug, $projectSlug, $update)
     {
-        $project = Project::where('slug', $project)->first();
+        list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+
         $update = $project->updates()->where('slug', $update)->first();
 
         $parser = new MarkdownParser();
@@ -143,17 +135,10 @@ class UpdateController extends BaseController
      *
      * @return Response
      */
-    public function edit($participant, $project, $update)
+    public function edit($participantSlug, $projectSlug, $update)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
-        }
+        list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
 
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
         if (Sentry::getUser()->isMember($project) === false) {
             App::abort(401);
         }
@@ -166,17 +151,10 @@ class UpdateController extends BaseController
      *
      * @return Response
      */
-    public function update($participant, $project, $update)
+    public function update($participantSlug, $projectSlug, $update)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
-        }
+        list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
 
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
         if (Sentry::getUser()->isMember($project) === false) {
             App::abort(401);
         }
@@ -189,17 +167,15 @@ class UpdateController extends BaseController
      *
      * @return Response
      */
-    public function destroy($participant, $project, $update)
+    public function destroy($participantSlug, $projectSlug, $update)
     {
-        $owner = Project::resolveParticipant($participant);
-        if (!$owner) {
-            return Response::json(array('success' => false, 'error' => 'Participant not found.'));
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 
-        $project = $owner->projects()->where('slug', $project)->first();
-        if (!$project) {
-            return Response::json(array('success' => false, 'error' => 'Project not found.'));
-        }
+
         if (Sentry::getUser()->isMember($project) === false) {
             App::abort(401);
         }

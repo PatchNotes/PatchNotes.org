@@ -4,13 +4,13 @@ Route::get('/', 'HomeController@getIndex');
 Route::get('/search', 'SearchController@getSearch');
 
 /* Accounts & Users */
-Route::group(array('prefix' => 'account'), function () {
+Route::group(['prefix' => 'account'], function () {
     Route::controller('dashboard', 'Account\\DashboardController');
 
     Route::controller('', 'Account\\AccountController');
 });
 
-Route::group(array('prefix' => 'auth'), function () {
+Route::group(['prefix' => 'auth'], function () {
     Route::get('validation-required', 'Account\\AuthController@getValidationRequired');
     Route::get('oauth-error', 'Account\\AuthController@getOauthError');
     Route::get('account-connected', 'Account\\AuthController@getAccountConnected');
@@ -19,23 +19,25 @@ Route::group(array('prefix' => 'auth'), function () {
     Route::get('{provider}/callback', 'Account\\AuthController@getOAuthCallback');
 });
 
-Route::group(array('prefix' => 'users'), function () {
+/* Users */
+Route::group(['prefix' => 'users'], function () {
     Route::get('', 'UserController@getIndex');
     Route::get('{username}', 'UserController@getUser');
 });
 
-Route::group(array(), function () {
+/* Organizations */
+Route::group([], function () {
     Route::resource('organizations', 'OrganizationController');
 });
 
 /* Documentation */
-Route::group(array(), function () {
+Route::group([], function () {
     Route::controller('about', 'AboutController');
     Route::controller('help', 'HelpController');
 });
 
 /* Projects */
-Route::group(array(), function () {
+Route::group([], function () {
     Route::get('projects', 'Projects\\ProjectController@index');
     Route::get('projects/create', 'Projects\\ProjectController@create');
     Route::post('projects', 'Projects\\ProjectController@store');
@@ -48,8 +50,12 @@ Route::group(array(), function () {
 
     Route::resource('projects/{participant}/{name}/updates', 'Projects\\UpdateController');
 
-    Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');
-    Route::delete('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController@destroy');
+    Route::group(['before' => 'auth'], function() {
+
+
+        Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');
+        Route::delete('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController@destroy');
+    });
 
     Route::controller('projects/{participant}/{name}/share', 'Projects\\ShareController');
     Route::get('projects/{participant}/{name}/updates.rss', 'Projects\\UpdateController@indexRSS');

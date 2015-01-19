@@ -1,13 +1,19 @@
 <?php
 namespace Projects;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Project;
 use Redirect;
+use Response;
 
 class ShareController extends BaseController {
 
-    public function getTwitter($participant, $projectSlug) {
-        $project = Project::where('slug', $projectSlug)->first();
+    public function getTwitter($participantSlug, $projectSlug) {
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+        }
 
         $message = urlencode("Subscribe to $project->name on PatchNotes: {$project->href}");
 
@@ -16,8 +22,12 @@ class ShareController extends BaseController {
         return Redirect::to($url);
     }
 
-    public function getFacebook($participant, $projectSlug) {
-        $project = Project::where('slug', $projectSlug)->first();
+    public function getFacebook($participantSlug, $projectSlug) {
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+        }
 
         $message = urlencode("Subscribe to $project->name on PatchNotes");
 
@@ -26,8 +36,12 @@ class ShareController extends BaseController {
         return Redirect::to($redirect);
     }
 
-    public function getGoogle($participant, $projectSlug) {
-        $project = Project::where('slug', $projectSlug)->first();
+    public function getGoogle($participantSlug, $projectSlug) {
+        try {
+            list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
+        } catch(ModelNotFoundException $e) {
+            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+        }
 
         return Redirect::to("https://plus.google.com/share?url={$project->href}");
     }
