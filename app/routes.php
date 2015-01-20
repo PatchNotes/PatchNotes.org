@@ -4,12 +4,25 @@ Route::get('/', 'HomeController@getIndex');
 Route::get('/search', 'SearchController@getSearch');
 
 /* Accounts & Users */
-Route::group(['prefix' => 'account'], function () {
-    Route::controller('dashboard', 'Account\\DashboardController');
-
-    Route::controller('', 'Account\\AccountController');
+Route::group(['prefix' => 'account', 'namespace' => 'Account'], function () {
+    Route::controller('', 'AccountController');
+    Route::get('login', 'AccountController@getLogin');
+    Route::post('login', 'AccountController@postLogin');
+    
+    Route::get('register', 'AccountController@getRegister');
+    Route::post('register', 'AccountController@postRegister');
+    
+    // thanks/validate/forgot/reset/resetting/logout
+    
+    Route::group(['before' => 'auth'], function() {
+        Route::get('dashboard', ['as' => 'account.dashboard', 'uses' => 'DashboardController@getIndex']);
+        Route::get('dashboard/profile', ['as' => 'account.dashboard.profile', 'uses' => 'DashboardController@getProfile']);
+        Route::get('dashboard/subscriptions', ['as' => 'account.dashboard.subscriptions', 'uses' => 'DashboardController@getSubscriptions']);
+        Route::put('dashboard/subscriptions', ['as' => 'account.dashboard.subscriptions.update', 'uses' => 'DashboardController@postSubscriptions']);
+    });
 });
 
+/* Social Authing */
 Route::group(['prefix' => 'auth'], function () {
     Route::get('validation-required', 'Account\\AuthController@getValidationRequired');
     Route::get('oauth-error', 'Account\\AuthController@getOauthError');
@@ -26,14 +39,26 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 /* Organizations */
-Route::group([], function () {
-    Route::resource('organizations', 'OrganizationController');
+Route::group(['prefix' => 'organizations'], function () {
+    Route::get('', 'OrganizationController@index');
+    Route::get('{name}', 'OrganizationController@show');
+    
+    Route::group(['before' => 'auth'], function() {
+        Route::post('{name}', 'OrganizationController@store');
+        Route::get('{name}/edit', 'OrganizationController@edit');
+        Route::put('{name}', 'OrganizationController@update');
+        Route::patch('{name}', 'OrganizationController@update');
+        Route::delete('{name}', 'OrganizationController@destroy');
+    });
 });
 
 /* Documentation */
 Route::group([], function () {
-    Route::controller('about', 'AboutController');
-    Route::controller('help', 'HelpController');
+    Route::get('about', 'AboutController@getIndex');
+    Route::get('about/tos', 'AboutController@getTos');
+    Route::get('about/privacy', 'AboutController@getPrivacy');
+    
+    Route::get('help/welcome', 'HelpController@getWelcome');
 });
 
 /* Projects */
