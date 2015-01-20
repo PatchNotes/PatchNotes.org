@@ -10,6 +10,14 @@
 
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
         <link href="/assets/css/patchnotes.min.css" rel="stylesheet">
+
+        @if(App::environment() == "production")
+            <style>
+                body {
+                    margin-top: 190px;
+                }
+            </style>
+        @endif
     </head>
 
     <body class="{{ (isset($bodyclass) ? $bodyclass : '' ) }}">

@@ -125,7 +125,7 @@
         </div>
 
         @if(Sentry::check())
-            {{-- @if($project->isManager(Sentry::getUser())) --}}
+            @if(Sentry::getUser()->isMember($project))
                 <div class="panel panel-default">
                     <div class="panel-heading">New Project Update</div>
                     <div class="panel-body">
@@ -176,7 +176,7 @@
                         {{ Form::close() }}
                     </div>
                 </div>
-            {{-- @endif --}}
+            @endif
         @endif
 
     </div>

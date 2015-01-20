@@ -14,6 +14,7 @@ app/config/local/
 app/database/local.sqlite
 app/config/packages/*/*/local/
 app/storage/github
+app/storage/GitHub
 public/assets
 assets/libraries
 
