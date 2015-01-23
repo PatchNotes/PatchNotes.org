@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Route filters are contained inside the constructor of the controller.
+ */
+
 Route::get('/', 'HomeController@getIndex');
 Route::get('/search', 'SearchController@getSearch');
 
@@ -50,13 +54,9 @@ Route::group([], function () {
 
     Route::resource('projects/{participant}/{name}/updates', 'Projects\\UpdateController');
 
-    Route::group(['before' => 'auth'], function() {
-
-
-        Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');
-        Route::delete('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController@destroy');
-    });
-
+    Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');
+    Route::delete('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController@destroy');
+    
     Route::controller('projects/{participant}/{name}/share', 'Projects\\ShareController');
     Route::get('projects/{participant}/{name}/updates.rss', 'Projects\\UpdateController@indexRSS');
 });

@@ -19,11 +19,7 @@ class SubscriptionController extends BaseController
 
     public function __construct()
     {
-        $this->beforeFilter(function () {
-            if (!Sentry::check()) {
-                return Response::json(array('success' => false, 'error' => 'Please login to subscribe to a project.'));
-            }
-        });
+        $this->beforeFilter('auth');
 
         $this->user = Sentry::getUser();
     }

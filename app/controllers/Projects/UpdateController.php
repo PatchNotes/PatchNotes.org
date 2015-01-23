@@ -118,12 +118,10 @@ class UpdateController extends BaseController
 
         $update = $project->updates()->where('slug', $update)->first();
 
-        $parser = new MarkdownParser();
 
         return View::make('projects/updates/show', array(
             'project' => $project,
             'update' => $update,
-            'parser' => $parser,
             'bodyclass' => 'small-container'
         ));
     }

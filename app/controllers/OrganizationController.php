@@ -2,6 +2,10 @@
 
 class OrganizationController extends BaseController {
 
+    public function __construct() {
+        $this->beforeFilter('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
