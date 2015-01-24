@@ -10,9 +10,9 @@ use LaravelBook\Ardent\Ardent;
  * @property integer $user_id
  * @property integer $organization_id
  * @property boolean $creator
- * @method static \Illuminate\Database\Query\Builder|\OrganizationUser whereUserId($value) 
- * @method static \Illuminate\Database\Query\Builder|\OrganizationUser whereOrganizationId($value) 
- * @method static \Illuminate\Database\Query\Builder|\OrganizationUser whereCreator($value) 
+ * @method static \Illuminate\Database\Query\Builder|\OrganizationUser whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\OrganizationUser whereOrganizationId($value)
+ * @method static \Illuminate\Database\Query\Builder|\OrganizationUser whereCreator($value)
  */
 class OrganizationUser extends Ardent {
 
