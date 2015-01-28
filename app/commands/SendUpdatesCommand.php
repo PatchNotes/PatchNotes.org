@@ -12,7 +12,7 @@ class SendUpdatesCommand extends Command
      *
      * @var string
      */
-    protected $name = 'patchnotes:updates.send';
+    protected $name = 'patchnotes:updates-send';
 
     /**
      * The console command description.
@@ -38,11 +38,35 @@ class SendUpdatesCommand extends Command
      */
     public function fire()
     {
-        // This will need to look at the current time and then pull updates that should be going out.
-        // Instead I'm going to hardcode the values for now.
-        $sendTimes = [
 
-        ];
+        // This will need to look at the current time and then pull updates that should be going out.
+        // Instead I'm going to hard code the values for now.
+        $data = [];
+
+        $notificationLevels = NotificationLevel::where('level', $this->argument('notification_level'))->get();
+        foreach($notificationLevels as $level) {
+
+            $userUpdates = UserProjectUpdate::where('emailed_at', null)->where('notification_level_id', $level->id)->get();
+
+            /** @var UserProjectUpdate $up */
+            foreach($userUpdates as $up) {
+                $up->emailed_at = new \DateTime();
+                $up->save();
+
+                $data[] = [
+                    $level->name,
+                    $up->project_update->project->name,
+                    $up->project_update->title,
+                    $up->user->username
+                ];
+            }
+
+        }
+
+        $this->table(
+            ['NLevel', 'Project', 'Update', 'User'],
+            $data
+        );
     }
 
     /**
@@ -53,7 +77,7 @@ class SendUpdatesCommand extends Command
     protected function getArguments()
     {
         return array(
-
+            array('notification_level', InputArgument::REQUIRED, 'Notification level we want to send for.')
         );
     }
 

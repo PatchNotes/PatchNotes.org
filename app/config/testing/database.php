@@ -2,21 +2,19 @@
 
 return array(
 
-    'default' => 'mysql',
+    'default' => 'pgsql',
 
     'connections' => array(
-
-        'mysql' => array(
-            'driver' => 'mysql',
+        'pgsql' => array(
+            'driver' => 'pgsql',
             'host' => 'localhost',
-            'database' => 'patchnotes_test',
+            'database' => 'patchnotes-test',
             'username' => 'patchnotes',
-            'password' => 'patchnotes',
+            'password' => '',
             'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
             'prefix' => '',
+            'schema' => 'public',
         ),
-
     ),
 
 );

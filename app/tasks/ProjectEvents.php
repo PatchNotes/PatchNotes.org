@@ -21,7 +21,6 @@ class ProjectEvents {
         // Get all users of the project
         $subs = Subscription::where('project_id', $project->id)->where('project_update_level_id', $update->project_update_level_id)->get();
         foreach($subs as $sub) {
-
             $userProjectUpdate = new UserProjectUpdate();
             $userProjectUpdate->user_id = $sub->user_id;
             $userProjectUpdate->project_update_id = $update->id;

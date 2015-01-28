@@ -21,10 +21,6 @@
 class UserProjectUpdate extends Eloquent
 {
     protected $table = 'user_project_updates';
-    protected $primaryKey = null;
-    public $incrementing = false;
-
-    public $timestamps = false;
 
     public function user() {
         return $this->belongsTo('User');
