@@ -50,7 +50,7 @@
                         </li>
                         <li><a href="/projects">Browse</a></li>
                         <li><a href="/organizations">Organizations</a></li>
-                        <li><a href="http://blog.patchnotes.org/">Blog</a></li>
+                        <li><a href="https://medium.com/patch-notes">Blog</a></li>
                     </ul>
 
                     @if(!Sentry::check())
