@@ -41,6 +41,12 @@ class SendUpdatesCommand extends Command
 
         // This will need to look at the current time and then pull updates that should be going out.
         // Instead I'm going to hard code the values for now.
+        $times = [
+            0 => '',
+            24  => '19', // Daily
+            168 => 'Sunday 19' // Weekly
+        ];
+
         $data = [];
 
         $notificationLevels = NotificationLevel::where('level', $this->argument('notification_level'))->get();
@@ -50,8 +56,12 @@ class SendUpdatesCommand extends Command
 
             /** @var UserProjectUpdate $up */
             foreach($userUpdates as $up) {
+                if( ! $this->rightTime($level, $times[$level->level])) {
+                    continue;
+                }
+
                 $up->emailed_at = new \DateTime();
-                $up->save();
+                //$up->save();
 
                 $data[] = [
                     $level->name,
@@ -67,6 +77,32 @@ class SendUpdatesCommand extends Command
             ['NLevel', 'Project', 'Update', 'User'],
             $data
         );
+    }
+
+    private function rightTime(NotificationLevel $level, $time) {
+        // Currently in USER timezone
+        $currently = new DateTime();
+        switch($level->level) {
+            // Immediate
+            case 0:
+                return true;
+
+                break;
+            // Daily format is '22'
+            case 24:
+                if($currently->format('H:00:00') == $time)
+                    return true;
+
+                break;
+            // Weekly format is Sunday 22
+            case 168:
+                if($currently->format('l H') == $time)
+                    return true;
+
+                break;
+        }
+
+        return false;
     }
 
     /**

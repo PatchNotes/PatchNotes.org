@@ -83,6 +83,10 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
 
     }
 
+    public function preferences() {
+        return $this->hasOne('UserPreference');
+    }
+
     public function oauthAccounts()
     {
         return $this->hasMany('UserOauth', 'user_id', 'id');

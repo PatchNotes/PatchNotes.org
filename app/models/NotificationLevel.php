@@ -24,4 +24,16 @@ class NotificationLevel extends Ardent {
 
     protected $fillable = array('level', 'name', 'queue');
 
+    public static function selectBox()
+    {
+        $options = [];
+
+        $levels = self::all();
+        foreach($levels as $level) {
+            $options[$level->id] = $level->name;
+        }
+
+        return $options;
+    }
+
 } 
