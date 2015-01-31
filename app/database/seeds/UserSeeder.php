@@ -12,6 +12,12 @@ class UserSeeder extends Seeder {
     }
 
     public function run() {
+        Sentry::createUser([
+            'username' => 'admin',
+            'password' => 'admin',
+            'email' => 'admin@patchnotes.org',
+            'activated' => true
+        ]);
 
         for ($i = 0; $i < self::numUsers; $i++) {
             $username = $this->faker->unique()->username;

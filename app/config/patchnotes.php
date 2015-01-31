@@ -2,6 +2,15 @@
 
 return array(
 
+    'emails' => [
+        'updates' => [
+            'from' => [
+                'address' => 'updates@patchnotes.org',
+                'name' => 'PatchNotes Update Robot'
+            ]
+        ]
+    ],
+
     'assets' => array(
         'styles' => array(
             'assets/css/bootstrap',

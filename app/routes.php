@@ -7,6 +7,10 @@
 Route::get('/', 'HomeController@getIndex');
 Route::get('/search', 'SearchController@getSearch');
 
+Route::get('/unsubscribe', 'HomeController@getUnsubscribe');
+Route::post('/unsubscribe/feedback', 'HomeController@postUnsubscribeFeedback');
+
+
 /* Accounts & Users */
 Route::group(['prefix' => 'account'], function () {
     Route::controller('dashboard', 'Account\\DashboardController');
@@ -56,7 +60,7 @@ Route::group([], function () {
 
     Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');
     Route::delete('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController@destroy');
-    
+
     Route::controller('projects/{participant}/{name}/share', 'Projects\\ShareController');
     Route::get('projects/{participant}/{name}/updates.rss', 'Projects\\UpdateController@indexRSS');
 });

@@ -3,8 +3,21 @@
         <h3>{{ $user->username }}</h3>
 </div>
 
-
-
-<ul>
-    <li><a href="/account/dashboard/subscriptions">Your Subscriptions</a></li>
-</ul>
+<div class="list-group">
+    <a href="{{ URL::action('Account\\DashboardController@getIndex') }}"
+       class="list-group-item {{ Route::currentRouteAction() == 'Account\\DashboardController@getIndex' ? 'active ': '' }}">
+        Dashboard
+    </a>
+    <a href="{{ URL::action('Account\\DashboardController@getSubscriptions') }}"
+       class="list-group-item {{ Route::currentRouteAction() == 'Account\\DashboardController@getSubscriptions' ? 'active ': '' }}">
+        Subscriptions
+    </a>
+    <a href="{{ URL::action('Account\\DashboardController@getPendingUpdates') }}"
+       class="list-group-item {{ Route::currentRouteAction() == 'Account\\DashboardController@getPendingUpdates' ? 'active ': '' }}">
+        Pending Updates
+    </a>
+    <a href="{{ URL::action('Account\\DashboardController@getPreferences') }}"
+       class="list-group-item {{ Route::currentRouteAction() == 'Account\\DashboardController@getPreferences' ? 'active ': '' }}">
+        Preferences
+    </a>
+</div>

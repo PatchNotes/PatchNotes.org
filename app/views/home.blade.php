@@ -30,7 +30,6 @@
 </div>
 @endif
 
-<p class="text-info">These divs below should swap out for the various focuses PatchNotes has.</p>
 <div id="feature-cycle" class="row">
     <div id="feature-producer" class="col-lg-6">
         <h2>Producers: <em class="feature-topic"></em></h2>

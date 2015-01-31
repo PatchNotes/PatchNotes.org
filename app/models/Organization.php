@@ -5,6 +5,25 @@ use LaravelBook\Ardent\Ardent;
 /**
  * An Eloquent Model: 'Organization'
  *
+ * @property integer $id
+ * @property string $name
+ * @property string $slug
+ * @property string $site_url
+ * @property string $email
+ * @property string $description
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Project[] $projects
+ * @property-read mixed $href
+ * @property-read \Illuminate\Database\Eloquent\Collection|\User[] $users
+ * @method static \Illuminate\Database\Query\Builder|\Organization whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Organization whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Organization whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\Organization whereSiteUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\Organization whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\Organization whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\Organization whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Organization whereUpdatedAt($value)
  */
 class Organization extends Ardent implements Models\Interfaces\Participant
 {

@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     $('.project-header').textfill({
-        maxFontPixels: 28
+        maxFontPixels: 26
     });
 
 

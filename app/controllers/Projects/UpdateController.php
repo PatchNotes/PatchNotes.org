@@ -93,7 +93,7 @@ class UpdateController extends BaseController
         $update->project_update_level_id = $projectUpdateLevel->id;
         $update->user_id = Sentry::getUser()->id;
 
-        $update = $project->updates()->save($update);
+        $project->updates()->save($update);
 
         Event::fire('project.update.create', array($project, $update));
 

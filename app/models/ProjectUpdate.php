@@ -19,16 +19,17 @@ use LaravelBook\Ardent\Ardent;
  * @property-read \User $author
  * @property integer $level
  * @property integer $project_update_level_id
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereProjectId($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereTitle($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereSlug($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereBody($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereUserId($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereCreatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereUpdatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereDeletedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereProjectUpdateLevelId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereProjectId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereBody($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereProjectUpdateLevelId($value)
+ * @property-read mixed $href
  */
 class ProjectUpdate extends Ardent {
 
@@ -41,5 +42,10 @@ class ProjectUpdate extends Ardent {
     public function author() {
         return $this->belongsTo('User', 'user_id');
     }
+
+    public function getHrefAttribute() {
+        return action('Projects\\UpdateController@show', array($this->project->owner->slug, $this->project->slug, $this->slug));
+    }
+
 
 } 

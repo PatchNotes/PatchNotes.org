@@ -125,7 +125,7 @@
         </div>
 
         @if(Sentry::check())
-            {{-- @if($project->isManager(Sentry::getUser())) --}}
+            @if(Sentry::getUser()->isMember($project))
                 <div class="panel panel-default">
                     <div class="panel-heading">New Project Update</div>
                     <div class="panel-body">
@@ -159,7 +159,7 @@
                             <label for="importance" class="col-lg-2 control-label">Level</label>
                             <div class="col-lg-10">
                                 @foreach(ProjectUpdateLevel::orderBy('level', 'asc')->get() as $rank)
-                                <label for="level-{{ $rank->level }}" data-toggle="tooltip" data-placement="right" title="{{ Lang::get('project.notification_levels.' . $rank->level) }}">
+                                <label for="level-{{ $rank->level }}" data-toggle="tooltip" data-placement="right" title="{{ Lang::get('project.project_update_level.' . $rank->level) }}">
                                     <input type="radio" name="level" value="{{ $rank->level }}" id="level-{{ $rank->level }}"> {{ $rank->name }}
                                 </label>
                                 <br>
@@ -176,7 +176,7 @@
                         {{ Form::close() }}
                     </div>
                 </div>
-            {{-- @endif --}}
+            @endif
         @endif
 
     </div>

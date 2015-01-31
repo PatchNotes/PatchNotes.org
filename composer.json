@@ -15,7 +15,8 @@
         "knplabs/github-api": "*",
         "adamwathan/bootforms": "dev-master",
         "laravelbook/ardent": "dev-master",
-        "lusitanian/oauth": "~0.2"
+        "lusitanian/oauth": "~0.2",
+        "guzzlehttp/guzzle": "~4.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "1.*",

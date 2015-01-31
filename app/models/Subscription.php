@@ -20,13 +20,13 @@ use LaravelBook\Ardent\Ardent;
  * @property-read \ProjectUpdateLevel $subscriptionLevel
  * @property-read \NotificationLevel $notificationLevel
  * @property-read \ProjectUpdateLevel $projectUpdateLevel
- * @method static \Illuminate\Database\Query\Builder|\Subscription whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Subscription whereUserId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Subscription whereProjectId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Subscription whereCreatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\Subscription whereUpdatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\Subscription whereProjectUpdateLevelId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Subscription whereNotificationLevelId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Subscription whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Subscription whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Subscription whereProjectId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Subscription whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Subscription whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Subscription whereProjectUpdateLevelId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Subscription whereNotificationLevelId($value)
  */
 class Subscription extends Ardent {
 

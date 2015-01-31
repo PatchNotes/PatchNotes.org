@@ -43,6 +43,12 @@ Route::filter('auth', function () {
     }
 });
 
+Route::filter('auth.json', function() {
+    if(!Sentry::getUser()) {
+        return Response::json(['success' => false, 'error' => 'Must be logged in.']);
+    }
+});
+
 
 Route::filter('auth.basic', function () {
     return Auth::basic();

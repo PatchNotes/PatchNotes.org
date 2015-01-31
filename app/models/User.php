@@ -26,21 +26,27 @@
  * @property-read mixed $name
  * @property-read mixed $slug
  * @property-read mixed $href
- * @method static \Illuminate\Database\Query\Builder|\User whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereUsername($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereFirstName($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereLastName($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereEmail($value) 
- * @method static \Illuminate\Database\Query\Builder|\User wherePassword($value) 
- * @method static \Illuminate\Database\Query\Builder|\User wherePermissions($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereActivated($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereActivationCode($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereActivatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereLastLogin($value) 
- * @method static \Illuminate\Database\Query\Builder|\User wherePersistCode($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereResetPasswordCode($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereCreatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereFirstName($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereLastName($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\User wherePermissions($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereActivated($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereActivationCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereActivatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereLastLogin($value)
+ * @method static \Illuminate\Database\Query\Builder|\User wherePersistCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereResetPasswordCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereUpdatedAt($value)
+ * @property string $unsubscribe_token
+ * @property string $unsubscribed_at
+ * @property-read \UserPreference $preferences
+ * @property-read mixed $fullname
+ * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribeToken($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribedAt($value) 
  */
 class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Interfaces\Participant
 {
@@ -74,13 +80,14 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
         ),
     );
 
-    public function __construct(array $attributes = array())
+    public static function boot()
     {
-
-        parent::__construct($attributes);
-
+        parent::boot();
         self::events();
+    }
 
+    public function preferences() {
+        return $this->hasOne('UserPreference');
     }
 
     public function oauthAccounts()
@@ -117,6 +124,14 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
     public function getSlugAttribute()
     {
         return $this->username;
+    }
+
+    public function getFullnameAttribute()
+    {
+        if(!empty($this->first_name) && !empty($this->last_name))
+            return $this->first_name . " " . $this->last_name;
+        else
+            return $this->username;
     }
 
     public function getHrefAttribute() {
@@ -222,6 +237,17 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
             if ($org) {
                 return false;
             }
+
+            $user->unsubscribe_token = str_random(42);
+        });
+
+        self::created(function($user) {
+            if(empty($user->preferences)) {
+                $preference = new UserPreference();
+
+                $user->preferences()->save($preference);
+            }
+
         });
 
         self::updating(function ($user) {

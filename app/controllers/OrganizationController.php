@@ -12,13 +12,15 @@ class OrganizationController extends BaseController {
      * @return Response
      */
     public function index() {
+        $organizations = Organization::all();
+
         if(Sentry::check()) {
             return View::make('organizations/index', array(
-                'orgs' => Organization::fetchByCreator(Sentry::getUser())
+                'orgs' => Organization::fetchByCreator(Sentry::getUser()),
+                'organizations' => $organizations
             ));
         }
-
-        return View::make('organizations/index');
+        return View::make('organizations/index', compact('organizations'));
     }
 
     /**

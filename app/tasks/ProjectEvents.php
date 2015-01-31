@@ -6,19 +6,28 @@ use Queue;
 use ProjectUpdate;
 use Subscription;
 use User;
+use UserProjectUpdate;
 
 class ProjectEvents {
 
+    /**
+     * This event is triggered when a project pushes out an update.
+     * We use this for queueing up updates for users
+     *
+     * @param \Project $project
+     * @param ProjectUpdate $update
+     */
     public function onUpdate(\Project $project, \ProjectUpdate $update) {
-        return;
         // Get all users of the project
-        $subs = Subscription::where('project_id', $project->id)->where('project_update_level_id', $update->id)->get();
+        $subs = Subscription::where('project_id', $project->id)->where('project_update_level_id', $update->project_update_level_id)->get();
         foreach($subs as $sub) {
-            $notificationLevel = $sub->user->getNotificationLevel($update);
-            $queue = Config::get('patchnotes.aws.queue.' . $notificationLevel->queue);
-
-            // Push to the update queue
-            Queue::push('SendUpdate', array($update->id, $sub->user->id), $queue);
+            $userProjectUpdate = new UserProjectUpdate();
+            $userProjectUpdate->user_id = $sub->user_id;
+            $userProjectUpdate->project_id = $project->id;
+            $userProjectUpdate->project_update_id = $update->id;
+            $userProjectUpdate->project_update_level_id = $sub->project_update_level_id;
+            $userProjectUpdate->notification_level_id = $sub->notification_level_id;
+            $userProjectUpdate->save();
         }
     }
 
