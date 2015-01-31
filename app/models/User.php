@@ -41,6 +41,12 @@
  * @method static \Illuminate\Database\Query\Builder|\User whereResetPasswordCode($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereUpdatedAt($value)
+ * @property string $unsubscribe_token
+ * @property string $unsubscribed_at
+ * @property-read \UserPreference $preferences
+ * @property-read mixed $fullname
+ * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribeToken($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribedAt($value) 
  */
 class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Interfaces\Participant
 {

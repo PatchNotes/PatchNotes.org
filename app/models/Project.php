@@ -21,17 +21,17 @@ use LaravelBook\Ardent\Ardent;
  * @property string $owner_type
  * @property-read mixed $href
  * @property-read \ $owner
- * @method static \Illuminate\Database\Query\Builder|\Project whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereName($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereSlug($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereDescription($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereContent($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereSiteUrl($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereOwnerId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereOwnerType($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereCreatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereUpdatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\Project whereDeletedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Project whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereSiteUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereOwnerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereOwnerType($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Project whereDeletedAt($value)
  */
 class Project extends Ardent {
 

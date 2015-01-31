@@ -29,6 +29,7 @@ use LaravelBook\Ardent\Ardent;
  * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereProjectUpdateLevelId($value)
+ * @property-read mixed $href
  */
 class ProjectUpdate extends Ardent {
 

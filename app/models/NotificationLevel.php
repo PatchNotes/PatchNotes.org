@@ -17,6 +17,8 @@ use LaravelBook\Ardent\Ardent;
  * @method static \Illuminate\Database\Query\Builder|\NotificationLevel whereQueue($value)
  * @method static \Illuminate\Database\Query\Builder|\NotificationLevel whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\NotificationLevel whereUpdatedAt($value)
+ * @property string $key
+ * @method static \Illuminate\Database\Query\Builder|\NotificationLevel whereKey($value) 
  */
 class NotificationLevel extends Ardent {
 

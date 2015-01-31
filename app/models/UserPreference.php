@@ -1,5 +1,26 @@
 <?php
 
+/**
+ * UserPreference
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property string $timezone
+ * @property string $daily_time
+ * @property string $weekly_day
+ * @property string $weekly_time
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \User $user
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereUserId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereTimezone($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereDailyTime($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereWeeklyDay($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereWeeklyTime($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereUpdatedAt($value) 
+ */
 class UserPreference extends Eloquent
 {
     protected $table = 'user_preferences';

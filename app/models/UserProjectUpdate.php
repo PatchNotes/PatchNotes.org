@@ -11,12 +11,21 @@
  * @property string $seen_at
  * @property-read \User $user
  * @property-read \ProjectUpdate $projectUpdate
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereUserId($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereProjectUpdateId($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereProjectUpdateLevelId($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereNotificationLevelId($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereEmailedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereSeenAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereProjectUpdateId($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereProjectUpdateLevelId($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereNotificationLevelId($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereEmailedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereSeenAt($value)
+ * @property integer $id
+ * @property integer $project_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \NotificationLevel $notificationLevel
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereProjectId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereUpdatedAt($value) 
  */
 class UserProjectUpdate extends Eloquent
 {
