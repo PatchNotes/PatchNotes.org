@@ -65,6 +65,8 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
      */
     protected $hidden = array('password');
 
+    protected $fillable = ['username','first_name','last_name','email','password','activated','activation_code','activated_at','last_login','persist_code','reset_password_code'];
+
     protected $defaultLevels = array(
         array(
             'notification_level' => 168,
