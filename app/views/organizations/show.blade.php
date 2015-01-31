@@ -9,12 +9,10 @@
             <ul>
                 <li>Created On: {{ $org->created_at }}</li>
             </ul>
-            <img src="" alt="">
         </div>
         <div class="col-md-8 col-md-offset-1">
             <h3>Projects</h3>
-            <?php $projects = $org->projects; ?>
-            @include('projects/partials/list')
+            @include('projects/partials/list', ['projects' => $org->projects])
         </div>
     </div>
 

@@ -19,7 +19,7 @@ class SubscriptionController extends BaseController
 
     public function __construct()
     {
-        $this->beforeFilter('auth');
+        $this->beforeFilter('auth.json');
 
         $this->user = Sentry::getUser();
     }

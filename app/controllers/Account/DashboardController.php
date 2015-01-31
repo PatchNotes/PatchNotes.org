@@ -27,7 +27,7 @@ class DashboardController extends BaseController {
     }
 
     public function getIndex() {
-        return View::make("account/dashboard/index", array('user' => $this->user));
+        return View::make("account/dashboard/index");
     }
 
     public function getProfile() {
