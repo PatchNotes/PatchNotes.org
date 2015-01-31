@@ -42,4 +42,9 @@ class ProjectUpdate extends Ardent {
         return $this->belongsTo('User', 'user_id');
     }
 
+    public function getHrefAttribute() {
+        return action('Projects\\UpdateController@show', array($this->project->owner->slug, $this->project->slug, $this->slug));
+    }
+
+
 } 

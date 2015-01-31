@@ -8,6 +8,10 @@
        class="list-group-item {{ Route::currentRouteAction() == 'Account\\DashboardController@getSubscriptions' ? 'active ': 'sdfsa' }}">
         Subscriptions
     </a>
+    <a href="{{ URL::action('Account\\DashboardController@getPendingUpdates') }}"
+       class="list-group-item {{ Route::currentRouteAction() == 'Account\\DashboardController@getPendingUpdates' ? 'active ': 'sdfsa' }}">
+        Pending Updates
+    </a>
     <a href="{{ URL::action('Account\\DashboardController@getPreferences') }}"
        class="list-group-item {{ Route::currentRouteAction() == 'Account\\DashboardController@getPreferences' ? 'active ': 'sdfsa' }}">
         Preferences

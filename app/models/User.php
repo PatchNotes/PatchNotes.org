@@ -123,6 +123,14 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
         return $this->username;
     }
 
+    public function getFullnameAttribute()
+    {
+        if(!empty($this->first_name) && !empty($this->last_name))
+            return $this->first_name . " " . $this->last_name;
+        else
+            return $this->username;
+    }
+
     public function getHrefAttribute() {
         return action('UserController@getUser', array($this->slug));
     }
@@ -226,6 +234,8 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
             if ($org) {
                 return false;
             }
+
+            $user->unsubscribe_token = str_random(42);
         });
 
         self::updating(function ($user) {

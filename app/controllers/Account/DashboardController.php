@@ -7,7 +7,8 @@ use Sentry,
     User,
     View,
     Response,
-    Input;
+    Input,
+    UserProjectUpdate;
 use Symfony\Component\EventDispatcher\Tests\SubscriberService;
 use Validator;
 
@@ -84,6 +85,12 @@ class DashboardController extends BaseController {
 
         return Redirect::back()->with('success', true);
 
+    }
+
+    public function getPendingUpdates() {
+        $projectsUpdated = UserProjectUpdate::where('emailed_at', null)->where('user_id', $this->user->id)->get()->groupBy('project_id');
+
+        return View::make('account/dashboard/pending-updates', compact('projectsUpdated'));
     }
 
 }

@@ -45,6 +45,11 @@ class SubscriptionController extends BaseController
         return Response::json(array('success' => true));
     }
 
+    public function unsubscribe($participantSlug, $projectSlug)
+    {
+        return $this->destroy($participantSlug, $projectSlug);
+    }
+
     public function destroy($participantSlug, $projectSlug)
     {
         try {

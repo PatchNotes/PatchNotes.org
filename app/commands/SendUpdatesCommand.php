@@ -38,65 +38,76 @@ class SendUpdatesCommand extends Command
      */
     public function fire()
     {
+        $level = NotificationLevel::where('key', $this->argument('notification_level'))->firstOrFail();
 
-        // This will need to look at the current time and then pull updates that should be going out.
-        // Instead I'm going to hard code the values for now.
-        $times = [
-            0 => '',
-            24  => '19', // Daily
-            168 => 'Sunday 19' // Weekly
-        ];
+        $usersNeedingUpdates = DB::table('user_project_updates')->where('emailed_at', null)->where('notification_level_id', $level->id)->groupBy('user_id')->get(['user_id']);
 
-        $data = [];
-
-        $notificationLevels = NotificationLevel::where('level', $this->argument('notification_level'))->get();
-        foreach($notificationLevels as $level) {
-
-            $userUpdates = UserProjectUpdate::where('emailed_at', null)->where('notification_level_id', $level->id)->get();
-
-            /** @var UserProjectUpdate $up */
-            foreach($userUpdates as $up) {
-                if( ! $this->rightTime($level, $times[$level->level])) {
-                    continue;
-                }
-
-                $up->emailed_at = new \DateTime();
-                //$up->save();
-
-                $data[] = [
-                    $level->name,
-                    $up->project_update->project->name,
-                    $up->project_update->title,
-                    $up->user->username
-                ];
+        foreach($usersNeedingUpdates as $upu) {
+            $user = User::find($upu->user_id)->firstOrFail();
+            if( ! $this->rightTime($level, $user)) {
+                continue;
             }
 
-        }
+            $projectsUpdated = UserProjectUpdate::where('emailed_at', null)->where('notification_level_id', $level->id)->where('user_id', $user->id)->get()->groupBy('project_id');
 
-        $this->table(
-            ['NLevel', 'Project', 'Update', 'User'],
-            $data
-        );
+            $title = $this->goodTitle($level, $user);
+
+            // Do this in the background, we have a doublecheck in SendUpdates for emailed_at
+            Mail::queue(
+                ['emails.updates.grouped.html', 'emails.updates.grouped.text'],
+                ['user' => $user, 'projectsUpdated' => $projectsUpdated],
+            function($message) use ($user, $title) {
+                $message->from(Config::get('patchnotes.emails.updates.from.address'), Config::get('patchnotes.emails.updates.from.name'));
+
+                $message->to($user->email, $user->fullname)->subject($title);
+            });
+        }
     }
 
-    private function rightTime(NotificationLevel $level, $time) {
+    private function goodTitle(NotificationLevel $level, $user) {
+        switch($level->key) {
+            case 'immediate':
+                return "Immediate updates from ";
+
+                break;
+            case 'daily':
+                $now = new DateTime('now', new DateTimeZone($user->preferences->timezone));
+                return "Daily Digest for " . $now->format('F jS');
+
+                break;
+            case 'weekly':
+                $now = new DateTime('now', new DateTimeZone($user->preferences->timezone));
+                $plusOneWeek = new DateTime('now', new DateTimeZone($user->preferences->timezone));
+                $plusOneWeek->add(new DateInterval("P7D"));
+                return "Weekly Digest for " . $now->format('F jS') . " - " . $plusOneWeek->format('F jS');
+
+                break;
+        }
+    }
+
+    /**
+     * Figure out if it's the right time for users update
+     *
+     * @param NotificationLevel $level
+     * @param User $user
+     * @return bool
+     */
+    private function rightTime(NotificationLevel $level, User $user) {
         // Currently in USER timezone
         $currently = new DateTime();
-        switch($level->level) {
-            // Immediate
-            case 0:
+        $preferences = $user->preferences;
+        switch($level->key) {
+            case 'immediate':
                 return true;
 
                 break;
-            // Daily format is '22'
-            case 24:
-                if($currently->format('H:00:00') == $time)
+            case 'daily':
+                if($currently->format('H:00:00') == $preferences->daily_time)
                     return true;
 
                 break;
-            // Weekly format is Sunday 22
-            case 168:
-                if($currently->format('l H') == $time)
+            case 'weekly':
+                if($currently->format('l H:00:00') == ($preferences->weekly_day . " " . $preferences->weekly_time))
                     return true;
 
                 break;

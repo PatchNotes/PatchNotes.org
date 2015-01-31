@@ -30,4 +30,8 @@ class UserProjectUpdate extends Eloquent
         return $this->belongsTo('ProjectUpdate');
     }
 
+    public function notificationLevel() {
+        return $this->belongsTo('NotificationLevel');
+    }
+
 }

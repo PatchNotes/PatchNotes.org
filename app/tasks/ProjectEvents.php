@@ -23,6 +23,7 @@ class ProjectEvents {
         foreach($subs as $sub) {
             $userProjectUpdate = new UserProjectUpdate();
             $userProjectUpdate->user_id = $sub->user_id;
+            $userProjectUpdate->project_id = $project->id;
             $userProjectUpdate->project_update_id = $update->id;
             $userProjectUpdate->project_update_level_id = $sub->project_update_level_id;
             $userProjectUpdate->notification_level_id = $sub->notification_level_id;
