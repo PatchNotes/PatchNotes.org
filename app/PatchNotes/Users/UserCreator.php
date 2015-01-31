@@ -96,8 +96,7 @@ class UserCreator
             $user = Sentry::register(array(
                 'username'         => $oauthDetails['username'],
                 'email'         => $oauthDetails['email'],
-                'first_name'     => $oauthDetails['first_name'],
-                'last_name'     => $oauthDetails['last_name'],
+                'fullname'     => $oauthDetails['fullname'],
                 'password'         => str_random(32),
                 'activated'     => true
             ));

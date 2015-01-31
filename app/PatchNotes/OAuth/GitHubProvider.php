@@ -29,13 +29,10 @@ class GitHubProvider extends AbstractProvider implements ProviderInterface
     {
         $details = json_decode($this->consumer->request('user'));
 
-        list($first_name, $last_name) = explode(" ", $details->name);
-
         return array(
             'user_id'         => $details->id,
             'username'         => $details->login,
-            'first_name'    => $first_name,
-            'last_name'        => $last_name,
+            'fullname'    => $details->name,
             'email'         => $details->email
         );
     }
