@@ -65,7 +65,7 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
      */
     protected $hidden = array('password');
 
-    protected $fillable = ['username','first_name','last_name','email','password','activated','activation_code','activated_at','last_login','persist_code','reset_password_code'];
+    protected $fillable = ['username','fullname','email','password','activated','activation_code','activated_at','last_login','persist_code','reset_password_code'];
 
     protected $defaultLevels = array(
         array(
@@ -130,8 +130,8 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
 
     public function getFullnameAttribute()
     {
-        if(!empty($this->first_name) && !empty($this->last_name))
-            return $this->first_name . " " . $this->last_name;
+        if(!empty($this->fullname))
+            return $this->fullname;
         else
             return $this->username;
     }
