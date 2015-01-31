@@ -75,6 +75,10 @@ class AuthController extends BaseController implements UserCreatorListenerInterf
      */
     public function oauthUserRequiresValidation($oauthUser)
     {
+        if(!is_null($oauthUser->user->unsubscribed_at)) {
+            App::abort(404, "Can't validate user when unsubscribed_at is not null.");
+        }
+
         Mail::send('emails.auth.oauth-validation', array('oauth' => $oauthUser), function ($m) use ($oauthUser) {
             $m->to($oauthUser->user->email)->subject('PatchNotes oAuth validation');
         });

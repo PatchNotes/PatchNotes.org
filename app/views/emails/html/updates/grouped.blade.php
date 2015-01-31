@@ -4,26 +4,26 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Welcome to PatchNotes!</h2>
-
 <div>
-    <p>In case you forgot, <a href="{{URL::to('/')}}">PatchNotes</a> INSERT SOME DESCRIPTION OF THE WEBSITE HERE.</p>
+    <p>Hey there {{{ $user->fullname }}},</p>
 
-    <p>Anyways, here's the stuff you need to know to login: </p>
+    <p>Here's your digest of updates!</p>
 
-    <ol>
-        <li><a href="{{ URL::to('account/validate', array($user->email, $activationCode)) }}">Validate Your Email</a>[1]</li>
-    </ol>
+    @foreach($projectsUpdated as $projectId => $userUpdates)
+        <h4>{{{ Project::where('id', $projectId)->first()->name }}}</h4>
+        <ul>
+            @foreach($userUpdates as $userUpdate)
+                <li><a href="{{ $userUpdate->project_update->href }}">{{{ $userUpdate->project_update->title }}}</a></li>
+            @endforeach
+        </ul>
+    @endforeach
 
-    <p>We hope that's pretty simple, if not, let us know!</p>
+    <p>See something you don't like? Curate your subscriptions on <a href="{{ URL::action('Account\\DashboardController@getSubscriptions') }}">Your Dashboard</a></p>
 
-    <p>Thanks,<br>
-        <i>The Robots @ PatchNotes</i><br></p>
-    <hr>
+    <p>Thanks,</p>
+    <p>{{ Config::get('patchnotes.emails.updates.from.name') }}</p>
 
-    <ol>
-        <li>{{ URL::to('account/validate', array($user->email, $activationCode)) }}</li>
-    </ol>
+    <p><a href="{{ URL::action('HomeController@getUnsubscribe') }}?email={{ $user->email }}&token={{ $user->unsubscribe_token }}">Unsubscribe from all emails from PatchNotes.</a></p>
 </div>
 </body>
 </html>

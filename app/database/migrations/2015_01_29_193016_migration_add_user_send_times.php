@@ -28,6 +28,14 @@ class MigrationAddUserSendTimes extends Migration
             $table->unique('user_id');
             $table->foreign('user_id')->references('id')->on('users');
         });
+
+        foreach(User::all() as $user) {
+            if(!count($user->preferences)) {
+                $preference = new UserPreference();
+                $preference->user_id = $user->id;
+                $preference->save();
+            }
+        }
     }
 
     /**

@@ -74,13 +74,10 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
         ),
     );
 
-    public function __construct(array $attributes = array())
+    public static function boot()
     {
-
-        parent::__construct($attributes);
-
+        parent::boot();
         self::events();
-
     }
 
     public function preferences() {
@@ -236,6 +233,15 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
             }
 
             $user->unsubscribe_token = str_random(42);
+        });
+
+        self::created(function($user) {
+            if(empty($user->preferences)) {
+                $preference = new UserPreference();
+
+                $user->preferences()->save($preference);
+            }
+
         });
 
         self::updating(function ($user) {

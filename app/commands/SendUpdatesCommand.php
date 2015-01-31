@@ -43,8 +43,9 @@ class SendUpdatesCommand extends Command
         $usersNeedingUpdates = DB::table('user_project_updates')->where('emailed_at', null)->where('notification_level_id', $level->id)->groupBy('user_id')->get(['user_id']);
 
         foreach($usersNeedingUpdates as $upu) {
-            $user = User::find($upu->user_id)->firstOrFail();
-            if( ! $this->rightTime($level, $user)) {
+            $user = User::where('id', $upu->user_id)->firstOrFail();
+            if( ! $this->rightTime($level, $user) || !is_null($user->unsubscribe_at)) {
+                $this->info("{$user->username} has updates but it's not the right time.");
                 continue;
             }
 
@@ -53,33 +54,42 @@ class SendUpdatesCommand extends Command
             $title = $this->goodTitle($level, $user);
 
             // Do this in the background, we have a doublecheck in SendUpdates for emailed_at
-            Mail::queue(
-                ['emails.updates.grouped.html', 'emails.updates.grouped.text'],
+            Mail::send(
+                ['emails/html/updates/grouped', 'emails/text/updates/grouped'],
                 ['user' => $user, 'projectsUpdated' => $projectsUpdated],
             function($message) use ($user, $title) {
                 $message->from(Config::get('patchnotes.emails.updates.from.address'), Config::get('patchnotes.emails.updates.from.name'));
 
                 $message->to($user->email, $user->fullname)->subject($title);
             });
+
+            foreach($projectsUpdated as $p) {
+                foreach($p as $pu) {
+                    $this->info("Mailed project_update_id={$pu->project_update_id} to $user->email");
+
+                    $pu->emailed_at = new DateTime();
+                    $pu->save();
+                }
+            }
         }
     }
 
     private function goodTitle(NotificationLevel $level, $user) {
         switch($level->key) {
             case 'immediate':
-                return "Immediate updates from ";
+                return "Important Updates";
 
                 break;
             case 'daily':
                 $now = new DateTime('now', new DateTimeZone($user->preferences->timezone));
-                return "Daily Digest for " . $now->format('F jS');
+                return "Daily Update Digest for " . $now->format('F jS');
 
                 break;
             case 'weekly':
                 $now = new DateTime('now', new DateTimeZone($user->preferences->timezone));
                 $plusOneWeek = new DateTime('now', new DateTimeZone($user->preferences->timezone));
                 $plusOneWeek->add(new DateInterval("P7D"));
-                return "Weekly Digest for " . $now->format('F jS') . " - " . $plusOneWeek->format('F jS');
+                return "Weekly Update Digest for " . $now->format('F jS') . " - " . $plusOneWeek->format('F jS');
 
                 break;
         }
@@ -93,9 +103,10 @@ class SendUpdatesCommand extends Command
      * @return bool
      */
     private function rightTime(NotificationLevel $level, User $user) {
-        // Currently in USER timezone
-        $currently = new DateTime();
         $preferences = $user->preferences;
+
+        // Currently in USER timezone
+        $currently = new DateTime('now', new DateTimeZone($preferences->timezone));
         switch($level->key) {
             case 'immediate':
                 return true;

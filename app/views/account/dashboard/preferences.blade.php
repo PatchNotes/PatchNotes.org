@@ -30,7 +30,7 @@
                         <label for="inputTimezone" class="col-sm-4 control-label">Timezone</label>
 
                         <div class="col-sm-8">
-                            {{ Form::select('timezone', UserPreference::timezoneSelectBox(), $preference->timezone, [
+                            {{ Form::select('timezone', UserPreference::timezoneSelectBox(), (isset($preference->timezone) ? $preference->timezone : "UTC"), [
                                 'class' => 'form-control',
                                 'id' => 'inputTimezone'
                             ]) }}
