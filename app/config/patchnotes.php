@@ -11,6 +11,12 @@ return array(
         ]
     ],
 
+    'tracking' => [
+        'ga' => [
+            'code' => ''
+        ]
+    ],
+
     'assets' => array(
         'styles' => array(
             'assets/css/bootstrap',
