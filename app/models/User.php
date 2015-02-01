@@ -112,10 +112,10 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
         return $this->hasMany('Subscription');
     }
 
-    public function getGravatar()
+    public function getGravatarAttribute()
     {
-        $hash = md5($this->attributes['email']);
-        return "http://www.gravatar.com/avatar/$hash";
+        $hash = md5($this->email);
+        return "http://www.gravatar.com/avatar/$hash?s=200";
     }
 
     public function getNameAttribute()
