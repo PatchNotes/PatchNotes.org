@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-lg-7">
+    <div class="col-lg-12">
         <h2 id="projectHeader">
             @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
                 <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-subscribe">
