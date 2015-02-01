@@ -4,30 +4,19 @@
 
 <div class="row">
     <div class="col-lg-7">
-        <h2 id="projectHeader"><a href="{{ $owner->href }}">{{{ $owner->name }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a><br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small></h2>
-    </div>
-    <div class="col-lg-5">
-        @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
-        <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn social-btn social-subscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
-            <i class="fa fa-plus"></i>
-        </a>
-        @else
-        <a href="{{ action('Projects\\SubscriptionController@destroy', array($owner->slug, $project->slug)) }}" class="btn social-btn social-unsubscribe" data-toggle="tooltip" data-placement="bottom" title="Subscribe to this project">
-            <i class="fa fa-minus"></i>
-        </a>
-        @endif
-        <a href="{{ $project->href }}/updates.rss" class="btn social-btn social-rss">
-            <i class="fa fa-rss"></i>
-        </a>
-        <a href="{{ action('Projects\\ShareController@getTwitter', array($owner->slug, $project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank">
-            <i class="fa fa-twitter"></i>
-        </a>
-        <a href="{{ action('Projects\\ShareController@getGoogle', array($owner->slug, $project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank">
-            <i class="fa fa-google-plus"></i>
-        </a>
-        <a href="" class="btn social-btn social-code">
-            <i class="fa fa-code"></i>
-        </a>
+        <h2 id="projectHeader">
+            @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
+                <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-subscribe">
+                    <i class="fa fa-plus"></i> <span class="text"></span>
+                </a>
+            @else
+                <a href="{{ action('Projects\\SubscriptionController@destroy', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-unsubscribe">
+                    <i class="fa fa-minus"></i> <span class="text"></span>
+                </a>
+            @endif
+            <a href="{{ $owner->href }}">{{{ $owner->name }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a>
+            <br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small>
+        </h2>
     </div>
 </div>
 
@@ -74,14 +63,6 @@
     </div>
     <div class="col-lg-5">
 
-        <div id="code" class="panel panel-default" style="display:none">
-            <div class="panel-heading">Embed Widget Code</div>
-            <div class="panel-body">
-                <p>You can use this code to embed our subscription widget on your website.</p>
-                <pre>Some code here.</pre>
-            </div>
-        </div>
-
         @if(Sentry::check())
         <div id="subscribe" class="panel panel-primary" style="display:none">
             <div class="panel-heading">Subscribed to {{{ $project->name }}}</div>
@@ -118,11 +99,30 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="well well-sm">
-
-                </div>
+                <a href="{{ $project->href }}/updates.rss" class="btn social-btn social-rss">
+                    <i class="fa fa-rss"></i>
+                </a>
+                <a href="{{ action('Projects\\ShareController@getTwitter', array($owner->slug, $project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a href="{{ action('Projects\\ShareController@getGoogle', array($owner->slug, $project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                <a href="" class="btn social-btn social-code">
+                    <i class="fa fa-code"></i>
+                </a>
             </div>
         </div>
+
+
+            <div id="code" class="panel panel-default" style="display:none">
+                <div class="panel-heading">Embed Widget Code</div>
+                <div class="panel-body">
+                    <p>You can use this code to embed our subscription widget on your website.</p>
+                    <pre>Some code here.</pre>
+                </div>
+            </div>
+
 
         @if(Sentry::check())
             @if(Sentry::getUser()->isMember($project))

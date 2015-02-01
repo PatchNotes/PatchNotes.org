@@ -42,11 +42,24 @@
   }
 }
 
+.subscribe-btn {
+    margin: 3px;
+    display: inline-block;
+    font-size: 21px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #FFF !important;
+    line-height: 20px;
+
+    i {
+        color: #ffffff;
+    }
+}
+
 .social-btn {
     margin: 3px;
-    margin-top: 20px;
-    width: 82px;
-    font-size: 250%;
+    width: 53px;
+    font-size: 200%;
     padding: 0;
 
     i {
@@ -61,6 +74,29 @@
 .social-subscribe:hover,.social-unsubscribe:hover {
     background-color: #033C73;
     border-color: #022A50;
+}
+
+
+.social-subscribe:hover .text:after {
+    content: " Subscribe";
+    -webkit-animation: showHide 5s ease-in alternate infinite;
+    animation: showHide 5s ease-in alternate infinite;
+}
+.social-unsubscribe:hover .text:after {
+    content: " Unsubscribe";
+}
+
+@-webkit-keyframes showHide { /* Chrome, Safari */
+    0% {width:100%}
+    40% {width:0%}
+    60% {width:0%;}
+    100% {width:100%;}
+}
+@keyframes showHide {
+    0% {width:100%}
+    40% {width:0%}
+    60% {width:0%;}
+    100% {width:100%;}
 }
 
 .social-rss {
