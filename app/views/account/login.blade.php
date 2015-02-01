@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', "Login to PatchNotes")
+
 @section('content')
 
 <div class="row">

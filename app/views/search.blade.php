@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', 'Search Projects')
+
 @section('content')
 
 

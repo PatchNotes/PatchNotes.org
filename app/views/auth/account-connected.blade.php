@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', "OAuth Account Connected")
+
 @section('content')
 <h3>OAuth Account Connected</h3>
 <p>

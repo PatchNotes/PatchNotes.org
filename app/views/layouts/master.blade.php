@@ -6,10 +6,29 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>PatchNotes</title>
+        <title><?php echo e($__env->yieldContent('title')); ?></title>
+
+        @yield('head')
 
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
         <link href="/assets/css/patchnotes.min.css" rel="stylesheet">
+
+        @if(!empty(Config::get('patchnotes.tracking.ga.code')))
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-45550761-1', 'auto');
+                ga('require', 'linkid', 'linkid.js');
+                ga('send', 'pageview');
+
+                @if(Sentry::check())
+                ga('set', '&uid', {{ Sentry::getUser()->id }}});
+                @endif
+            </script>
+        @endif
     </head>
 
     <body class="{{ (isset($bodyclass) ? $bodyclass : '' ) }}">
@@ -45,7 +64,7 @@
                     @if(!Sentry::check())
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign Up / Sign In <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Register / Sign In <b class="caret"></b></a>
                             <ul class="dropdown-menu account-menu">
                                 <li>
                                     <div class="row">
@@ -88,6 +107,8 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container -->
         </nav>
+
+        @yield('precontent')
 
         <div id="content" class="container">
 

@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', "Welcome to PatchNotes")
+
 @section('content')
 <h3>Welcome to PatchNotes!</h3>
 <p>

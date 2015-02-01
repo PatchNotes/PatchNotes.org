@@ -1,12 +1,6 @@
 @extends('layouts.master')
 
-@section('title')
-Forgot Password
-@stop
-
-@section('navigation')
-
-@stop
+@section('title', "Forgot Password")
 
 @section('content')
 <div class="row">

@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', "Organizations on PatchNotes")
+
 @section('content')
 
 

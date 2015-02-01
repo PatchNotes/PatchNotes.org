@@ -1,5 +1,12 @@
 @extends('layouts/master')
 
+@section('title', $project->name . " on PatchNotes")
+
+@section('head')
+    <meta name="author" content="{{{ $owner->name }}}"/>
+    <meta name="description" content="{{{ $project->description }}}"/>
+@stop
+
 @section('content')
 
 <div class="row">

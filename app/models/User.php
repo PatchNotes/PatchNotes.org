@@ -115,7 +115,7 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
     public function getGravatarAttribute()
     {
         $hash = md5($this->email);
-        return "http://www.gravatar.com/avatar/$hash?s=200";
+        return "http://www.gravatar.com/avatar/$hash?s=200&d=retro";
     }
 
     public function getNameAttribute()

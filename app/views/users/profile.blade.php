@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', $user->username . " on PatchNotes")
+
 @section('content')
 
 <div class="row">
@@ -8,9 +10,11 @@
             <img src="{{ $user->gravatar }}" alt="">
             <h3>{{ $user->username }}</h3>
 
+            @if(Sentry::check())
             @if($user->id == Sentry::getUser()->id)
                 <a href="{{ URL::action('Account\DashboardController@getIndex') }}">Your Dashboard</a>
             @endif
+            @endif 
         </div>
 
         <ul>

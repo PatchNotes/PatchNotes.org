@@ -6,6 +6,7 @@ var less = require('gulp-less');
 var del = require('del');
 
 var paths = {
+    fonts: 'assets/libraries/fontawesome/fonts/**/*.{ttf,woff,eof,svg}',
     less: ['assets/less/patchnotes.less'],
     scripts: [
         'assets/libraries/jquery/dist/jquery.min.js',
@@ -21,7 +22,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('fonts', ['clean'], function() {
-    gulp.src('assets/libraries/fontawesome/fonts/**/*.{ttf,woff,eof,svg}')
+    gulp.src(paths.fonts)
         .pipe(gulp.dest('public/assets/fonts'));
 });
 
@@ -55,7 +56,8 @@ gulp.task('images', ['clean'], function() {
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
-    gulp.watch("assets/less/**/*.less", ['less']);
+    gulp.watch(paths.fonts, ['fonts']);
+    gulp.watch(paths.less, ['less']);
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.images, ['images']);
 });

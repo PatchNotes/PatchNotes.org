@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', "Create a Project")
+
 @section('scripts')
 <script>
     $('.ghProject').click(function(event) {

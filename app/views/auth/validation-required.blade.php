@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', "OAuth Validation Required")
+
 @section('content')
 <h3>OAuth Validation Required</h3>
 <p>

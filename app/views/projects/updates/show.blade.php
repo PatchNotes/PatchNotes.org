@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', $project->name . ": " .$update->title)
+
 @section('content')
 
 <div class="update">

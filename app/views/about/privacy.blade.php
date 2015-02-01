@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', "Your Privacy on PatchNotes")
+
 @section('content')
 <h2 id="patchnotes-privacy-policy">PatchNotes Privacy Policy</h2>
 <p>Last updated November 7th, 2013</p>

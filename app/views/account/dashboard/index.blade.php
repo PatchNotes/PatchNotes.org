@@ -1,5 +1,7 @@
 @extends("layouts/master")
 
+@section('title', "Your Dashboard")
+
 @section("content")
 
 <div class="row">

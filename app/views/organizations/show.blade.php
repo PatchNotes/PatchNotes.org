@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', $org->name . " on PatchNotes")
+
 @section('content')
 
 

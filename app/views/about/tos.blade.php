@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', "Terms of Service")
+
 @section('content')
 <h2 id="patchnotes-terms-of-service">PatchNotes Terms of Service</h2>
 <p>Last updated January 29th, 2014</p>

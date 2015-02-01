@@ -1,5 +1,7 @@
 @extends("layouts/master")
 
+@section('title', "Subscriptions")
+
 @section("content")
 
     <div class="row">

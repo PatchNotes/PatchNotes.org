@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', "OAuth Authentication Rejected")
+
 @section('content')
 
 <h3>OAuth Authentication Rejected</h3>

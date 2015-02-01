@@ -1,5 +1,7 @@
 @extends("layouts/master")
 
+@section('title', "Preferences")
+
 @section("content")
 
     <div class="row">

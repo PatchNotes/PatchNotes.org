@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', "Create an Organization")
+
 @section('content')
 
 <div class="row">

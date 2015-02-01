@@ -1,12 +1,6 @@
 @extends('layouts.master')
 
-@section('title')
-Now Resetting!
-@stop
-
-@section('navigation')
-
-@stop
+@section('title', "Resetting Password")
 
 @section('content')
 <h3>Check Your Email!</h3>

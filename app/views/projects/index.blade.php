@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', "Projects on PatchNotes")
+
 @section('content')
 
 <div class="row">

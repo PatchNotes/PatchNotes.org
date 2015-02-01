@@ -1,5 +1,7 @@
 @extends("layouts/master")
 
+@section('title', "Pending Updates")
+
 @section("content")
 
     <div class="row">
