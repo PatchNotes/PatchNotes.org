@@ -111,7 +111,7 @@
         @yield('precontent')
 
         <div id="content" class="container">
-
+            <br/>
             @yield('content')
 
         </div>

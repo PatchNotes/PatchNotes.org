@@ -10,7 +10,6 @@ Route::get('/search', 'SearchController@getSearch');
 Route::get('/unsubscribe', 'HomeController@getUnsubscribe');
 Route::post('/unsubscribe/feedback', 'HomeController@postUnsubscribeFeedback');
 
-
 /* Accounts & Users */
 Route::group(['prefix' => 'account'], function () {
     Route::controller('dashboard', 'Account\\DashboardController');

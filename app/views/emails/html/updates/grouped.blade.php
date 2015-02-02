@@ -1,29 +1,53 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="utf-8">
-</head>
-<body>
-<div>
-    <p>Hey there {{{ $user->fullname }}},</p>
+@extends('layouts/email')
 
-    <p>Here's your digest of updates!</p>
+@section('content')
 
-    @foreach($projectsUpdated as $projectId => $userUpdates)
-        <h4>{{{ Project::where('id', $projectId)->first()->name }}}</h4>
-        <ul>
-            @foreach($userUpdates as $userUpdate)
-                <li><a href="{{ $userUpdate->project_update->href }}">{{{ $userUpdate->project_update->title }}}</a></li>
-            @endforeach
-        </ul>
+    <table class="row">
+
+        <tr>
+            <td class="wrapper last">
+
+                <table class="twelve columns">
+                    <tr>
+                        <td>
+                            <h1>Hi, {{{ $user->username }}}</h1>
+                            <p class="lead">This is your {{ $nLevel->name }}. You have {{ $numUpdates }} updates from {{ $numProjects }} projects that you follow.</p>
+                        </td>
+                        <td class="expander"></td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+    @foreach($projectsUpdated as $projectId => $pUpdates)
+        <h4>{{{ Project::whereId($projectId)->firstOrFail()->name }}} <small>by <a href="{{ Project::whereId($projectId)->firstOrFail()->owner->href }}">{{{ Project::whereId($projectId)->firstOrFail()->owner->name }}}</a></small></h4>
+
+        @foreach($pUpdates as $pu)
+            <p>
+                <a href="{{ $pu->project_update->href }}">{{{ $pu->project_update->title }}}</a><br/>
+                {{{ str_limit($pu->project_update->body, 80, '...') }}}
+            </p>
+        @endforeach
+
+        <br/>
     @endforeach
 
-    <p>See something you don't like? Curate your subscriptions on <a href="{{ URL::action('Account\\DashboardController@getSubscriptions') }}">Your Dashboard</a></p>
+    <table class="row callout">
+        <tr>
+            <td class="wrapper last">
 
-    <p>Thanks,</p>
-    <p>{{ Config::get('patchnotes.emails.updates.from.name') }}</p>
+                <table class="twelve columns">
+                    <tr>
+                        <td class="panel">
+                            <p>Don't like what you see? <a href="{{ URL::action('Account\\DashboardController@getSubscriptions') }}">Manage your subscriptions »</a></p>
+                        </td>
+                        <td class="expander"></td>
+                    </tr>
+                </table>
 
-    <p><a href="{{ URL::action('HomeController@getUnsubscribe') }}?email={{ $user->email }}&token={{ $user->unsubscribe_token }}">Unsubscribe from all emails from PatchNotes.</a></p>
-</div>
-</body>
-</html>
+            </td>
+        </tr>
+    </table>
+@stop

@@ -128,14 +128,6 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Models\Inter
         return $this->username;
     }
 
-    public function getFullnameAttribute()
-    {
-        if(!empty($this->fullname))
-            return $this->fullname;
-        else
-            return $this->username;
-    }
-
     public function getHrefAttribute() {
         return action('UserController@getUser', array($this->slug));
     }

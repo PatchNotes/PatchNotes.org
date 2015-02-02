@@ -49,14 +49,21 @@ class SendUpdatesCommand extends Command
                 continue;
             }
 
-            $projectsUpdated = UserProjectUpdate::where('emailed_at', null)->where('notification_level_id', $level->id)->where('user_id', $user->id)->get()->groupBy('project_id');
+            $userUpdates = UserProjectUpdate::where('emailed_at', null)->where('notification_level_id', $level->id)->where('user_id', $user->id)->get();
+            $projectsUpdated = $userUpdates->groupBy('project_id');
 
             $title = $this->goodTitle($level, $user);
 
             // Do this in the background, we have a doublecheck in SendUpdates for emailed_at
             Mail::send(
                 ['emails/html/updates/grouped', 'emails/text/updates/grouped'],
-                ['user' => $user, 'projectsUpdated' => $projectsUpdated],
+                [
+                    'user' => $user,
+                    'projectsUpdated' => $projectsUpdated,
+                    'nLevel' => $level,
+                    'numProjects' => count($projectsUpdated),
+                    'numUpdates' => count($userUpdates)
+                ],
             function($message) use ($user, $title) {
                 $message->from(Config::get('patchnotes.emails.updates.from.address'), Config::get('patchnotes.emails.updates.from.name'));
 
