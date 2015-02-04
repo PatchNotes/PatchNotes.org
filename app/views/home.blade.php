@@ -2,19 +2,21 @@
 
 @section('title', "PatchNotes")
 
+@section('head')
+    <meta name="description" content="Regular email updates from the projects and services you use."/>
+@stop
+
 @section('precontent')
     @if(!Sentry::check())
 
-        <div id="pullEmIn" class="jumbotron hero-spacer">
+        {{--<div id="pullEmIn" class="jumbotron hero-spacer">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
+                        <br/>
                         <!-- Filling this in was the the hardest thing I did on the website -->
-                        <h1 id="lead">Keep up with the software world</h1>
-
-                        <h2 id="sublead">WIP.</h2>
-
-                        <p>Never let that security vulnerability bite you in the butt again or something</p>
+                        <h1 id="lead">Software Changes Fast</h1>
+                        <h2 id="sublead">Keep up with regular email updates from the projects and services you rely on.</h2>
                     </div>
                     <div class="col-lg-4">
                         {{ Form::open(array('url' => 'account/register', 'class' => 'form auth', 'role' => 'form')) }}
@@ -33,6 +35,23 @@
                     </div>
                 </div>
             </div>
+        </div>--}}
+        <div id="pullEmIn" class="jumbotron hero-spacer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <br/>
+                        <!-- Filling this in was the the hardest thing I did on the website -->
+                        <h1 id="lead">Software Changes Fast</h1>
+
+                        <h2 id="sublead">Keep up with regular email updates from the projects and services you rely
+                            on.</h2>
+                    </div>
+                    <div class="col-lg-5">
+                        <img src="http://i.imgur.com/Z7qOGBP.png" class="img-responsive" alt=""/>
+                    </div>
+                </div>
+            </div>
         </div>
     @endif
 
@@ -42,12 +61,12 @@
 
     <div id="feature-cycle" class="row">
         <div id="feature-producer" class="col-md-5 col-md-offset-1">
-            <h2>Producers: <em class="feature-topic"></em></h2>
+            <h3>Producers: <em class="feature-topic"></em></h3>
 
             <p class="feature-text"></p>
         </div>
         <div id="feature-consumer" class="col-md-5">
-            <h2>Consumers: <em class="feature-topic"></em></h2>
+            <h3>Consumers: <em class="feature-topic"></em></h3>
 
             <p class="feature-text"></p>
         </div>
@@ -67,12 +86,14 @@
     <script>
         $(function documentReady() {
             var featureCycles = {
-                topics: ["Security Alerts", "Bug Fixes"],
+                topics: ["Regular Updates", "Security Alerts", "Bug Fixes"],
                 producers: {
+                    "Regular Updates": "Stop worrying about managing email lists and making sure your domain doesn't get blacklisted. With PatchNotes everything is done for you, all you have to do is post updates.",
                     "Security Alerts": "Here's something for the producers",
                     "Bug Fixes": "Something about bug fixes for producers."
                 },
                 consumers: {
+                    "Regular Updates": "Keep your email sane, we combine all of your pending updates into one easy to read email. Producer getting annoying? Easily kill the updates without worrying about if you're actuall removed or not.",
                     "Security Alerts": "Be informed instantly when projects you use have important security patches.",
                     "Bug Fixes": "Something about bug fixes for consumers."
                 }

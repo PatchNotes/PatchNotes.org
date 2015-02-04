@@ -93,4 +93,22 @@ class DashboardController extends BaseController {
         return View::make('account/dashboard/pending-updates', compact('projectsUpdated'));
     }
 
+    public function getEmailPreview() {
+        $nLevel = \NotificationLevel::where('key', Input::get('key'))->firstOrFail();
+        $userUpdates = UserProjectUpdate::where('emailed_at', null)->where('user_id', $this->user->id)->get();
+        $projectsUpdated = $userUpdates->groupBy('project_id');
+        $user = $this->user;
+        $numUpdates = count($userUpdates);
+        $numProjects = count($projectsUpdated);
+
+        return View::make('emails/html/updates/grouped', compact(
+            'projectsUpdated',
+            'user',
+            'numUpdates',
+            'numProjects',
+            'nLevel'
+        ));
+    }
+
+
 }

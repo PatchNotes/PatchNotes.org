@@ -9,9 +9,15 @@
 
                 <table class="twelve columns">
                     <tr>
+                        <td class="center">
+                            <h1 class="center">
+                                PatchNotes
+                            </h1>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
-                            <h1>Hi, {{{ $user->username }}}</h1>
-                            <p class="lead">This is your {{ $nLevel->name }}. You have {{ $numUpdates }} updates from {{ $numProjects }} projects that you follow.</p>
+                            <p class="lead">Hi {{{ $user->username }}}, this is your {{ $nLevel->name }}. You have {{ $numUpdates }} updates from {{ $numProjects }} projects that you follow.</p>
                         </td>
                         <td class="expander"></td>
                     </tr>

@@ -14,8 +14,4 @@ class AboutController extends BaseController {
         return View::make('about/privacy', array('bodyclass' => 'small-container'));
     }
 
-    public function getEmailPreview() {
-        return View::make('about/email-preview');
-    }
-
 }
