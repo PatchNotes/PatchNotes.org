@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: PatchNotes
+        psr4_prefix: PatchNotes
+        src_path: app
