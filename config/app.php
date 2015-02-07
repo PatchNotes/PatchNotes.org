@@ -203,6 +203,6 @@ return [
 		 */
 		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 
-	],ddd
+	],
 
 ];
