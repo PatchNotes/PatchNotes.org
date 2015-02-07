@@ -1,6 +1,25 @@
 {
+  "name": "PatchNotes.org",
+  "version": "1.0.0",
+  "description": "Follow up on your favorite projects & services",
+  "private": true,
+  "dependencies": {},
   "devDependencies": {
+    "bower": "^1.3.11",
     "gulp": "^3.8.8",
     "laravel-elixir": "*"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PatchNotes/PatchNotes.org.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PatchNotes/PatchNotes.org/issues"
+  },
+  "homepage": "https://github.com/PatchNotes/PatchNotes.org"
 }
