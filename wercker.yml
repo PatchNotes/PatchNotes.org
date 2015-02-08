@@ -49,15 +49,19 @@ deploy:
     - script:
         name: transfer application
         code: |
-          rsync -a -e "ssh -i $PRIVATEKEY_PATH" /pipeline/build/* patchnotes@patchnotes.org:/srv/www/patchnotes.org/website/
+          rsync -a -e "ssh -i $PRIVATEKEY_PATH" /pipeline/build/* patchnotes@patchnotes.org:/srv/www/patchnotes.org/newwebsite/
+    - script:
+        name: temporary migration
+        code: |
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "mv /srv/www/patchnotes.org/website/ /srv/www/patchnotes.org/oldwebsite/ && mv /srv/www/patchnotes.org/newwebsite/ /srv/www/patchnotes.org/website/"
     - script:
         name: migrate database
         code: |
-          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/website/ && php artisan migrate --env=production --force"
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/newwebsite/ && php artisan migrate --env=production --force"
     - script:
         name: reset permissions
         code: |
-          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "chmod -Rf 775 /srv/www/patchnotes.org/website/app/storage/ || :"
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "chmod -Rf 775 /srv/www/patchnotes.org/website/storage/ || :"
     - script:
         name: start application
         code: |
