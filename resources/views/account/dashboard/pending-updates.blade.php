@@ -27,9 +27,9 @@
                 @foreach($projectsUpdated as $projectId => $userUpdates)
                     @foreach($userUpdates as $userUpdate)
                     <tr>
-                        <td>{{{ $userUpdate->project_update->project->name }}}</td>
-                        <td>{{{ $userUpdate->project_update->title }}}</td>
-                        <td>{{{ $userUpdate->notification_level->key }}}</td>
+                        <td>{{ $userUpdate->project_update->project->name }}</td>
+                        <td>{{ $userUpdate->project_update->title }}</td>
+                        <td>{{ $userUpdate->notification_level->key }}</td>
                     </tr>
                     @endforeach
                 @endforeach

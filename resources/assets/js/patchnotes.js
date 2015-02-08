@@ -23,6 +23,9 @@ $(document).ready(function() {
 
         $.ajax({
             url: $(this).attr('href'),
+            data: {
+                _token: $(this).attr('data-csrf-token')
+            },
             type: "POST"
         }).done(function(response) {
                 if(response.success == false) {
@@ -49,6 +52,9 @@ $(document).ready(function() {
 
         $.ajax({
             url: $(this).attr('href'),
+            data: {
+                _token: $(this).attr('data-csrf-token')
+            },
             type: "DELETE"
         }).done(function(response) {
                 if(response.success == false) {

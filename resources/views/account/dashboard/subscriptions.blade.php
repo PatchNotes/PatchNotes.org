@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            {{ Form::open(['method' => 'POST', 'action' => 'Account\\DashboardController@postSubscriptions']) }}
+            {!! Form::open(['method' => 'POST', 'action' => 'Account\\DashboardController@postSubscriptions']) !!}
             <table class="table">
                 <thead>
                 <tr>
@@ -32,15 +32,15 @@
                         <tr>
                             <td><a href="{{ $subscription->project->href }}">{{ $subscription->project->name }}</a></td>
                             <td>
-                                {{ $subscription->project_update_level->name }}
+                                {{ $subscription->projectUpdateLevel->name }}
                             </td>
                             <td>
-                                {{ Form::select(
-                                    "subscriptions[{$subscription->id}][project_update_level_id][{$subscription->project_update_level->id}]",
-                                    NotificationLevel::selectBox(),
-                                    $subscription->notification_level->id,
+                                {!! Form::select(
+                                    "subscriptions[{$subscription->id}][project_update_level_id][{$subscription->projectUpdateLevel->id}]",
+                                    PatchNotes\Models\NotificationLevel::selectBox(),
+                                    $subscription->notificationLevel->id,
                                     ['class' => 'form-control']
-                                ) }}
+                                ) !!}
 
                             </td>
                             <td>{{ $subscription->created_at }}</td>
@@ -54,7 +54,7 @@
                 <input type="submit" class="btn btn-primary" value="Update Subscriptions"/>
             </div>
 
-            {{ Form::close() }}
+            {!! Form::close() !!}
         </div>
     </div>
 

@@ -18,7 +18,7 @@
         </div>
         @endif
 
-        {{ Form::open(array('url' => 'account/forgot', 'class' => 'form-horizontal')) }}
+        {!! Form::open(array('url' => 'account/forgot', 'class' => 'form-horizontal')) !!}
         <fieldset>
 
             <div class="control-group">
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </fieldset>
-        {{ Form::close() }}
+        {!! Form::close() !!}
     </div>
 
 </div>

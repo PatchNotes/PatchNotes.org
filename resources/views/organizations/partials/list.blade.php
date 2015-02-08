@@ -4,8 +4,8 @@
     <div class="col-md-3">
         <a href="{{ $org->href }}" class="thumbnail project">
             <div class="project-caption">
-                <h2 class="project-header"><span>{{{ $org->name }}}</span></h2>
-                <p>{{{ Str::limit($org->description, 50) }}}</p>
+                <h2 class="project-header"><span>{{ $org->name }}</span></h2>
+                <p>{{ Str::limit($org->description, 50) }}</p>
             </div>
             <div class="modal-footer" style="text-align: left">
                 <div class="row project-info">

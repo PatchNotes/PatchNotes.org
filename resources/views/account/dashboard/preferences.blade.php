@@ -27,45 +27,45 @@
                         </div>
                     @endif
 
-                    {{ Form::open(['method' => 'POST', 'action' => 'Account\\DashboardController@postPreferences', 'class' => 'form-horizontal']) }}
+                    {!! Form::open(['method' => 'POST', 'action' => 'Account\\DashboardController@postPreferences', 'class' => 'form-horizontal']) !!}
                     <div class="form-group">
                         <label for="inputTimezone" class="col-sm-4 control-label">Timezone</label>
 
                         <div class="col-sm-8">
-                            {{ Form::select('timezone', UserPreference::timezoneSelectBox(), (isset($preference->timezone) ? $preference->timezone : "UTC"), [
+                            {!! Form::select('timezone', PatchNotes\Models\UserPreference::timezoneSelectBox(), (isset($preference->timezone) ? $preference->timezone : "UTC"), [
                                 'class' => 'form-control',
                                 'id' => 'inputTimezone'
-                            ]) }}
+                            ]) !!}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputDailyTime" class="col-sm-4 control-label">Daily Update Time</label>
 
                         <div class="col-sm-8">
-                            {{ Form::select('daily_time', UserPreference::timeSelectBox(), $preference->daily_time, [
+                            {!! Form::select('daily_time', PatchNotes\Models\UserPreference::timeSelectBox(), $preference->daily_time, [
                                 'class' => 'form-control',
                                 'id' => 'inputDailyTime'
-                            ]) }}
+                            ]) !!}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputWeeklyDay" class="col-sm-4 control-label">Weekly Update Day</label>
 
                         <div class="col-sm-8">
-                            {{ Form::select('weekly_day', UserPreference::daySelectBox(), $preference->weekly_day, [
+                            {!! Form::select('weekly_day', PatchNotes\Models\UserPreference::daySelectBox(), $preference->weekly_day, [
                                 'class' => 'form-control',
                                 'id' => 'inputWeeklyDay'
-                            ]) }}
+                            ]) !!}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputWeeklyTime" class="col-sm-4 control-label">Weekly Update Time</label>
 
                         <div class="col-sm-8">
-                            {{ Form::select('weekly_time', UserPreference::timeSelectBox(), $preference->weekly_time, [
+                            {!! Form::select('weekly_time', PatchNotes\Models\UserPreference::timeSelectBox(), $preference->weekly_time, [
                                 'class' => 'form-control',
                                 'id' => 'inputWeeklyTime'
-                            ]) }}
+                            ]) !!}
                         </div>
                     </div>
 
@@ -75,7 +75,7 @@
                             <button type="submit" class="btn btn-primary">Save Preferences</button>
                         </div>
                     </div>
-                    {{ Form::close() }}
+                    {!! Form::close() !!}
                 </div>
             </div>
 

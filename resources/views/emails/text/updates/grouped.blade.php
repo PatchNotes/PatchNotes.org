@@ -1,11 +1,11 @@
-Hey there {{{ $user->fullname }}},
+Hey there {{ $user->fullname }},
 
 Here's your digest of updates!
 
 @foreach($projectsUpdated as $projectId => $userUpdates)
-{{{ Project::where('id', $projectId)->first()->name }}}
+{{ Project::where('id', $projectId)->first()->name }}
 @foreach($userUpdates as $userUpdate)
- * {{{ $userUpdate->project_update->title }}} [{{ $userUpdate->project_update->href }}]
+ * {{ $userUpdate->project_update->title }} [{{ $userUpdate->project_update->href }}]
 @endforeach
 
 @endforeach

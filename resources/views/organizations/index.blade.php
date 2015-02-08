@@ -11,7 +11,7 @@
         <p>Companies and Teams working on the same projects.</p>
     </div>
     <div class="col-lg-3">
-        @if(Auth::check())
+        @if(Sentry::check())
 
         <a href="/organizations/create" class="btn btn-primary btn-block">Create a Organization</a>
 

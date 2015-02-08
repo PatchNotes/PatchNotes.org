@@ -4,10 +4,13 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
+use PatchNotes\Commands\UserRegistered;
 use PatchNotes\Http\Controllers\Controller;
+use Sentry;
 
 class AccountController extends Controller
 {
+	protected $redirectPath;
 
 	/**
 	 * Create a new authentication controller instance.
@@ -37,20 +40,15 @@ class AccountController extends Controller
 
 			// Set login credentials
 			$credentials = array(
-				'email' => $input['email'],
-				'password' => $input['password'],
+				'email' => $request->get('email'),
+				'password' => $request->get('password'),
 			);
 
 			// Try to authenticate the user
 			$user = Sentry::authenticate($credentials, true);
-			Event::fire('user.login', array($user));
 
-			$redirect = Session::get('redirect');
-			if ($redirect) {
-				return redirect($redirect);
-			} else {
-				return redirect('/');
-			}
+			return redirect()->intended($this->redirectPath());
+
 		} catch (\Cartalyst\Sentry\Users\LoginRequiredException $e) {
 			return redirect('account/login')->withErrors(['Login field is required.']);
 		} catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e) {
@@ -72,31 +70,24 @@ class AccountController extends Controller
 		return view('account.register', array('bodyclass' => 'smaller-container'));
 	}
 
-	public function postRegister()
+	public function postRegister(Request $request)
 	{
-		$input = Input::all();
-
-		$rules = array(
+		$this->validate($request, [
 			'username' => 'required|min:2|max:32|unique:users',
 			'email' => 'required|email|unique:users',
 			'password' => 'required|min:6'
-		);
-
-		$validator = Validator::make($input, $rules);
-
-		if ($validator->fails()) {
-			return redirect('account/register')->withErrors($validator);
-		}
+		]);
 
 		try {
 			$user = Sentry::register(array(
-				'username' => $input['username'],
-				'email' => $input['email'],
-				'password' => $input['password']
+				'username' => $request->get('username'),
+				'email' => $request->get('email'),
+				'password' => $request->get('password')
 			));
-			$activationCode = $user->getActivationCode();
 
-			Event::fire('user.register', array($user, $activationCode));
+			$this->dispatch(
+				new UserRegistered($user)
+			);
 
 			return redirect('account/thanks');
 		} catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
@@ -219,5 +210,30 @@ class AccountController extends Controller
 		Sentry::logout();
 
 		return redirect('');
+	}
+
+	/**
+	 * Get the post register / login redirect path.
+	 *
+	 * @return string
+	 */
+	public function redirectPath()
+	{
+		if (property_exists($this, 'redirectPath'))
+		{
+			return $this->redirectPath;
+		}
+
+		return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
+	}
+
+	/**
+	 * Get the path to the login route.
+	 *
+	 * @return string
+	 */
+	public function loginPath()
+	{
+		return property_exists($this, 'loginPath') ? $this->loginPath : '/account/login';
 	}
 }

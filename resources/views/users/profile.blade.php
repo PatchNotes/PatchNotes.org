@@ -10,8 +10,8 @@
             <img src="{{ $user->gravatar }}" alt="">
             <h3>{{ $user->username }}</h3>
 
-            @if(Auth::check())
-            @if($user->id == Auth::getUser()->id)
+            @if(Sentry::check())
+            @if($user->id == Sentry::getUser()->id)
                 <a href="{{ URL::action('Account\DashboardController@getIndex') }}">Your Dashboard</a>
             @endif
             @endif 

@@ -21,7 +21,7 @@ build:
     - npm-install
     - plasticine/bower-install@0.0.4
     - hgen/gulp:
-        tasks: compile
+        tasks: default
     - script:
         name: migrate database
         code: php artisan migrate --env=wercker

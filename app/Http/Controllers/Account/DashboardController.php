@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use PatchNotes\Http\Controllers\Controller;
 use PatchNotes\Models\NotificationLevel;
 use PatchNotes\Models\Subscription;
+use PatchNotes\Models\User;
 use PatchNotes\Models\UserPreference;
 use PatchNotes\Models\UserProjectUpdate;
+use Sentry;
 
 class DashboardController extends Controller {
 
@@ -17,8 +19,8 @@ class DashboardController extends Controller {
     public function __construct() {
         $this->middleware('auth');
 
-        $this->user = Auth::getUser();
-        View::share('user', $this->user);
+        $this->user = Sentry::getUser();
+        view()->share('user', $this->user);
     }
 
     public function getIndex() {
@@ -40,7 +42,7 @@ class DashboardController extends Controller {
             $subscription = Subscription::where('id', $subKey)
                 ->where('project_update_level_id', key($subValues['project_update_level_id']))
                 ->firstOrFail();
-            if ($subscription->user->id !== Auth::getUser()->id) {
+            if ($subscription->user->id !== Sentry::getUser()->id) {
                 return abort(400, "Don't do that.");
             }
 
@@ -67,10 +69,10 @@ class DashboardController extends Controller {
         ]);
 
         $preference = UserPreference::firstOrNew(['user_id' => $this->user->id]);
-        $preference->timezone = $data['timezone'];
-        $preference->daily_time = $data['daily_time'];
-        $preference->weekly_day = $data['weekly_day'];
-        $preference->weekly_time = $data['weekly_time'];
+        $preference->timezone = $request->get('timezone');
+        $preference->daily_time = $request->get('daily_time');
+        $preference->weekly_day = $request->get('weekly_day');
+        $preference->weekly_time = $request->get('weekly_time');
 
         $preference->save();
 

@@ -1,27 +1,32 @@
 <?php namespace PatchNotes\Http\Controllers\Projects;
 
+use Illuminate\Http\Response;
 use PatchNotes\Http\Controllers\Controller;
+use PatchNotes\Services\ResolveParticipant;
+use Thujohn\Rss\Rss;
 
 class UpdateController extends Controller
 {
+    use ResolveParticipant;
 
     public function __construct()
     {
-        $this->beforeFilter('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
     }
 
     /**
      * Return a list of the projects updates in the RSS format.
      *
-     * @param $participant
+     * @param $participantSlug
      * @param $projectSlug
      * @return \Illuminate\Http\Response
+     * @internal param $participant
      */
     public function indexRSS($participantSlug, $projectSlug)
     {
         list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
 
-        $feed = Rss::feed('2.0', 'UTF-8');
+        $feed = new Rss('2.0', 'UTF-8');
         $feed->channel(array(
             'title' => $project->name,
             'description' => $project->description,
@@ -36,7 +41,7 @@ class UpdateController extends Controller
             ));
         }
 
-        return Response::make($feed, 200, array('Content-Type' => 'text/xml'));
+        return response($feed, 200, array('Content-Type' => 'text/xml'));
     }
 
 

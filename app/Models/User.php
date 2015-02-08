@@ -51,7 +51,7 @@ use PatchNotes\Contracts\Participant;
  * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribeToken($value) 
  * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribedAt($value) 
  */
-class User extends Model implements Participant
+class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Participant
 {
 
     /**
@@ -84,12 +84,6 @@ class User extends Model implements Participant
             'project_update_level' => 100
         ),
     );
-
-    public static function boot()
-    {
-        parent::boot();
-        self::events();
-    }
 
     public function preferences() {
         return $this->hasOne('PatchNotes\Models\UserPreference');
@@ -220,40 +214,4 @@ class User extends Model implements Participant
         throw new \Exception("No default level found, updateLevel must be out of range.");
     }
 
-    /**
-     * Verify we're unique in both users and orgs
-     *
-     * @return bool
-     */
-    private static function events()
-    {
-
-        self::creating(function ($user) {
-            $org = Organization::where('slug', $user->slug)->first();
-
-            if ($org) {
-                return false;
-            }
-
-            $user->unsubscribe_token = str_random(42);
-        });
-
-        self::created(function($user) {
-            if(empty($user->preferences)) {
-                $preference = new UserPreference();
-
-                $user->preferences()->save($preference);
-            }
-
-        });
-
-        self::updating(function ($user) {
-            $org = Organization::where('slug', $user->slug)->first();
-
-            if ($org) {
-                return false;
-            }
-        });
-
-    }
 }

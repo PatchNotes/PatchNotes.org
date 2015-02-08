@@ -12,17 +12,17 @@
 <div class="row">
     <div class="col-lg-12">
         <h2 id="projectHeader">
-            @if(!Auth::check() || (Auth::check() && !$project->isSubscriber(Auth::getUser())))
-                <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-subscribe">
+            @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
+                <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-subscribe" data-csrf-token="{{ csrf_token() }}">
                     <i class="fa fa-plus"></i> <span class="text"></span>
                 </a>
             @else
-                <a href="{{ action('Projects\\SubscriptionController@destroy', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-unsubscribe">
+                <a href="{{ action('Projects\\SubscriptionController@destroy', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-unsubscribe" data-csrf-token="{{ csrf_token() }}">
                     <i class="fa fa-minus"></i> <span class="text"></span>
                 </a>
             @endif
-            <a href="{{ $owner->href }}">{{{ $owner->name }}}</a> / <a href="{{ $project->href }}">{{{ $project->name }}}</a>
-            <br><small><a href="{{ $project->site_url }}" target="_blank">{{{ $project->site_url }}}</a></small>
+            <a href="{{ $owner->href }}">{{ $owner->name }}</a> / <a href="{{ $project->href }}">{{ $project->name }}</a>
+            <br><small><a href="{{ $project->site_url }}" target="_blank">{{ $project->site_url }}</a></small>
         </h2>
     </div>
 </div>
@@ -47,13 +47,13 @@
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $update->id }}">
-                                    {{{ $update->title }}}
+                                    {{ $update->title }}
                                 </a>
                             </h4>
                         </div>
                         <div id="collapse{{ $update->id }}" class="panel-collapse collapse {{ $first }}">
                             <div class="panel-body">
-                                {{{ $update->body }}}
+                                {{ $update->body }}
 
                                 <hr>
                                 <p><a href="{{ action('Projects\\UpdateController@show', array($owner->slug, $project->slug, $update->slug)) }}">{{ $update->created_at->toRSSString() }}</a></p>
@@ -70,17 +70,17 @@
     </div>
     <div class="col-lg-5">
 
-        @if(Auth::check())
+        @if(Sentry::check())
         <div id="subscribe" class="panel panel-primary" style="display:none">
-            <div class="panel-heading">Subscribed to {{{ $project->name }}}</div>
+            <div class="panel-heading">Subscribed to {{ $project->name }}</div>
             <div class="panel-body">
-                <p>Thanks for your subscription to {{{ $project->name }}}. Your default subscription intervals are below, you can also modify them on
+                <p>Thanks for your subscription to {{ $project->name }}. Your default subscription intervals are below, you can also modify them on
                     <a href="/account/dashboard">your dashboard</a>.</p>
 
                 <ul>
-                    <li>Newsletter: {{ Auth::getUser()->getDefaultNotificationLevel(10)->name }}</li>
-                    <li>Product Updates: {{ Auth::getUser()->getDefaultNotificationLevel(50)->name }}</li>
-                    <li>Service Changes: {{ Auth::getUser()->getDefaultNotificationLevel(100)->name }}</li>
+                    <li>Newsletter: {{ Sentry::getUser()->getDefaultNotificationLevel(10)->name }}</li>
+                    <li>Product Updates: {{ Sentry::getUser()->getDefaultNotificationLevel(50)->name }}</li>
+                    <li>Service Changes: {{ Sentry::getUser()->getDefaultNotificationLevel(100)->name }}</li>
                 </ul>
             </div>
         </div>
@@ -131,8 +131,8 @@
             </div>
 
 
-        @if(Auth::check())
-            @if(Auth::getUser()->isMember($project))
+        @if(Sentry::check())
+            @if(Sentry::getUser()->isMember($project))
                 <div class="panel panel-default">
                     <div class="panel-heading">New Project Update</div>
                     <div class="panel-body">
@@ -147,7 +147,7 @@
                         @endif
 
 
-                        {{ Form::open(array('action' => array('Projects\\UpdateController@store', $owner->slug, $project->slug), 'class' => 'form-horizontal', 'role' => 'form')) }}
+                        {!! Form::open(array('action' => array('Projects\\UpdateController@store', $owner->slug, $project->slug), 'class' => 'form-horizontal', 'role' => 'form')) !!}
                         <input type="hidden" name="project_id" value="{{ $project->id }}"/>
                         <div class="form-group">
                             <label for="updateTitle" class="col-lg-2 control-label">Title</label>
@@ -180,7 +180,7 @@
                                 <button type="submit" class="btn btn-primary">Post & Send Update</button>
                             </div>
                         </div>
-                        {{ Form::close() }}
+                        {!! Form::close() !!}
                     </div>
                 </div>
             @endif

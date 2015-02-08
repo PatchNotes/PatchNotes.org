@@ -25,13 +25,18 @@ abstract class AbstractProvider
      */
     protected $userAccessToken;
 
+    /**
+     * @var ProviderInterface
+     */
+    protected $provider;
+
 
     public function __construct($callback = null, $scope = null, $id = null, $secret = null)
     {
-        $id = $id ?: config('oauth.GitHub.client_id');
-        $secret = $secret ?: config('oauth.GitHub.client_secret');
-        $callback = $callback ?: config('oauth.GitHub.callback');
-        $scope = $scope ?: config('oauth.GitHub.scope');
+        $id = $id ?: config("oauth.{$this->provider}.client_id");
+        $secret = $secret ?: config("oauth.{$this->provider}.client_secret");
+        $callback = $callback ?: config("oauth.{$this->provider}.callback");
+        $scope = $scope ?: config("oauth.{$this->provider}.scope");
         $callback = url($callback);
 
         $serviceFactory = new ServiceFactory();

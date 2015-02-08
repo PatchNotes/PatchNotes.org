@@ -1,5 +1,5 @@
 <div class="well text-center">
-    <img src="{{ $user->gravatar }}" alt="">
+    <img src="{!! $user->gravatar !!}" alt="">
 
     <h3>{{ $user->username }}</h3>
     <p><a href="{{ URL::action('UserController@getUser', [$user->slug]) }}">Your Public Profile</a></p>

@@ -19,11 +19,11 @@
         </div>
         @endif
 
-        {{ Form::open(array('url' => 'account/reset', 'class' => 'form-horizontal')) }}
+        {!! Form::open(array('url' => 'account/reset', 'class' => 'form-horizontal')) !!}
         <fieldset>
 
-            <input type="hidden" name="code" value="{{$code}}"/>
-            <input type="hidden" name="email" value="{{$email}}"/>
+            <input type="hidden" name="code" value="{{ $code }}"/>
+            <input type="hidden" name="email" value="{{ $email }}"/>
 
             <div class="control-group">
                 <!-- Password-->
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </fieldset>
-        {{ Form::close() }}
+        {!! Form::close() !!}
     </div>
 
 </div>

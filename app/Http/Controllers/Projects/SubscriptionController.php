@@ -1,9 +1,13 @@
 <?php namespace PatchNotes\Http\Controllers\Projects;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PatchNotes\Http\Controllers\Controller;
+use PatchNotes\Services\ResolveParticipant;
+use Sentry;
 
 class SubscriptionController extends Controller
 {
+    use ResolveParticipant;
 
     /**
      * @var User
@@ -27,15 +31,15 @@ class SubscriptionController extends Controller
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
         } catch(ModelNotFoundException $e) {
-            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
 
         $success = $project->subscribe($this->user, $this->user->getDefaultLevels());
         if (!$success) {
-            return Response::json(array('success' => false, 'error' => 'You\'re already subscribed to this project.'));
+            return response()->json(array('success' => false, 'error' => 'You\'re already subscribed to this project.'));
         }
 
-        return Response::json(array('success' => true));
+        return response()->json(array('success' => true));
     }
 
     public function unsubscribe($participantSlug, $projectSlug)
@@ -48,15 +52,15 @@ class SubscriptionController extends Controller
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
         } catch(ModelNotFoundException $e) {
-            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
 
         $success = $project->unsubscribe($this->user);
         if (!$success) {
-            return Response::json(array('success' => false, 'error' => 'You\'re not subscribed to this project.'));
+            return response()->json(array('success' => false, 'error' => 'You\'re not subscribed to this project.'));
         }
 
-        return Response::json(array('success' => true));
+        return response()->json(array('success' => true));
     }
 
 } 

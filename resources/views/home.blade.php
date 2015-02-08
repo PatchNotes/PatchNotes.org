@@ -7,7 +7,7 @@
 @stop
 
 @section('precontent')
-    @if(!Auth::check())
+    @if(!Sentry::check())
 
         {{--<div id="pullEmIn" class="jumbotron hero-spacer">
             <div class="container">

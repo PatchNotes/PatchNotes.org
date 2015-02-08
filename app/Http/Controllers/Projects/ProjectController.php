@@ -39,7 +39,7 @@ class ProjectController extends Controller
     {
         $githubRepos = array();
 
-        $user = Auth::getUser();
+        $user = Sentry::getUser();
 
         $possibleOwners = array(
             'Users' => array(

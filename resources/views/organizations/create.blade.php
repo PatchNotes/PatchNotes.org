@@ -6,21 +6,21 @@
 
 <div class="row">
     <div class="col-lg-6">
-        {{ BootForm::open()->action(action("OrganizationController@store"))->render() }}
-            {{ BootForm::text('Organization Name', 'name')->autofocus('autofocus') }}
-            {{ BootForm::text('Organization Email', 'email') }}
-            {{ BootForm::text('Organization URL', 'site_url') }}
-            {{ BootForm::textarea('Organization Description', 'description')->placeholder("A description or your organization or group. Completely optional.") }}
+        {!! BootForm::open()->action(action("OrganizationController@store"))->render() !!}
+            {!! BootForm::text('Organization Name', 'name')->autofocus('autofocus') !!}
+            {!! BootForm::text('Organization Email', 'email') !!}
+            {!! BootForm::text('Organization URL', 'site_url') !!}
+            {!! BootForm::textarea('Organization Description', 'description')->placeholder("A description or your organization or group. Completely optional.") !!}
 
-            {{ BootForm::submit('Create Organization') }}
-        {{ BootForm::close() }}
+            {!! BootForm::submit('Create Organization') !!}
+        {!! BootForm::close() !!}
     </div>
     <div class="col-lg-6">
         @if($errors->count() > 0)
         <div class="alert alert-danger">
             <ul>
                 @foreach($errors->all() as $message)
-                <li>{{$message}}</li>
+                <li>{{ $message }}</li>
                 @endforeach
             </ul>
         </div>

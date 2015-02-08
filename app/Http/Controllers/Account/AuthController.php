@@ -1,8 +1,13 @@
 <?php namespace PatchNotes\Http\Controllers\Account;
 
+use Cartalyst\Sentry\Facades\Laravel\Sentry;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use PatchNotes\Contracts\UserCreatorListener;
 use PatchNotes\Http\Controllers\Controller;
+use PatchNotes\Services\UserCreator;
 
-class AuthController extends Controller implements UserCreatorListenerInterface
+class AuthController extends Controller implements UserCreatorListener
 {
     /**
      * Start the oAuth process
@@ -12,26 +17,24 @@ class AuthController extends Controller implements UserCreatorListenerInterface
      */
     public function getOAuthStart($provider)
     {
-        $provider = App::make("PatchNotes\OAuth\\{$provider}Provider"); // TODO validate if logins/registrations are allowed
+        $provider = App::make("PatchNotes\\Providers\\OAuth\\{$provider}Provider"); // TODO validate if logins/registrations are allowed
         return redirect($provider->getAuthorizationUri());
     }
 
     /**
      * oAuth callback
      *
+     * @param Request $request
      * @param $provider string
      * @return \PatchNotes\Users\func|void
      */
-    public function getOAuthCallback($provider)
+    public function getOAuthCallback(Request $request, $provider)
     {
-        $provider = App::make("PatchNotes\OAuth\\{$provider}Provider"); // TODO validate if logins/registrations are allowed
+        $provider = App::make("PatchNotes\\Providers\\OAuth\\{$provider}Provider"); // TODO validate if logins/registrations are allowed
 
-        if (!Input::has('code'))
-        {
-            return redirect('auth/oauth-error')->withErrors(['Authorization code missing']);
-        }
+        $this->validate($request, ['code' => 'required']);
 
-        if (!$provider->authorizeUser(Input::get('code')))
+        if (!$provider->authorizeUser($request->get('code')))
         {
             return redirect('auth/oauth-error')->withErrors(['Authorization code was rejected by the ' . $provider]);
         }

@@ -11,7 +11,7 @@
         @yield('head')
 
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
-        <link href="/css/app.css" rel="stylesheet">
+        <link href="{{ elixir("css/app.css") }}" rel="stylesheet">
 
         @if(!empty(Config::get('patchnotes.tracking.ga.code')))
             <script>
@@ -24,8 +24,8 @@
                 ga('require', 'linkid', 'linkid.js');
                 ga('send', 'pageview');
 
-                @if(Auth::check())
-                ga('set', '&uid', {{ Auth::getUser()->id }});
+                @if(Sentry::check())
+                ga('set', '&uid', {{ Sentry::getUser()->id }});
                 @endif
             </script>
         @endif
@@ -60,7 +60,7 @@
                         <li><a href="https://medium.com/patch-notes">Blog</a></li>
                     </ul>
 
-                    @if(!Auth::check())
+                    @if(!Sentry::check())
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Register / Sign In <b class="caret"></b></a>
@@ -68,6 +68,7 @@
                                 <li>
                                     <div class="row">
                                         <div class="col-md-12">
+                                            {!! Form::open(['method' => "POST", 'url' => '/account/login', 'id' => 'login-nav', 'class' => 'form']) !!}
                                             <form method="POST" action="/account/login" id="login-nav" class="form">
                                                 <div class="form-group">
                                                     <label class="sr-only" for="headerLoginEmail">Email address</label>
@@ -86,7 +87,7 @@
                                                     <button type="submit" name="login" class="btn btn-primary btn-block">Sign in</button>
                                                     <button type="submit" name="register" class="btn btn-success btn-block">Register</button>
                                                 </div>
-                                            </form>
+                                            {!! Form::close() !!}
                                         </div>
                                     </div>
                                 </li>
@@ -142,7 +143,8 @@
 
         </div><!-- /.container -->
 
-        <script src="/assets/js/patchnotes.min.js"></script>
+        <script src="{{ elixir("js/libs.js") }}"></script>
+        <script src="{{ elixir("js/app.js") }}"></script>
         @yield('scripts')
 
         <script src="//grtp.co/v1.js"></script>

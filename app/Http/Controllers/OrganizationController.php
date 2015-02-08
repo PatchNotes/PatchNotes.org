@@ -18,9 +18,9 @@ class OrganizationController extends Controller {
     public function index() {
         $organizations = Organization::all();
 
-        if(Auth::check()) {
+        if(Sentry::check()) {
             return view('organizations/index', array(
-                'orgs' => Organization::fetchByCreator(Auth::getUser()),
+                'orgs' => Organization::fetchByCreator(Sentry::getUser()),
                 'organizations' => $organizations
             ));
         }
@@ -39,6 +39,7 @@ class OrganizationController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
+     * @param Request $request
      * @return Redirect
      */
     public function store(Request $request) {
@@ -50,7 +51,7 @@ class OrganizationController extends Controller {
         $org->description = $request->get('description');
 
         if($org->save()) {
-            $user = Auth::getUser();
+            $user = Sentry::getUser();
 
             $org->users()->attach($user, ['creator' => true]);
 

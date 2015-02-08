@@ -36,13 +36,13 @@
         </div>
         @endif
 
-        {{ BootForm::open()->action(action('Projects\\ProjectController@store'))->render() }}
-            {{ BootForm::select('Owner', 'owner', $possibleOwners) }}
-            {{ BootForm::text('Project Name', 'name')->id('projectName') }}
-            {{ BootForm::text('Homepage', 'url')->id('projectURL') }}
-            {{ BootForm::textarea('Short Description', 'description')->id('projectDescription')->rows(3) }}
-            {{ BootForm::submit('Create Project') }}
-        {{ BootForm::close() }}
+        {!! BootForm::open()->action(action('Projects\\ProjectController@store'))->render() !!}
+            {!! BootForm::select('Owner', 'owner', $possibleOwners) !!}
+            {!! BootForm::text('Project Name', 'name')->id('projectName') !!}
+            {!! BootForm::text('Homepage', 'url')->id('projectURL') !!}
+            {!! BootForm::textarea('Short Description', 'description')->id('projectDescription')->rows(3) !!}
+            {!! BootForm::submit('Create Project') !!}
+        {!! BootForm::close() !!}
     </div>
     <div class="col-lg-6">
         @if(count($githubRepos) == 0)
@@ -55,7 +55,7 @@
             </div>
             <div class="panel-body" style="max-height: 300px; overflow-y:scroll">
                 @foreach($githubRepos as $repo)
-                <a href="#" data-gh-name="{{{ $repo['name'] }}}" data-gh-url="{{{ $repo['html_url'] }}}" data-gh-description="{{{ $repo['description'] }}}" class="ghProject">{{{ $repo['full_name'] }}}</a><br/>
+                <a href="#" data-gh-name="{{ $repo['name'] }}" data-gh-url="{{ $repo['html_url'] }}" data-gh-description="{{ $repo['description'] }}" class="ghProject">{{ $repo['full_name'] }}</a><br/>
                 @endforeach
             </div>
         </div>

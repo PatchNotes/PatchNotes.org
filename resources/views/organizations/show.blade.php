@@ -5,7 +5,7 @@
 @section('content')
 
 
-    <h2>{{{ $org->name }}}</h2>
+    <h2>{{ $org->name }}</h2>
     <div class="row">
         <div class="col-md-3">
             <ul>

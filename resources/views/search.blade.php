@@ -27,8 +27,8 @@
         <div class="row">
             @foreach($users as $user)
             <div class="col-xs-2 col-md-1">
-                <a href="/users/{{{ $user->username }}}" class="thumbnail">
-                    <img src="{{ $user->gravatar }}" alt="">
+                <a href="/users/{{ $user->username }}" class="thumbnail">
+                    <img src="{!! $user->gravatar !!}" alt="">
                 </a>
             </div>
             @endforeach

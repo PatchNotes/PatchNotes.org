@@ -19,7 +19,7 @@
         </div>
         @endif
 
-        {{ Form::open(array('url' => 'account/register', 'class' => 'form auth', 'role' => 'form')) }}
+        {!! Form::open(array('url' => 'account/register', 'class' => 'form auth', 'role' => 'form')) !!}
         <input class="form-control" name="username" placeholder="Username" type="text" value="{{ Input::old('username') }}" autofocus />
         <input class="form-control" name="email" placeholder="Email" type="email" value="{{ Input::old('email') }}" />
         <input class="form-control" name="password" placeholder="Password" type="password" value="{{ Input::old('password') }}" />
@@ -29,7 +29,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">
             Create An Account
         </button>
-        {{ Form::close() }}
+        {!! Form::close() !!}
         <div class="text-center">
             <br/>
             <a href="/account/login">Login</a>
