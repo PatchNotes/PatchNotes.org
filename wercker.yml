@@ -45,19 +45,15 @@ deploy:
     - script:
         name: stop application
         code: |
-          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/website/ && php artisan down --env=production"
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/website/ && php artisan down"
     - script:
         name: transfer application
         code: |
-          rsync -a -e "ssh -i $PRIVATEKEY_PATH" /pipeline/build/* patchnotes@patchnotes.org:/srv/www/patchnotes.org/newwebsite/
-    - script:
-        name: temporary migration
-        code: |
-          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "mv /srv/www/patchnotes.org/website/ /srv/www/patchnotes.org/oldwebsite/ && mv /srv/www/patchnotes.org/newwebsite/ /srv/www/patchnotes.org/website/"
+          rsync -a -e "ssh -i $PRIVATEKEY_PATH" /pipeline/build/* patchnotes@patchnotes.org:/srv/www/patchnotes.org/website/
     - script:
         name: migrate database
         code: |
-          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/newwebsite/ && php artisan migrate --env=production --force"
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/website/ && php artisan migrate --force"
     - script:
         name: reset permissions
         code: |
@@ -65,4 +61,4 @@ deploy:
     - script:
         name: start application
         code: |
-          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/website/ && php artisan up --env=production"
+          ssh -i $PRIVATEKEY_PATH -l patchnotes patchnotes.org "cd /srv/www/patchnotes.org/website/ && php artisan up"
