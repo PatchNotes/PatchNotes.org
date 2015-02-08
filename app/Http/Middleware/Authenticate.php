@@ -20,7 +20,7 @@ class Authenticate
             if ($request->ajax()) {
                 return response()->json(['success' => false, 'error' => 'Unauthorized.'], 401);
             } else {
-                return redirect()->guest('auth/login');
+                return redirect()->guest('account/login');
             }
         }
 

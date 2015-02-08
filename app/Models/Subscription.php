@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Subscription
- *
+ * 
  * Subscriptions are PatchNote's core, you subscribe to do anything on the website.
  *
  * @property integer $id
