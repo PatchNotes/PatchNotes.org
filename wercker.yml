@@ -15,12 +15,6 @@ build:
         code: |-
           composer config github-oauth.github.com $GH_OAUTH
           composer install --no-interaction --prefer-dist
-    - script:
-        name: clean npm cache
-        code: |-
-          rm -rf /pipeline/build/node_modules/
-          rm -rf ~/.npm
-          npm cache clean
     - npm-install
     - plasticine/bower-install@0.0.4
     - hgen/gulp:

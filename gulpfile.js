@@ -19,12 +19,10 @@ elixir(function (mix) {
     mix.scripts([
         'libraries/jquery/dist/jquery.js',
         'libraries/jquery-textfill/source/jquery.textfill.js',
-        'libraries/bootstrap/dist/js/bootstrap.js'
-    ], './public/js/libs.js', './resources/assets')
-        .scripts([
+        'libraries/bootstrap/dist/js/bootstrap.js',
         'js/patchnotes.js'
     ], './public/js/app.js', './resources/assets');
 
+    mix.version(['css/app.css','js/app.js']);
 
-    mix.version(['css/app.css','js/app.js','js/libs.js']);
 });
