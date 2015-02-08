@@ -26,7 +26,7 @@ class AuthController extends Controller implements UserCreatorListener
      *
      * @param Request $request
      * @param $provider string
-     * @return \PatchNotes\Users\func|void
+     * @return func|void
      */
     public function getOAuthCallback(Request $request, $provider)
     {
@@ -34,8 +34,7 @@ class AuthController extends Controller implements UserCreatorListener
 
         $this->validate($request, ['code' => 'required']);
 
-        if (!$provider->authorizeUser($request->get('code')))
-        {
+        if (!$provider->authorizeUser($request->get('code'))) {
             return redirect('auth/oauth-error')->withErrors(['Authorization code was rejected by the ' . $provider]);
         }
 
@@ -68,7 +67,7 @@ class AuthController extends Controller implements UserCreatorListener
      */
     public function oauthUserRequiresValidation($oauthUser)
     {
-        if(!is_null($oauthUser->user->unsubscribed_at)) {
+        if (!is_null($oauthUser->user->unsubscribed_at)) {
             App::abort(404, "Can't validate user when unsubscribed_at is not null.");
         }
 

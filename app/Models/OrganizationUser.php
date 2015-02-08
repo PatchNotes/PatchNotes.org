@@ -14,18 +14,21 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\OrganizationUser whereOrganizationId($value)
  * @method static \Illuminate\Database\Query\Builder|\OrganizationUser whereCreator($value)
  */
-class OrganizationUser extends Model {
+class OrganizationUser extends Model
+{
 
     protected $primaryKey = null;
     protected $table = 'organization_user';
 
     public $timestamps = false;
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('PatchNotes\Models\User');
     }
 
-    public function organization() {
+    public function organization()
+    {
         return $this->belongsTo('PatchNotes\Models\Organization');
     }
 

@@ -24,24 +24,27 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \NotificationLevel $notificationLevel
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereProjectId($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereCreatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereProjectId($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserProjectUpdate whereUpdatedAt($value)
  */
 class UserProjectUpdate extends Model
 {
     protected $table = 'user_project_updates';
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('PatchNotes\Models\User');
     }
 
-    public function projectUpdate() {
+    public function projectUpdate()
+    {
         return $this->belongsTo('PatchNotes\Models\ProjectUpdate');
     }
 
-    public function notificationLevel() {
+    public function notificationLevel()
+    {
         return $this->belongsTo('PatchNotes\Models\NotificationLevel');
     }
 

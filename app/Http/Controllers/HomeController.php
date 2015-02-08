@@ -2,9 +2,11 @@
 
 use PatchNotes\Models\Project;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
-    public function getIndex(Project $project) {
+    public function getIndex(Project $project)
+    {
         $newProjects = $project->orderBy('created_at', 'desc')->limit(4)->get();
 
         return view('home', [
@@ -12,13 +14,14 @@ class HomeController extends Controller {
         ]);
     }
 
-    public function getUnsubscribe() {
+    public function getUnsubscribe()
+    {
         $rules = [
             'email' => 'required',
             'token' => 'required'
         ];
         $validator = Validator::make(Input::all(), $rules);
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return view('unsubscribe/error')->withErrors($validator);
         }
 
@@ -30,13 +33,14 @@ class HomeController extends Controller {
         return view('unsubscribe/success');
     }
 
-    public function postUnsubscribeFeedback() {
+    public function postUnsubscribeFeedback()
+    {
         $rules = [
             'email' => 'required',
             'feedback' => 'required'
         ];
         $validator = Validator::make(Input::all(), $rules);
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return view('unsubscribe/feedback-error')->withErrors($validator);
         }
         $user = User::where('email', Input::get('email'))->firstOrFail();

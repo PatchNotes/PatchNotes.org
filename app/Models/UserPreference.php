@@ -14,14 +14,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \User $user
- * @method static \Illuminate\Database\Query\Builder|\UserPreference whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserPreference whereUserId($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserPreference whereTimezone($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserPreference whereDailyTime($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserPreference whereWeeklyDay($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserPreference whereWeeklyTime($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserPreference whereCreatedAt($value) 
- * @method static \Illuminate\Database\Query\Builder|\UserPreference whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereTimezone($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereDailyTime($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereWeeklyDay($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereWeeklyTime($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\UserPreference whereUpdatedAt($value)
  */
 class UserPreference extends Model
 {
@@ -29,17 +29,20 @@ class UserPreference extends Model
 
     protected $fillable = array('user_id');
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('PatchNotes\Models\User');
     }
 
-    public static function timezoneSelectBox() {
+    public static function timezoneSelectBox()
+    {
         $tzs = \DateTimeZone::listIdentifiers();
 
         return array_combine($tzs, $tzs);
     }
 
-    public static function timeSelectBox() {
+    public static function timeSelectBox()
+    {
         return [
             "00:00:00" => "12:00 a.m. midnight",
             "01:00:00" => "1:00 a.m.",
@@ -68,7 +71,8 @@ class UserPreference extends Model
         ];
     }
 
-    public static function daySelectBox() {
+    public static function daySelectBox()
+    {
         $days = [
             'Sunday',
             'Monday',

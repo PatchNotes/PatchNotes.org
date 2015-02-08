@@ -16,7 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\ProjectUpdateLevel whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\ProjectUpdateLevel whereUpdatedAt($value)
  */
-class ProjectUpdateLevel extends Model {
+class ProjectUpdateLevel extends Model
+{
 
     protected $table = 'project_updates_levels';
 

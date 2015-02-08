@@ -3,9 +3,11 @@
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PatchNotes\Models\Project;
 
-trait ResolveParticipant {
+trait ResolveParticipant
+{
 
-    public function resolveParticipantProject($participantSlug, $projectSlug) {
+    public function resolveParticipantProject($participantSlug, $projectSlug)
+    {
         $owner = Project::resolveParticipant($participantSlug);
         if (!$owner) {
             throw new ModelNotFoundException('Participant not found.');

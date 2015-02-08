@@ -33,7 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Project whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Project whereDeletedAt($value)
  */
-class Project extends Model {
+class Project extends Model
+{
 
     public static $rules = array(
         'name' => 'required',
@@ -42,7 +43,8 @@ class Project extends Model {
         'description' => 'required',
     );
 
-    public function getHrefAttribute() {
+    public function getHrefAttribute()
+    {
         return action('Projects\\ProjectController@show', array($this->owner->slug, $this->slug));
     }
 
@@ -51,15 +53,16 @@ class Project extends Model {
      * @return bool|User|Organization
      * @throws Exception
      */
-    public static function resolveParticipant($participant) {
+    public static function resolveParticipant($participant)
+    {
         $user = User::where('username', $participant)->first();
         $organization = Organization::where('slug', $participant)->first();
 
-        if($user && $organization) {
+        if ($user && $organization) {
             throw new \Exception("Found user and org record for {$participant}.");
-        } elseif($user && !$organization) {
+        } elseif ($user && !$organization) {
             return $user;
-        } elseif(!$user && $organization) {
+        } elseif (!$user && $organization) {
             return $organization;
         }
 
@@ -73,8 +76,9 @@ class Project extends Model {
      * @param $levels
      * @return bool
      */
-    public function subscribe(User $user, $levels = array()) {
-        if(empty($levels)) $levels = $user->getDefaultLevels();
+    public function subscribe(User $user, $levels = array())
+    {
+        if (empty($levels)) $levels = $user->getDefaultLevels();
         foreach ($levels as $level) {
 
             $projectUpdateLevel = ProjectUpdateLevel::where('level', $level['project_update_level'])->firstOrFail();
@@ -99,17 +103,19 @@ class Project extends Model {
         return true;
     }
 
-    public function unsubscribe(User $user) {
+    public function unsubscribe(User $user)
+    {
         $subscriptions = Subscription::where('user_id', $user->id)->where('project_id', $this->id)->get();
 
-        foreach($subscriptions as $subscription) {
+        foreach ($subscriptions as $subscription) {
             $subscription->delete();
         }
 
         return true;
     }
 
-    public function isSubscriber(User $user) {
+    public function isSubscriber(User $user)
+    {
         return (boolean)Subscription::where('user_id', $user->id)->where('project_id', $this->id)->first();
     }
 
@@ -118,19 +124,23 @@ class Project extends Model {
      *
      * @return integer
      */
-    public function subscriberCount() {
+    public function subscriberCount()
+    {
         return count($this->subscribers()->distinct()->get(array('user_id')));
     }
 
-    public function subscribers() {
+    public function subscribers()
+    {
         return $this->hasMany('PatchNotes\Models\Subscription');
     }
 
-    public function updates() {
+    public function updates()
+    {
         return $this->hasMany('PatchNotes\Models\ProjectUpdate');
     }
 
-    public function owner() {
+    public function owner()
+    {
         return $this->morphTo();
     }
 

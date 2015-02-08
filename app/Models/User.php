@@ -48,8 +48,8 @@ use PatchNotes\Contracts\Participant;
  * @property string $unsubscribed_at
  * @property-read \UserPreference $preferences
  * @property-read mixed $fullname
- * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribeToken($value) 
- * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribeToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribedAt($value)
  */
 class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Participant
 {
@@ -68,7 +68,7 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Participant
      */
     protected $hidden = array('password');
 
-    protected $fillable = ['username','fullname','email','password','activated','activation_code','activated_at','last_login','persist_code','reset_password_code'];
+    protected $fillable = ['username', 'fullname', 'email', 'password', 'activated', 'activation_code', 'activated_at', 'last_login', 'persist_code', 'reset_password_code'];
 
     protected $defaultLevels = array(
         array(
@@ -85,7 +85,8 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Participant
         ),
     );
 
-    public function preferences() {
+    public function preferences()
+    {
         return $this->hasOne('PatchNotes\Models\UserPreference');
     }
 
@@ -125,7 +126,8 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Participant
         return $this->username;
     }
 
-    public function getHrefAttribute() {
+    public function getHrefAttribute()
+    {
         return action('UserController@getUser', array($this->slug));
     }
 
@@ -136,16 +138,16 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Participant
 
     public function isMember(Project $project)
     {
-        if($project->owner instanceof Organization) {
+        if ($project->owner instanceof Organization) {
 
-            foreach($project->owner->users as $user) {
-                if($user->id === $this->id) {
+            foreach ($project->owner->users as $user) {
+                if ($user->id === $this->id) {
                     return true;
                 }
             }
 
-        } elseif($project->owner instanceof User) {
-            if($project->owner->id === $this->id) {
+        } elseif ($project->owner instanceof User) {
+            if ($project->owner->id === $this->id) {
                 return true;
             }
         } else {

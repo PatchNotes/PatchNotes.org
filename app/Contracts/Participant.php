@@ -2,7 +2,8 @@
 namespace PatchNotes\Contracts;
 
 
-interface Participant {
+interface Participant
+{
 
     public function getNameAttribute();
 

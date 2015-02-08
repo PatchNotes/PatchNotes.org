@@ -4,9 +4,11 @@ use Auth;
 use Illuminate\Http\Request;
 use PatchNotes\Models\Organization;
 
-class OrganizationController extends Controller {
+class OrganizationController extends Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -15,10 +17,11 @@ class OrganizationController extends Controller {
      *
      * @return Response
      */
-    public function index() {
+    public function index()
+    {
         $organizations = Organization::all();
 
-        if(Sentry::check()) {
+        if (Sentry::check()) {
             return view('organizations/index', array(
                 'orgs' => Organization::fetchByCreator(Sentry::getUser()),
                 'organizations' => $organizations
@@ -32,7 +35,8 @@ class OrganizationController extends Controller {
      *
      * @return Response
      */
-    public function create() {
+    public function create()
+    {
         return view('organizations/create');
     }
 
@@ -42,7 +46,8 @@ class OrganizationController extends Controller {
      * @param Request $request
      * @return Redirect
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $org = new Organization();
         $org->name = $request->get('name');
         $org->email = $request->get('email');
@@ -50,7 +55,7 @@ class OrganizationController extends Controller {
         $org->site_url = $request->get('site_url');
         $org->description = $request->get('description');
 
-        if($org->save()) {
+        if ($org->save()) {
             $user = Sentry::getUser();
 
             $org->users()->attach($user, ['creator' => true]);
@@ -65,9 +70,10 @@ class OrganizationController extends Controller {
      * @param $slug
      * @return \Illuminate\View\View
      */
-    public function show($slug) {
+    public function show($slug)
+    {
         $org = Organization::where('slug', $slug)->first();
-        if(!$org) {
+        if (!$org) {
             // Return 404
             abort(404);
         }
@@ -81,7 +87,8 @@ class OrganizationController extends Controller {
      * @param  int $id
      * @return Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
 
         return view('organizations/edit');
     }
@@ -92,7 +99,8 @@ class OrganizationController extends Controller {
      * @param  int $id
      * @return Response
      */
-    public function update($id) {
+    public function update($id)
+    {
         //
     }
 
@@ -102,7 +110,8 @@ class OrganizationController extends Controller {
      * @param  int $id
      * @return Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         //
     }
 

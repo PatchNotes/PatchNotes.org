@@ -30,16 +30,16 @@ class GitHubProvider extends AbstractProvider implements ProviderInterface
         $details = json_decode($this->consumer->request('user'));
         $emails = json_decode($this->consumer->request('user/emails'));
 
-        if(!isset($emails[0])) {
+        if (!isset($emails[0])) {
             \Log::error('Email[0] is not set.', $emails);
             return false;
         }
 
         return array(
-            'user_id'         => $details->id,
-            'username'         => $details->login,
-            'fullname'    => $details->name,
-            'email'         => $emails[0]
+            'user_id' => $details->id,
+            'username' => $details->login,
+            'fullname' => $details->name,
+            'email' => $emails[0]
         );
     }
 }

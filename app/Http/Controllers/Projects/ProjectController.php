@@ -118,7 +118,7 @@ class ProjectController extends Controller
     {
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
-        } catch(ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return abort(404);
         }
 
@@ -138,7 +138,7 @@ class ProjectController extends Controller
     {
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
-        } catch(ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 
@@ -158,7 +158,7 @@ class ProjectController extends Controller
     {
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
-        } catch(ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 
@@ -178,7 +178,7 @@ class ProjectController extends Controller
     {
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
-        } catch(ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return Response::json(['success' => false, 'error' => $e->getMessage()]);
         }
 

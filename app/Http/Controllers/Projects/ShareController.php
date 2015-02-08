@@ -1,15 +1,20 @@
 <?php namespace PatchNotes\Http\Controllers\Projects;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PatchNotes\Http\Controllers\Controller;
+use PatchNotes\Services\ResolveParticipant;
 
 
-class ShareController extends Controller {
+class ShareController extends Controller
+{
+    use ResolveParticipant;
 
-    public function getTwitter($participantSlug, $projectSlug) {
+    public function getTwitter($participantSlug, $projectSlug)
+    {
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
-        } catch(ModelNotFoundException $e) {
-            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
 
         $message = urlencode("Subscribe to $project->name on PatchNotes: {$project->href}");
@@ -19,11 +24,12 @@ class ShareController extends Controller {
         return redirect($url);
     }
 
-    public function getFacebook($participantSlug, $projectSlug) {
+    public function getFacebook($participantSlug, $projectSlug)
+    {
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
-        } catch(ModelNotFoundException $e) {
-            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
 
         $message = urlencode("Subscribe to $project->name on PatchNotes");
@@ -33,11 +39,12 @@ class ShareController extends Controller {
         return redirect($redirect);
     }
 
-    public function getGoogle($participantSlug, $projectSlug) {
+    public function getGoogle($participantSlug, $projectSlug)
+    {
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
-        } catch(ModelNotFoundException $e) {
-            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
 
         return redirect("https://plus.google.com/share?url={$project->href}");

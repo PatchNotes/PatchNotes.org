@@ -18,9 +18,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\NotificationLevel whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\NotificationLevel whereUpdatedAt($value)
  * @property string $key
- * @method static \Illuminate\Database\Query\Builder|\NotificationLevel whereKey($value) 
+ * @method static \Illuminate\Database\Query\Builder|\NotificationLevel whereKey($value)
  */
-class NotificationLevel extends Model {
+class NotificationLevel extends Model
+{
 
     protected $table = 'notification_levels';
 
@@ -31,7 +32,7 @@ class NotificationLevel extends Model {
         $options = [];
 
         $levels = self::all();
-        foreach($levels as $level) {
+        foreach ($levels as $level) {
             $options[$level->id] = $level->name;
         }
 

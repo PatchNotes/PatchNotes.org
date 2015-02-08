@@ -2,13 +2,16 @@
 
 use PatchNotes\Models\User;
 
-class UserController extends Controller {
+class UserController extends Controller
+{
 
-    public function getIndex() {
+    public function getIndex()
+    {
         abort(404);
     }
 
-    public function getUser($username) {
+    public function getUser($username)
+    {
         $user = User::where('username', $username)->first();
 
         if (!$user) {

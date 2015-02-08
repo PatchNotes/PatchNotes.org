@@ -2,4 +2,6 @@
 
 use PatchNotes\Exceptions\Handler;
 
-class TokenResponseException extends Handler {}
+class TokenResponseException extends Handler
+{
+}

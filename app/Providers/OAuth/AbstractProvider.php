@@ -54,7 +54,7 @@ abstract class AbstractProvider
      */
     public function getAuthorizationUri()
     {
-        return (string) $this->consumer->getAuthorizationUri();
+        return (string)$this->consumer->getAuthorizationUri();
     }
 
     /**

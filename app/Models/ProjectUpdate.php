@@ -31,19 +31,23 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\ProjectUpdate whereProjectUpdateLevelId($value)
  * @property-read mixed $href
  */
-class ProjectUpdate extends Model {
+class ProjectUpdate extends Model
+{
 
     protected $table = "project_updates";
 
-    public function project() {
+    public function project()
+    {
         return $this->belongsTo('PatchNotes\Models\Project');
     }
 
-    public function author() {
+    public function author()
+    {
         return $this->belongsTo('PatchNotes\Models\User', 'user_id');
     }
 
-    public function getHrefAttribute() {
+    public function getHrefAttribute()
+    {
         return action('Projects\\UpdateController@show', array($this->project->owner->slug, $this->project->slug, $this->slug));
     }
 

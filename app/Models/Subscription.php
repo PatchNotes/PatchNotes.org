@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Subscription
- * 
+ *
  * Subscriptions are PatchNote's core, you subscribe to do anything on the website.
  *
  * @property integer $id
@@ -28,21 +28,26 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Subscription whereProjectUpdateLevelId($value)
  * @method static \Illuminate\Database\Query\Builder|\Subscription whereNotificationLevelId($value)
  */
-class Subscription extends Model {
+class Subscription extends Model
+{
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('PatchNotes\Models\User');
     }
 
-    public function project() {
+    public function project()
+    {
         return $this->belongsTo('PatchNotes\Models\Project');
     }
 
-    public function projectUpdateLevel() {
+    public function projectUpdateLevel()
+    {
         return $this->belongsTo('PatchNotes\Models\ProjectUpdateLevel');
     }
 
-    public function notificationLevel() {
+    public function notificationLevel()
+    {
         return $this->belongsTo('PatchNotes\Models\NotificationLevel');
     }
 

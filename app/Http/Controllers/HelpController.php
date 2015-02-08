@@ -1,8 +1,10 @@
 <?php namespace PatchNotes\Http\Controllers;
 
-class HelpController extends Controller {
+class HelpController extends Controller
+{
 
-    public function getWelcome() {
+    public function getWelcome()
+    {
         return view('help.welcome');
     }
 

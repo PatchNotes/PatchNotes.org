@@ -1,7 +1,8 @@
 <?php namespace PatchNotes\Events;
 
-abstract class Event {
+abstract class Event
+{
 
-	//
+    //
 
 }

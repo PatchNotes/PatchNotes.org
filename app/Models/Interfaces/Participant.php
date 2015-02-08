@@ -2,7 +2,8 @@
 namespace Models\Interfaces;
 
 
-interface Participant {
+interface Participant
+{
 
     public function getNameAttribute();
 

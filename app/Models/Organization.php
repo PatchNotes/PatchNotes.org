@@ -51,32 +51,38 @@ class Organization extends Model implements Participant
 
     // Fill in attributes
     // ==================
-    public function setSlugAttribute($slug) {
+    public function setSlugAttribute($slug)
+    {
         return $this->attributes['slug'] = $slug;
     }
 
-    public function getNameAttribute() {
+    public function getNameAttribute()
+    {
         return $this->attributes['name'];
     }
 
-    public function getSlugAttribute() {
+    public function getSlugAttribute()
+    {
         return $this->attributes['slug'];
     }
 
-    public function getHrefAttribute() {
+    public function getHrefAttribute()
+    {
         return action('OrganizationController@show', array($this->slug));
     }
 
     // Pivot
     // =====
 
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany('PatchNotes\Models\User')->withPivot(['creator']);
     }
 
-    public function creator() {
+    public function creator()
+    {
         $org = $this;
-        $user = Organization::with(array('users' => function($query) use($org) {
+        $user = Organization::with(array('users' => function ($query) use ($org) {
             $query->where('creator', true);
             $query->where('organization_id', $org->id);
         }))->find(1);
@@ -86,7 +92,8 @@ class Organization extends Model implements Participant
 
     // Helper
     // ======
-    public static function fetchByCreator(User $creator) {
+    public static function fetchByCreator(User $creator)
+    {
         return $creator->organizations()->wherePivot('creator', true)->get();
     }
 

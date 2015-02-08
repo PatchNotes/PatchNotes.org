@@ -6,7 +6,8 @@ use PatchNotes\Contracts\UserCreatorListener;
 use PatchNotes\Models\User;
 use PatchNotes\Models\UserOauth;
 
-class UserCreator {
+class UserCreator
+{
     /**
      * @param $listener
      */
@@ -19,7 +20,7 @@ class UserCreator {
      * Try to create a user from an array of oAuth user details
      *
      * @param  array $oauthDetails
-     * @param  null  $currentUser
+     * @param  null $currentUser
      * @return func
      */
     public function createUserFromOauth($oauthDetails, $currentUser = null)
@@ -62,7 +63,7 @@ class UserCreator {
      * Associate the oAuth entry with the provided userId
      *
      * @param  array $oauthDetails
-     * @param  int   $userId
+     * @param  int $userId
      * @return func
      */
     public function associateOauthWithUser($oauthDetails, $userId)
@@ -75,7 +76,7 @@ class UserCreator {
      * Create the oAuth entry and attach it to a local user account
      *
      * @param  array $oauthDetails
-     * @param  int     $localUser
+     * @param  int $localUser
      * @return func
      */
     public function createOauthAttachedToUser($oauthDetails, $localUser)
@@ -94,11 +95,11 @@ class UserCreator {
     {
         try {
             $user = Sentry::register(array(
-                'username'         => $oauthDetails['username'],
-                'email'         => $oauthDetails['email'],
-                'fullname'     => $oauthDetails['fullname'],
-                'password'         => str_random(32),
-                'activated'     => true
+                'username' => $oauthDetails['username'],
+                'email' => $oauthDetails['email'],
+                'fullname' => $oauthDetails['fullname'],
+                'password' => str_random(32),
+                'activated' => true
             ));
 
             $this->createOauth($oauthDetails, $user->id, true);
@@ -113,19 +114,19 @@ class UserCreator {
      * Store oAuth entry
      *
      * @param array $details
-     * @param int   $userId
+     * @param int $userId
      * @param bool $validated
      * @return \Illuminate\Database\Eloquent\Model|static
      */
     public function createOauth($details, $userId, $validated = false)
     {
         $oauth = UserOauth::create(array(
-            'user_id'                 => $userId,
-            'provider'                 => $details['provider'],
-            'provider_user_id'         => $details['user_id'],
+            'user_id' => $userId,
+            'provider' => $details['provider'],
+            'provider_user_id' => $details['user_id'],
             'provider_user_details' => $details,
-            'validated'             => $validated ? 1 : 0,
-            'validation_key'        => str_random(32)
+            'validated' => $validated ? 1 : 0,
+            'validation_key' => str_random(32)
         ));
 
         return $oauth;
