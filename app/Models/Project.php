@@ -50,20 +50,20 @@ class Project extends Model
 
     public function share($provider)
     {
+        $url = '';
+
         switch($provider) {
             case 'google':
-                return "https://plus.google.com/share?url={$this->href}";
+                $url = "https://plus.google.com/share?url=" . urlencode($this->href);
                 break;
             case 'twitter':
-                $message = urlencode("Subscribe to " . e($this->name) . " on PatchNotes: {$this->href}");
+                $message = "Subscribe to " . e($this->name) . " on PatchNotes";
 
-                return "https://twitter.com/intent/tweet?text=$message";
+                $url = "https://twitter.com/intent/tweet?text=" . urlencode($message) . "&url=" . urlencode($this->href);
                 break;
-            default:
-                return '';
-            break;
-
         }
+
+        return $url;
     }
 
     /**
