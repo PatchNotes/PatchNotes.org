@@ -109,14 +109,14 @@
                 <a href="{{ $project->href }}/updates.rss" class="btn social-btn social-rss">
                     <i class="fa fa-rss"></i>
                 </a>
-                <a href="{{ action('Projects\\ShareController@getTwitter', array($owner->slug, $project->slug)) }}" class="btn social-btn share-btn social-twitter" target="_blank">
-                    <i class="fa fa-twitter"></i>
-                </a>
-                <a href="{{ action('Projects\\ShareController@getGoogle', array($owner->slug, $project->slug)) }}" class="btn social-btn share-btn social-google" target="_blank">
-                    <i class="fa fa-google-plus"></i>
-                </a>
                 <a href="" class="btn social-btn social-code">
                     <i class="fa fa-code"></i>
+                </a>
+                <a href="{{ $project->share('twitter') }}" class="btn social-btn share-btn social-twitter share" target="_blank">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a href="{{ $project->share('google') }}" class="btn social-btn share-btn social-google share" target="_blank">
+                    <i class="fa fa-google-plus"></i>
                 </a>
             </div>
         </div>

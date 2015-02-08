@@ -48,6 +48,24 @@ class Project extends Model
         return action('Projects\\ProjectController@show', array($this->owner->slug, $this->slug));
     }
 
+    public function share($provider)
+    {
+        switch($provider) {
+            case 'google':
+                return "https://plus.google.com/share?url={$this->href}";
+                break;
+            case 'twitter':
+                $message = urlencode("Subscribe to " . e($this->name) . " on PatchNotes: {$this->href}");
+
+                return "https://twitter.com/intent/tweet?text=$message";
+                break;
+            default:
+                return '';
+            break;
+
+        }
+    }
+
     /**
      * @param string $participant
      * @return bool|User|Organization
