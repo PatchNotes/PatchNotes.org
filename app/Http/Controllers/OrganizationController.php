@@ -1,6 +1,6 @@
 <?php namespace PatchNotes\Http\Controllers;
 
-use Auth;
+use Sentry;
 use Illuminate\Http\Request;
 use PatchNotes\Models\Organization;
 
@@ -48,6 +48,13 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required',
+            'site_url' => 'url',
+            'email' => 'required|email',
+            'description' => '',
+        ]);
+
         $org = new Organization();
         $org->name = $request->get('name');
         $org->email = $request->get('email');
@@ -62,7 +69,7 @@ class OrganizationController extends Controller
 
             return redirect('organizations/' . $org->slug);
         } else {
-            return redirect()->back()->withErrors($org->errors());
+            return redirect()->back();
         }
     }
 

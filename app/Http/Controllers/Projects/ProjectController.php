@@ -6,8 +6,8 @@ use PatchNotes\Http\Controllers\Controller;
 use PatchNotes\Models\Organization;
 use PatchNotes\Models\User;
 use PatchNotes\Services\ResolveParticipant;
-
 use PatchNotes\Models\Project;
+use Sentry;
 
 class ProjectController extends Controller
 {
@@ -15,7 +15,7 @@ class ProjectController extends Controller
 
     public function __construct()
     {
-        $this->beforeFilter('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
     }
 
     /**
@@ -76,11 +76,17 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['owner' => ['regex:/(user|organization)\:\d+/']]);
+        $this->validate($request, [
+            'owner' => ['regex:/(user|organization)\:\d+/'],
+            'name' => 'required',
+            'site_url' => 'required|url',
+            'description' => 'required'
+        ]);
 
         $inpOwner = explode(':', $request->get('owner'));
 
@@ -139,11 +145,11 @@ class ProjectController extends Controller
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
         } catch (ModelNotFoundException $e) {
-            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
 
         if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
-            App::abort(401);
+            return abort(401);
         }
     }
 
@@ -159,11 +165,11 @@ class ProjectController extends Controller
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
         } catch (ModelNotFoundException $e) {
-            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
 
         if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
-            App::abort(401);
+            return abort(401);
         }
     }
 
@@ -179,12 +185,12 @@ class ProjectController extends Controller
         try {
             list($owner, $project) = $this->resolveParticipantProject($participantSlug, $projectSlug);
         } catch (ModelNotFoundException $e) {
-            return Response::json(['success' => false, 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
 
 
         if (!Sentry::getUser()->isMember($project) || !Sentry::getUser()->isSuperUser()) {
-            App::abort(401);
+            return abort(401);
         }
     }
 }

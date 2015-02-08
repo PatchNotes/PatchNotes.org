@@ -2,7 +2,9 @@
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use PatchNotes\Models\Observers\OrganizationObserver;
 use PatchNotes\Models\Observers\UserObserver;
+use PatchNotes\Models\Organization;
 use PatchNotes\Models\User;
 
 class EventServiceProvider extends ServiceProvider
@@ -30,6 +32,7 @@ class EventServiceProvider extends ServiceProvider
         parent::boot($events);
 
         User::observe(new UserObserver);
+        Organization::observe(new OrganizationObserver);
     }
 
 }

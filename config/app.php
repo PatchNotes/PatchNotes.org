@@ -142,6 +142,7 @@ return [
 		 */
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+		'AdamWathan\BootForms\BootFormsServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -206,6 +207,7 @@ return [
 		 * Libraries
 		 */
 		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+		'BootForm' => 'AdamWathan\BootForms\Facades\BootForm'
 
 	],
 

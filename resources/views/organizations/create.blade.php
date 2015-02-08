@@ -7,6 +7,7 @@
 <div class="row">
     <div class="col-lg-6">
         {!! BootForm::open()->action(action("OrganizationController@store"))->render() !!}
+            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
             {!! BootForm::text('Organization Name', 'name')->autofocus('autofocus') !!}
             {!! BootForm::text('Organization Email', 'email') !!}
             {!! BootForm::text('Organization URL', 'site_url') !!}

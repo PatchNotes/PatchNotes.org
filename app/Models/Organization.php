@@ -37,13 +37,6 @@ class Organization extends Model implements Participant
         'description' => '',
     );
 
-    public function __construct(array $attributes = array())
-    {
-        parent::__construct($attributes);
-
-        self::events();
-    }
-
     public function projects()
     {
         return $this->morphMany('PatchNotes\Models\Project', 'owner');

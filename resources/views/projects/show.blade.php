@@ -3,8 +3,8 @@
 @section('title', $project->name . " on PatchNotes")
 
 @section('head')
-    <meta name="author" content="{{{ $owner->name }}}"/>
-    <meta name="description" content="{{{ $project->description }}}"/>
+    <meta name="author" content="{{ $owner->name }}"/>
+    <meta name="description" content="{{ $project->description }}"/>
 @stop
 
 @section('content')
@@ -31,7 +31,7 @@
 <div class="row">
 
     <div class="col-lg-7">
-        <p>{{{ $project->description }}}</p>
+        <p>{{ $project->description }}</p>
 
         <div class="panel panel-default">
             <div class="panel-heading">Recent Project Updates</div>
@@ -85,9 +85,9 @@
             </div>
         </div>
         <div id="unsubscribe" class="panel panel-primary" style="display:none">
-            <div class="panel-heading">Unsubcribed to {{{ $project->name }}}</div>
+            <div class="panel-heading">Unsubcribed to {{ $project->name }}</div>
             <div class="panel-body">
-                <p>All of your subscriptions to {{{ $project->name }}} have been removed. You won't receive any more emails.</p>
+                <p>All of your subscriptions to {{ $project->name }} have been removed. You won't receive any more emails.</p>
             </div>
         </div>
         @endif
@@ -165,7 +165,7 @@
                         <div class="form-group">
                             <label for="importance" class="col-lg-2 control-label">Level</label>
                             <div class="col-lg-10">
-                                @foreach(ProjectUpdateLevel::orderBy('level', 'asc')->get() as $rank)
+                                @foreach(PatchNotes\Models\ProjectUpdateLevel::orderBy('level', 'asc')->get() as $rank)
                                 <label for="level-{{ $rank->level }}" data-toggle="tooltip" data-placement="right" title="{{ Lang::get('project.project_update_level.' . $rank->level) }}">
                                     <input type="radio" name="level" value="{{ $rank->level }}" id="level-{{ $rank->level }}"> {{ $rank->name }}
                                 </label>

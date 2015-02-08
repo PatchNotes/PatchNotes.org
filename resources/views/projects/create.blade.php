@@ -37,6 +37,7 @@
         @endif
 
         {!! BootForm::open()->action(action('Projects\\ProjectController@store'))->render() !!}
+            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
             {!! BootForm::select('Owner', 'owner', $possibleOwners) !!}
             {!! BootForm::text('Project Name', 'name')->id('projectName') !!}
             {!! BootForm::text('Homepage', 'url')->id('projectURL') !!}
