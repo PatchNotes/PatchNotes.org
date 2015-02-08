@@ -20,9 +20,8 @@ elixir(function (mix) {
         'libraries/jquery/dist/jquery.js',
         'libraries/jquery-textfill/source/jquery.textfill.js',
         'libraries/bootstrap/dist/js/bootstrap.js'
-    ], './public/js/libs.js', './resources/assets');
-
-    mix.scripts([
+    ], './public/js/libs.js', './resources/assets')
+        .scripts([
         'js/patchnotes.js'
     ], './public/js/app.js', './resources/assets');
 
