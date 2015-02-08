@@ -28,7 +28,11 @@
     </table>
 
     @foreach($projectsUpdated as $projectId => $pUpdates)
-        <h4>{{ PatchNotes\Models\Project::whereId($projectId)->firstOrFail()->name }} <small>by <a href="{{ Project::whereId($projectId)->firstOrFail()->owner->href }}">{{ Project::whereId($projectId)->firstOrFail()->owner->name }}</a></small></h4>
+        <h4>{{ PatchNotes\Models\Project::whereId($projectId)->firstOrFail()->name }}
+            <small>by <a href="{{ PatchNotes\Models\Project::whereId($projectId)->firstOrFail()->owner->href }}">
+                    {{ PatchNotes\Models\Project::whereId($projectId)->firstOrFail()->owner->name }}</a>
+            </small>
+        </h4>
 
         @foreach($pUpdates as $pu)
             <p>

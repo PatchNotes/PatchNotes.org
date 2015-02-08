@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Event;
+use PatchNotes\Commands\PostUpdate;
 use PatchNotes\Models\Organization;
 use PatchNotes\Models\Project;
 use PatchNotes\Models\ProjectUpdate;
@@ -11,9 +12,14 @@ class ProjectUpdateSeeder extends Seeder {
     private $faker;
 
     private $levels = array(1,2,3);
+    /**
+     * @var \Illuminate\Contracts\Bus\Dispatcher
+     */
+    private $bus;
 
-    public function __construct() {
+    public function __construct(\Illuminate\Contracts\Bus\Dispatcher $bus) {
         $this->faker = Faker\Factory::create();
+        $this->bus = $bus;
     }
 
     public function run() {
@@ -40,7 +46,10 @@ class ProjectUpdateSeeder extends Seeder {
                     'user_id' => $owner->id
                 ));
 
-                Event::fire('project.update.create', array($project, $update));
+                $this->bus->dispatch(
+                    new PostUpdate($project, $update)
+                );
+
             }
         }
     }

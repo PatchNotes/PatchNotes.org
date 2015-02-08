@@ -46,10 +46,12 @@ use PatchNotes\Contracts\Participant;
  * @method static \Illuminate\Database\Query\Builder|\User whereUpdatedAt($value)
  * @property string $unsubscribe_token
  * @property string $unsubscribed_at
- * @property-read \UserPreference $preferences
+ * @property-read \PatchNotes\Models\UserPreference $preferences
  * @property-read mixed $fullname
  * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribeToken($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereUnsubscribedAt($value)
+ * @property-read mixed $gravatar 
+ * @method static \Illuminate\Database\Query\Builder|\PatchNotes\Models\User whereFullname($value)
  */
 class User extends \Cartalyst\Sentry\Users\Eloquent\User implements Participant
 {

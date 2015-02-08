@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'PatchNotes\Console\Commands\Inspire',
+        'PatchNotes\Console\Commands\SendUpdatesCommand',
     ];
 
     /**
