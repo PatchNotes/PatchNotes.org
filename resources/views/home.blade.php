@@ -59,19 +59,6 @@
 
 @section('content')
 
-    <div id="feature-cycle" class="row">
-        <div id="feature-producer" class="col-md-5 col-md-offset-1">
-            <h3>Producers: <em class="feature-topic"></em></h3>
-
-            <p class="feature-text"></p>
-        </div>
-        <div id="feature-consumer" class="col-md-5">
-            <h3>Consumers: <em class="feature-topic"></em></h3>
-
-            <p class="feature-text"></p>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-lg-12">
             <h3>Newest Projects</h3>
@@ -83,60 +70,5 @@
 @stop
 
 @section('scripts')
-    <script>
-        $(function documentReady() {
-            var featureCycles = {
-                topics: ["Regular Updates", "Security Alerts", "Bug Fixes"],
-                producers: {
-                    "Regular Updates": "Stop worrying about managing email lists and making sure your domain doesn't get blacklisted. With PatchNotes everything is done for you, all you have to do is post updates.",
-                    "Security Alerts": "Here's something for the producers",
-                    "Bug Fixes": "Something about bug fixes for producers."
-                },
-                consumers: {
-                    "Regular Updates": "Keep your email sane, we combine all of your pending updates into one easy to read email. Producer getting annoying? Easily kill the updates without worrying about if you're actuall removed or not.",
-                    "Security Alerts": "Be informed instantly when projects you use have important security patches.",
-                    "Bug Fixes": "Something about bug fixes for consumers."
-                }
-            };
 
-            var cycleInterval = 0,
-                    currentCycle = 0;
-
-            function startCycle() {
-                cycleInterval = setInterval(changeCycle, 10000);
-            }
-
-            function stopCycle() {
-                clearInterval(cycleInterval);
-            }
-
-            function changeCycle() {
-                currentCycle++;
-                if (currentCycle > (featureCycles.topics.length - 1)) {
-                    currentCycle = 0;
-                }
-
-                setFeature(currentCycle);
-            }
-
-            function setFeature(i) {
-                var currentTopic = featureCycles.topics[currentCycle];
-
-                $('#feature-producer').find('.feature-topic').text(currentTopic);
-                $('#feature-producer').find('.feature-text').text(featureCycles.producers[currentTopic]);
-
-                $('#feature-consumer').find('.feature-topic').text(currentTopic);
-                $('#feature-consumer').find('.feature-text').text(featureCycles.consumers[currentTopic]);
-            }
-
-            setFeature(0);
-            startCycle();
-
-            $('#featureCycle').hover(function cycleHover() {
-                stopCycle();
-            }, function cycleUnhover() {
-                startCycle();
-            });
-        });
-    </script>
 @stop

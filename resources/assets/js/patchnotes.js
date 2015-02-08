@@ -10,10 +10,7 @@ $(document).ready(function() {
         };
 
         // add handler links
-        var slink = document.querySelectorAll(Config.Link);
-        for (var a = 0; a < slink.length; a++) {
-            slink[a].onclick = PopupHandler;
-        }
+        $(Config.Link).on('click', PopupHandler);
 
         // create popup
         function PopupHandler(e) {
