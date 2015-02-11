@@ -13,11 +13,12 @@
 @gray-light:             lighten(#000, 70%);   // #999
 @gray-lighter:           lighten(#000, 93.5%); // #eee
 
-@brand-primary:         #4582EC;
-@brand-success:         #3FAD46;
-@brand-info:            #5bc0de;
-@brand-warning:         #f0ad4e;
-@brand-danger:          #d9534f;
+// http://paletton.com/#uid=72R0u0kgWAK6XU6ceLekZu7pBqZ
+@brand-primary:         #62d06f;
+@brand-success:         #62d06f;
+@brand-info:            #53A5AD;
+@brand-warning:         #FFB878;
+@brand-danger:          #FF7F78;
 
 
 //== Scaffolding
@@ -25,12 +26,12 @@
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-@body-bg:               #fff;
+@body-bg:               #F8F5F0;
 //** Global text color on `<body>`.
 @text-color:            @gray-dark;
 
 //** Global textual link color.
-@link-color:            @brand-primary;
+@link-color:            @brand-info;
 //** Link hover color set via `darken()` function.
 @link-hover-color:      darken(@link-color, 20%);
 
@@ -369,7 +370,7 @@
 // Inverted navbar
 // Reset inverted navbar basics
 @navbar-inverse-color:                      @text-color;
-@navbar-inverse-bg:                         @body-bg;
+@navbar-inverse-bg:                         darken(@body-bg, 3%);
 @navbar-inverse-border:                     #ddd;
 
 // Inverted navbar links
@@ -466,7 +467,7 @@
 
 @jumbotron-padding:              30px;
 @jumbotron-color:                inherit;
-@jumbotron-bg:                   darken(@body-bg, 12%);
+@jumbotron-bg:                   darken(@body-bg, 8%);
 @jumbotron-heading-color:        inherit;
 @jumbotron-font-size:            ceil((@font-size-base * 1.2));
 

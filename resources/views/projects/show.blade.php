@@ -14,15 +14,14 @@
         <h2 id="projectHeader">
             @if(!Sentry::check() || (Sentry::check() && !$project->isSubscriber(Sentry::getUser())))
                 <a href="{{ action('Projects\\SubscriptionController@store', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-subscribe" data-csrf-token="{{ csrf_token() }}">
-                    <i class="fa fa-plus"></i> <span class="text"></span>
+                    <i class="fa fa-plus"></i> <span class="text">Subscribe</span>
                 </a>
             @else
                 <a href="{{ action('Projects\\SubscriptionController@destroy', array($owner->slug, $project->slug)) }}" class="btn subscribe-btn social-unsubscribe" data-csrf-token="{{ csrf_token() }}">
-                    <i class="fa fa-minus"></i> <span class="text"></span>
+                    <i class="fa fa-minus"></i> <span class="text">Unsubscribe</span>
                 </a>
             @endif
             <a href="{{ $owner->href }}">{{ $owner->name }}</a> / <a href="{{ $project->href }}">{{ $project->name }}</a>
-            <br><small><a href="{{ $project->site_url }}" target="_blank">{{ $project->site_url }}</a></small>
         </h2>
     </div>
 </div>
@@ -31,7 +30,10 @@
 <div class="row">
 
     <div class="col-lg-7">
-        <p>{{ $project->description }}</p>
+        <blockquote>
+            <p>{{ $project->description }}</p>
+            <small><a href="{{ $project->site_url }}" target="_blank">{{ $project->site_url }}</a></small>
+        </blockquote>
 
         <div class="panel panel-default">
             <div class="panel-heading">Recent Project Updates</div>
