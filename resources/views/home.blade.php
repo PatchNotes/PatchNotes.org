@@ -48,7 +48,7 @@
                             on.</h2>
                     </div>
                     <div class="col-lg-5">
-                        <img src="http://i.imgur.com/Z7qOGBP.png" class="img-responsive" alt=""/>
+                        <img src="http://i.imgur.com/Z7qOGBP.png" class="img-responsive visible-lg" alt=""/>
                     </div>
                 </div>
             </div>
