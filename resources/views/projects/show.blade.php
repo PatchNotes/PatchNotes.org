@@ -124,13 +124,13 @@
         </div>
 
 
-            <div id="code" class="panel panel-default" style="display:none">
-                <div class="panel-heading">Embed Widget Code</div>
-                <div class="panel-body">
-                    <p>You can use this code to embed our subscription widget on your website.</p>
-                    <pre>Some code here.</pre>
-                </div>
+        <div id="code" class="panel panel-default" style="display:none">
+            <div class="panel-heading">Embed Widget Code</div>
+            <div class="panel-body">
+                <p>You can use this code to embed our subscription widget on your website.</p>
+                <!--<pre>&lt;embed src="{{ $project->href }}/embed/full" type="text/html"/&gt;</pre>-->
             </div>
+        </div>
 
 
         @if(Sentry::check())

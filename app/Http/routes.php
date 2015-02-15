@@ -55,6 +55,8 @@ Route::group([], function () {
     Route::patch('projects/{participant}/{name}', 'Projects\\ProjectController@update');
     Route::delete('projects/{participant}/{name}', 'Projects\\ProjectController@destroy');
 
+    Route::get('projects/{participant}/{name}/embed/full', 'Projects\\EmbedController@getFull');
+
     Route::resource('projects/{participant}/{name}/updates', 'Projects\\UpdateController');
 
     Route::resource('projects/{participant}/{name}/subscription', 'Projects\\SubscriptionController');

@@ -3,6 +3,13 @@
 .projects-list {
 
     .project {
+        .well;
+        display: block;
+        margin-bottom: @line-height-computed;
+        line-height: @line-height-base;
+        border-radius: @thumbnail-border-radius;
+
+        padding: 0;
 
         .project-header {
 
@@ -10,6 +17,8 @@
 
         .project-caption {
             @height: 100px;
+
+            margin: 5px;
 
             height: @height;
             min-height: @height;
@@ -21,24 +30,47 @@
                 text-align: center;
             }
 
+            h2:hover {
+                color: @brand-primary !important;
+            }
+
             p {
-                text-overflow:ellipsis;
+                text-overflow: ellipsis;
+                color: @text-color;
             }
         }
 
-            color: #000000;
-            text-align: center;
+        .project-content {
+            padding: 10px;
+            border-top: 1px solid @well-border;
+
+            color: @text-color;
+        }
+
+        text-align: center;
     }
 
-    .project:hover {
+    .project:hover, .project:focus {
         text-decoration: none;
+        border-color: @link-color;
+
+        .project-caption {
+            h2 {
+                color: @brand-primary !important;
+            }
+        }
+
+        .project-content {
+            border-color: @brand-primary;
+        }
     }
 
 }
 
+
 #projectHeader {
-  a {
-    color: #317eac;
+  a:hover {
+    text-decoration: none;
   }
 }
 
@@ -70,31 +102,27 @@
 .social-subscribe,.social-unsubscribe {
     background-color: #033C73;
     border-color: #022A50;
+
+    width: 39px;
+    overflow: hidden;
+
+    .text {
+        padding-left: 5px;
+    }
+
+    @animation-duration: .3s;
+    -webkit-transition: all @animation-duration;
+    -moz-transition: all @animation-duration;
+    -ms-transition: all @animation-duration;
+    -o-transition: all @animation-duration;
+    transition: all @animation-duration;
 }
 .social-subscribe:hover,.social-unsubscribe:hover {
     background-color: #033C73;
     border-color: #022A50;
-}
 
+    width: 146px;
 
-.social-subscribe:hover .text:after {
-    content: " Subscribe";
-}
-.social-unsubscribe:hover .text:after {
-    content: " Unsubscribe";
-}
-
-@-webkit-keyframes showHide { /* Chrome, Safari */
-    0% {width:100%}
-    40% {width:0%}
-    60% {width:0%;}
-    100% {width:100%;}
-}
-@keyframes showHide {
-    0% {width:100%}
-    40% {width:0%}
-    60% {width:0%;}
-    100% {width:100%;}
 }
 
 .social-rss {
