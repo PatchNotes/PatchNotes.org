@@ -74,6 +74,11 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.1/easing/EasePack.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.1/TweenLite.min.js"></script>
     <script>
+        /*
+         * Started with http://codepen.io/Dleonheart/details/wByWwR/
+         * Modified to have the orbs follow other orbs their interested in via timely email updates :)
+         */
+
         var canvas = document.getElementById('blorbs');
 
         var ctx = canvas.getContext('2d');
