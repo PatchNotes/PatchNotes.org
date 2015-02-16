@@ -79,14 +79,14 @@
         var ctx = canvas.getContext('2d');
 
         var width = window.innerWidth;
-        var height = 286;
+        var height = 300;
 
         canvas.width = width;
         canvas.height = height;
 
         window.onresize = function () {
             width = window.innerWidth;
-            height = 286;
+            height = 300;
             canvas.width = width;
             canvas.height = height;
 
