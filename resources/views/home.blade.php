@@ -7,8 +7,6 @@
 @stop
 
 @section('precontent')
-    @if(!Sentry::check())
-
         {{--<div id="pullEmIn" class="jumbotron hero-spacer">
             <div class="container">
                 <div class="row">
@@ -57,8 +55,6 @@
                 </div>
             </div>
         </div>
-    @endif
-
 @stop
 
 @section('content')
