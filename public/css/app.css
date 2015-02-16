@@ -8643,10 +8643,10 @@ fieldset[disabled] .btn-vk.active {
   margin-top: 115px;
   position: relative;
   height: 300px;
+  background-color: #008cba;
 }
 #pullEmIn #blorbs {
   position: absolute;
-  background-color: #008cba;
 }
 #pullEmIn #blorbs-overlay {
   padding: 59px;

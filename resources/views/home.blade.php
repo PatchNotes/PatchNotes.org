@@ -38,7 +38,7 @@
         </div>--}}
 
         <div id="pullEmIn">
-            <canvas id="blorbs"></canvas>
+            <canvas id="blorbs" class="visible-lg visible-md"></canvas>
 
             <div id="blorbs-overlay">
                 <div class="container">
