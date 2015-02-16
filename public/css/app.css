@@ -8641,9 +8641,25 @@ fieldset[disabled] .btn-vk.active {
 }
 #pullEmIn {
   margin-top: 115px;
+  position: relative;
+  height: 300px;
+}
+#pullEmIn #blorbs {
+  position: absolute;
+  background-color: #008cba;
+}
+#pullEmIn #blorbs-overlay {
+  padding: 59px;
 }
 #pullEmIn #lead {
   font-size: 2.8em;
+  color: white;
+  font-weight: 600;
+  text-shadow: black 0px 0px 20px;
+}
+#pullEmIn #sublead {
+  color: #fff;
+  text-shadow: black 0px 0px 20px;
 }
 #pullEmIn form > p {
   font-size: 0.6em;
@@ -8652,7 +8668,7 @@ fieldset[disabled] .btn-vk.active {
 }
 #pullEmIn img {
   position: absolute;
-  top: -110px;
+  top: -140px;
   width: 492px;
 }
 .projects-list .project {

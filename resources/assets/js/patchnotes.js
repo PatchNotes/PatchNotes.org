@@ -67,19 +67,21 @@ $(document).ready(function() {
             },
             type: "POST"
         }).done(function(response) {
-                if(response.success == false) {
-                    alert(response.error);
 
-                    $icon.removeClass().addClass('fa fa-plus');
-
-                    return;
-                }
 
                 $('#unsubscribe').slideUp();
                 $('#subscribe').slideDown();
                 $icon.removeClass().addClass('fa fa-minus');
                 $(self).removeClass('social-subscribe').addClass('social-unsubscribe');
-            });
+            }).error(function(response) {
+            if(response.success == false) {
+                alert(response.error);
+
+                $icon.removeClass().addClass('fa fa-plus');
+
+                return;
+            }
+        });
     });
 
     $('body').on('click', '.social-unsubscribe', function(e) {

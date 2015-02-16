@@ -16,7 +16,7 @@ class SubscriptionController extends Controller
 
     public function __construct()
     {
-        $this->beforeFilter('auth.json');
+        $this->middleware('auth');
 
         $this->user = Sentry::getUser();
     }
