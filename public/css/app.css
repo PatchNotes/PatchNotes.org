@@ -8650,9 +8650,6 @@ fieldset[disabled] .btn-vk.active {
   filter: blur(5px);
   -webkit-filter: blur(5px);
 }
-#pullEmIn #blorbs-overlay {
-  padding: 65px;
-}
 #pullEmIn #lead {
   font-size: 2.8em;
   color: white;
@@ -8673,6 +8670,11 @@ fieldset[disabled] .btn-vk.active {
   top: -48px;
   width: 100%;
   z-index: 500;
+}
+@media screen and (min-width: 768px) {
+  #pullEmIn #blorbs-overlay {
+    padding: 65px;
+  }
 }
 .projects-list .project {
   min-height: 20px;

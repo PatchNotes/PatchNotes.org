@@ -62,7 +62,13 @@
 
                     @if(!Sentry::check())
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
+                        <li class="dropdown hidden-lg hidden-md">
+                            <a href="/account/register">Register</a>
+                        </li>
+                        <li class="dropdown hidden-lg hidden-md">
+                            <a href="/account/Login">Login</a>
+                        </li>
+                        <li class="dropdown visible-lg visible-md">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Register / Sign In <b class="caret"></b></a>
                             <ul class="dropdown-menu account-menu">
                                 <li>
