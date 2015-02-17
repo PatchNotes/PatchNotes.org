@@ -1,12 +1,15 @@
 
 #pullEmIn {
-  margin-top: 115px;
+  margin-top: 45px;
   position: relative;
   height: 300px;
 
   background-color: @brand-primary;
+
   #blorbs {
     position: absolute;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
 
   }
   #blorbs-overlay {
@@ -33,7 +36,8 @@
 
   img {
     position: absolute;
-    top: -140px;
-    width: 492px;
+    top: -48px;
+    width: 100%;
+    z-index: 500;
   }
 }

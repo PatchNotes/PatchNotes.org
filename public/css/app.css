@@ -8640,13 +8640,15 @@ fieldset[disabled] .btn-vk.active {
   border-color: rgba(0, 0, 0, 0.2);
 }
 #pullEmIn {
-  margin-top: 115px;
+  margin-top: 45px;
   position: relative;
   height: 300px;
   background-color: #008cba;
 }
 #pullEmIn #blorbs {
   position: absolute;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
 }
 #pullEmIn #blorbs-overlay {
   padding: 65px;
@@ -8668,8 +8670,9 @@ fieldset[disabled] .btn-vk.active {
 }
 #pullEmIn img {
   position: absolute;
-  top: -140px;
-  width: 492px;
+  top: -48px;
+  width: 100%;
+  z-index: 500;
 }
 .projects-list .project {
   min-height: 20px;
@@ -8814,13 +8817,21 @@ body {
   margin-bottom: 30px;
   /* spaces out the feature boxes once they start to stack responsively */
 }
-.account-menu {
+.navbar {
+  box-shadow: 0 0 10px #003F54;
+}
+.navbar .account-menu {
   background-color: #ffffff !important;
   min-width: 230px;
   padding: 15px;
 }
-.account-menu li a {
+.navbar .account-menu li a {
   color: #FFF;
+}
+#content {
+  position: relative;
+  z-index: 1000;
+  background-color: white;
 }
 footer {
   margin: 50px 0;
